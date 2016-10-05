@@ -54,6 +54,32 @@
 			],
 			"interfaces": [
 			]
+		},
+		{
+			"name": "musicorganizer",
+			"description": "Provides playlist integration between your favourite music streaming services",
+			"platform": "weblogic",
+			"members": [
+				{
+					"name": "Lévai Roland",
+					"neptun": "VFNTDV",
+					"github": "RolandLevai"
+				}
+			],
+			"interfaces": [
+				{
+					"type": "web",
+					"goal": "Manage playlists"
+				},
+				{
+					"type": "rmi",
+					"goal": "Communication interface between back and frontend"
+				},
+				{
+					"type": "soap",
+					"goal": "Integration point towards other systems"
+				}
+			]
 		}
 	]
 }
