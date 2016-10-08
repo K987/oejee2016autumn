@@ -106,6 +106,28 @@
 					"goal": "For Microsoft.NET applications integrating this service"
 				}
 			]
-		}
+		},
+		{
+			"name": "Angler registry",
+			"description": "Management registry for angler associations",
+			"platform": "jboss",
+			"members": [
+				{
+					"name": "Gyigor Péter",
+					"neptun": "EZW6K1",
+					"github": "petergyigor"
+				}
+			],
+			"interfaces": [
+				{
+					"type": "restful",
+					"goal": "For applications which want to use this service"
+				},
+				{
+					"type": "web",
+					"goal": "Web interface for users and managers"
+				}
+			]
+		},
 	]
 }
