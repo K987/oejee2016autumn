@@ -81,5 +81,31 @@
 				}
 			]
 		}
+		{
+			"name": "centralizedbookmarksstorage",
+			"description": "A centralized bookmarks storage to add and access favourite sites from any browsers",
+			"platform": "jboss",
+			"members": [
+				{
+					"name": "Szabó Béla Zoltán",
+					"neptun": "HSY1HT",
+					"github": "szabobelazoltan"
+				}
+			],
+			"interfaces": [
+				{
+					"type": "web",
+					"goal": "Provides a web interface for the users"
+				},
+				{
+					"type": "restful",
+					"goal": "For applications which aim to integrate this service"
+				},
+				{
+					"type": "soap",
+					"goal": "For Microsoft.NET applications integrating this service"
+				}
+			]
+		}
 	]
 }
