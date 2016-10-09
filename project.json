@@ -80,7 +80,7 @@
 					"goal": "Integration point towards other systems"
 				}
 			]
-		}
+		},
 		{
 			"name": "centralizedbookmarksstorage",
 			"description": "A centralized bookmarks storage to add and access favourite sites from any browsers",
@@ -148,7 +148,7 @@
 				{
 					"type": "restful",
 					"goal": "Handle crud operations"
-				},
+				}
 			]
 		}
 	]
