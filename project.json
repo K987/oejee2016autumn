@@ -129,5 +129,27 @@
 				}
 			]
 		},
+		{
+			"name": "Collection Agency",
+			"description": "Helps collection flows to collect money from customers who have debts",
+			"platform": "weblogic",
+			"members": [
+				{
+					"name": "Mentes Bálint",
+					"neptun": "ACF1V6",
+					"github": "mentesbalint"
+				}
+			],
+			"interfaces": [
+				{
+					"type": "web",
+					"goal": "Manage customers , aggreements , documents"
+				},
+				{
+					"type": "restful",
+					"goal": "Handle crud operations"
+				},
+			]
+		}
 	]
 }
