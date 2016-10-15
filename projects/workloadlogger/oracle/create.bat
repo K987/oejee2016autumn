@@ -16,6 +16,7 @@ set db_sid=%db_name%_sid
 set db_ins=%db_name%_ins
 set sys_passwd=supersecret123
 set system_passwd=supersecret123
+set listener_port=1525
 
 set max_log_files=32
 set max_log_members=4
@@ -146,6 +147,7 @@ echo db_block_size=8192>>%init_file%
 echo db_domain=''>>%init_file%
 echo diagnostic_dest=%db_dir%>>%init_file%
 echo dispatchers='(protocol=tcp) (service=%app_name%xdb)'>>%init_file%
+echo local_listener='(ADDRESS = (PROTOCOL=TCP)(HOST=localhost)(PORT=%listener_port%))'>>%init_file%
 echo shared_servers=4>>%init_file%
 echo open_cursors=300>>%init_file%
 echo remote_login_passwordfile='exclusive'>>%init_file%
@@ -211,10 +213,15 @@ echo.>>%db_create_file%
 echo show parameter spfile;>>%db_create_file%
 echo.>>%db_create_file%
 
+echo exit;>>%db_create_file%
+echo.>>%db_create_file%
+
 REM CREATE WINDOWS ORACLE SERVICE
 oradim -new -sid %db_sid% -startmode manual -PFILE %init_file%
 
 REM EXECUTE DB CREATE SQL COMMANDS FROM FILE
 sqlplus -s "/as sysdba" @"%db_create_file%">%db_create_log%
+
+Isnrctl stat>>%db_create_log%
 
 pause
