@@ -1,0 +1,6 @@
+apply plugin: 'war'
+war { archiveName 'wll-weblayer.war' }
+dependencies {
+	providedCompile project(':wll-ejbservice')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+}

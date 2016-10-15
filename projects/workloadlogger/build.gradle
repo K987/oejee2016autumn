@@ -1,0 +1,27 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+dependencies {
+	deploy project('wll-ejbservice')
+	deploy project(path: 'wll-weblayer', configuration: 'archives')
+}
+
+ext {
+	testngVersion = '6.9.13.6'
+	jeeVersion = '7.0'
+	servletapiVersion = '3.0.1'
+	log4jVersion = '1.2.17'
+}
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+	
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+	repositories { mavenCentral() }
+	dependencies {
+		compile group: 'javax', name: 'javaee-api', version: jeeVersion
+		compile group: 'log4j', name: 'log4j', version: log4jVersion
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+}
