@@ -150,6 +150,24 @@
 					"goal": "Handle crud operations"
 				}
 			]
+		},
+		{  
+			"name":"workloadlogger",
+			"description":"project for supporting logging of work hours and following completion of projects",
+			"platform":"jboss",
+			"members":[  
+				{  
+				   "name":"Horváth Attila",
+				   "neptun":"VJERN1",
+				   "github":"Yogen88"
+				}
+			],
+			"interfaces": [
+				{
+					"type": "restful",
+					"goal": "handle crud operations"
+				}
+			]
 		}
 	]
 }
