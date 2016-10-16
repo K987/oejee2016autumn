@@ -168,6 +168,24 @@
 					"goal": "handle crud operations"
 				}
 			]
+		},
+		{
+			"name":"bjjpit",
+			"description":"Bjj related events,articles",
+			"platform":"weblogic",
+			"members":[  
+				{  
+				   "name":"Kiss Norbert Alex",
+				   "neptun":"JCDZIQ",
+				   "github":"nutcakez"
+				}
+			],
+			"interfaces": [
+				{
+					"type": "web",
+					"goal": "Manage events, people , bets"
+				}
+			]
 		}
 	]
 }
