@@ -1,5 +1,5 @@
 CREATE TABLE user (
-	user_id INTEGER NOT NULL,
+	user_id SERIAL NOT NULL,
 	user_name CHARACTER VARYING(20) NOT NULL,
 	user_password CHARACTER VARYING(20) NOT NULL,
 	user_emailaddr CHARACTER VARYING(40) NULL,
@@ -8,9 +8,8 @@ CREATE TABLE user (
 ALTER TABLE user OWNER TO postgres;
 
 
-
 CREATE TABLE tracklist (
-	tracklist_id INTEGER NOT NULL,
+	tracklist_id SERIAL NOT NULL,
 	tracklist_user_id INTEGER NOT NULL,
 	tracklist_name CHARACTER VARYING(20) NOT NULL,
 	CONSTRAINT PK_TRACKLIST_ID PRIMARY KEY (tracklist_id),
@@ -20,18 +19,26 @@ CREATE TABLE tracklist (
 ALTER TABLE tracklist OWNER TO postgres;
 
 
--- consider a different table for streaming urls
 CREATE TABLE song (
-	song_id INTEGER NOT NULL,
+	song_id SERIAL NOT NULL,
 	song_title CHARACTER VARYING(100) NOT NULL,
 	song_category CHARACTER VARYING(40) NULL,
-	youtube_streaming_url CHARACTER VARYING(40) NULL,
-	soundcloud_streaming_url CHARACTER VARYING(40) NULL,
-	spotify_streaming_url CHARACTER VARYING(40) NULL,
 	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id)
 );
 ALTER TABLE song OWNER TO postgres;
 
+
+CREATE TABLE streamingurl (
+	streamingurl_id SERIAL NOT NULL,
+	streamingurl_song_id INTEGER NOT NULL,
+	streamingurl_type CHARACTER VARYING(40) NOT NULL,
+	streamingurl_url CHARACTER VARYING(200) NOT NULL,
+	CONSTRAINT PK_STREAMINGURL_ID PRIMARY KEY (streamingurl_id),
+	CONSTRAINT FK_streamingurl_song_id FOREIGN KEY (tracklist_song_id)
+	  REFERENCES song (song_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+CREATE INDEX IDX_streamingurl_song_id ON streamingurl USING btree (song_id);
+ALTER TABLE streamingurl OWNER TO postgres;
 
 
 CREATE TABLE tracklistsong (
@@ -43,9 +50,8 @@ CREATE UNIQUE INDEX UI_tracklistsong_pk ON tracklistsong USING btree (tracklist_
 ALTER TABLE tracklistsong OWNER TO postgres;
 
 
-
 CREATE TABLE album (
-	album_id INTEGER NOT NULL,
+	album_id SERIAL NOT NULL,
 	album_title CHARACTER VARYING(100) NOT NULL,
 	album_releasedate DATE NULL,
 	album_genre CHARACTER VARYING(40) NULL,
@@ -67,7 +73,7 @@ ALTER TABLE albumsong OWNER TO postgres;
 
 
 CREATE TABLE artist (
-	artist_id INTEGER NOT NULL,
+	artist_id SERIAL NOT NULL,
 	artist_name CHARACTER VARYING(100) NOT NULL,
 	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id)
 );

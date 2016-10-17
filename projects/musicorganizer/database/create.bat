@@ -4,3 +4,5 @@ psql -d postgres -h localhost -p 5432 -U postgres -f create-user.sql
 psql -d musicorganizerdb -h localhost -p 5432 -U postgres -f create-schema.sql
 psql -d musicorganizerdb -h localhost -p 5432 -U postgres -f grant-access.sql
 psql -d musicorganizerdb -h localhost -p 5432 -U postgres -f initial-data.sql
+
+pause
