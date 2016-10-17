@@ -1,0 +1,5 @@
+jar { archiveName 'centralizedbookmarksstorage-persistence.jar' }
+
+dependencies {
+	compile group: 'org.hibernate', name: 'hib	ernate-core', version: hibernateVersion
+}
