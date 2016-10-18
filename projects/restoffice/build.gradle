@@ -1,13 +1,19 @@
 apply plugin: 'eclipse'
 apply plugin: 'ear'
 
+allprojects{
+	repositories {
+		mavenCentral()
+		maven { url "http://repository.pentaho.org/artifactory/repo" }
+	}
+}
+
 subprojects{
   apply plugin: 'eclipse'
   apply plugin: 'java'
 
   sourceCompatibility = 1.7
   targetCompatibility = 1.7
-  repositories {mavenCentral()}
   dependencies{
     compile group: 'javax', name: 'javaee-api', version: '6.0'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
@@ -18,5 +24,5 @@ subprojects{
 dependencies{
   deploy project ('ro_persistenceLayer')
   deploy project ('ro_ejbLayer')
-  deploy project (path: 'ro_weblayer', configuration: 'archives')
+  deploy project (path: 'ro_webLayer', configuration: 'archives')
 }
