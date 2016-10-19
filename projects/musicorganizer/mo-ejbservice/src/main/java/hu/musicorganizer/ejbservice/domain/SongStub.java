@@ -1,4 +1,4 @@
-package main.java.hu.musicorganizer.ejbservice.domain;
+package hu.musicorganizer.ejbservice.domain;
 
 public class SongStub {
 	
