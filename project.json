@@ -58,7 +58,7 @@
 		{
 			"name": "musicorganizer",
 			"description": "Provides playlist integration between your favourite music streaming services",
-			"platform": "weblogic",
+			"platform": "jboss",
 			"members": [
 				{
 					"name": "Lévai Roland",

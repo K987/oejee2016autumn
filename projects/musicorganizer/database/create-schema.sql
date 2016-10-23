@@ -41,13 +41,13 @@ CREATE INDEX IDX_streamingurl_song_id ON streamingurl USING btree (song_id);
 ALTER TABLE streamingurl OWNER TO postgres;
 
 
-CREATE TABLE tracklistsong (
+CREATE TABLE trackliststreamingurl (
 	song_id INTEGER NOT NULL,
-	tracklist_id INTEGER NOT NULL,
-	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id, tracklist_id)
+	streamingurl_id INTEGER NOT NULL,
+	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id, streamingurl_id)
 );
-CREATE UNIQUE INDEX UI_tracklistsong_pk ON tracklistsong USING btree (tracklist_id, song_id);
-ALTER TABLE tracklistsong OWNER TO postgres;
+CREATE UNIQUE INDEX UI_tracklistsong_pk ON trackliststreamingurl USING btree (streamingurl_id, song_id);
+ALTER TABLE trackliststreamingurl OWNER TO postgres;
 
 
 CREATE TABLE album (
@@ -64,8 +64,8 @@ ALTER TABLE album OWNER TO postgres;
 -- requirements were wrong, a song CAN belong to multiple albums 
 -- (think about reissued/remastered versions, etc...)
 CREATE TABLE albumsong (
-	reissued_id INTEGER NOT NULL,
-	reissued_id INTEGER NOT NULL,
+	album_id INTEGER NOT NULL,
+	song_id INTEGER NOT NULL,
 	CONSTRAINT PK_ALBUMSONG_ID PRIMARY KEY (song_id, album_id)
 );
 CREATE UNIQUE INDEX UI_tracklistsong_pk ON albumsong USING btree (album_id, song_id);
