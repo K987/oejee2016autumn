@@ -1,0 +1,42 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+version = '1.0'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	mockitoVersion = '1.10.8'
+	jeeVersion = '6.0'  
+	servletapiVersion = '3.0.1'
+	hibernateVersion = '4.3.10.Final'
+	jaxrsVersion = '2.0.1'
+	resteasyVersion = '2.3.7.Final'
+	jbossjee6Version = '3.0.3.Final'  
+	commonsloggingVersion = '1.2'
+	
+	webserviceArchiveName = 'ar-webservice.war'
+	webserviceContextPath = 'anglerregistry'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	repositories { 
+		mavenCentral() 
+	}
+}
+	
+ear {
+    deploymentDescriptor { 
+    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    }
+}
+	
+dependencies {
+	deploy project('ar-ejbservice')
+	deploy project('ar-persistence')
+	deploy project(path: 'ar-weblayer', configuration: 'archives')
+	deploy project(path: 'ar-webservice', configuration: 'archives')
+}
