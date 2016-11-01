@@ -5,5 +5,6 @@ repositories { mavenCentral() }
 jar { archiveName 'mo-ejbservice.jar' }
 
 dependencies {
-	compile group: 'javax', name:'javaee-api', version:'6.0'
+	compile group: 'log4j', name: 'log4j', version: log4jVersion
+	compile group: 'javax', name: 'javaee-api', version: jeeVersion
 }

@@ -1,6 +1,11 @@
 apply plugin: 'eclipse'
 apply plugin: 'ear'
 
+ext {
+	log4jVersion = '1.2.17'
+	jeeVersion = '6.0'  
+}
+
 dependencies {
 	deploy project('mo-ejbservice')
 	deploy project(path: 'mo-weblayer', configuration: 'archives')
