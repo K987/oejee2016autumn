@@ -1,3 +1,6 @@
 //include 'bs-ejbservice'
+
 //include 'bs-weblayer'
+
 include 'centralizedbookmarksstorage-persistance'
+include 'centralizedbookmarksstorage-ejbservice'

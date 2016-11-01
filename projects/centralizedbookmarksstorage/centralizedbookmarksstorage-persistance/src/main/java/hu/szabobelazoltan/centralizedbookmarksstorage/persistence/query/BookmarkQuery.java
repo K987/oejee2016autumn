@@ -8,4 +8,7 @@ public class BookmarkQuery {
 	public static final String KEYWORD_BY_KW = "Keyword.byKeyword";
 	public static final String CON_BOOKMARK_KEYWORD_BY_KW = "BookmarkKeywordConnection.byKeyword";
 	public static final String CON_SHARE_KEYWORD_BY_KW = "BookmarkKeywordConnection.byKeyword";
+	public static final String INSERT_USER = "User.insert";
+	public static final String INSERT_BOOKMARK = "Bookmark.insert";
+	public static final String INSERT_SHARE = "Share.insert";
 }
