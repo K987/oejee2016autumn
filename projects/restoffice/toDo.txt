@@ -1,0 +1,11 @@
+Standalone xml:
+  - loggolás (2.diasor)
+  - db beállításokat megnézni (3.diasor)
+
+gitignore:
+  - gitignore konfig
+
+eclipse:
+  - kód formázás (xml)
+
+persistence xml property beállítások
