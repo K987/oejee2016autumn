@@ -1,0 +1,12 @@
+jar { 
+	archiveName 'centralizedbookmarksstorage-ejbservice.jar' 
+}
+
+
+dependencies {
+	
+	compile group: 'javax', name: 'javaee-api', version: jeeVersion
+	
+	compile project(':centralizedbookmarksstorage-persistance')
+
+}
