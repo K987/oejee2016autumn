@@ -18,44 +18,42 @@ public class ExpType implements Serializable {
 	@Id
 	@SequenceGenerator(name="EXP_TYPES_EXPTYPEID_GENERATOR", sequenceName="EXP_TYPES_EXP_TYPE_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EXP_TYPES_EXPTYPEID_GENERATOR")
-	@Column(name="exp_type_id", updatable=false, unique=true, nullable=false)
-	private Integer expTypeId;
+	@Column(name="exp_type_id")
+	private Integer id;
 
-	@Column(name="exp_type_name", nullable=false, length=100)
-	private String expTypeName;
+	//TODO: set this to unique in the database as well
+	@Column(name="exp_type_name", nullable=false, unique=true, length=100)
+	private String name;
 
 	@Column(name="exp_type_prod_related", nullable=false)
-	private Boolean expTypeProdRelated;
+	private Boolean prodRelated;
 
-	//bi-directional many-to-one association to Expens
-	@OneToMany(mappedBy="expType")
+	//bi-directional many-to-one association to Expense
+	@OneToMany(mappedBy="", fetch=FetchType.LAZY)
 	private Set<Expense> expenses;
 
 	public ExpType() {
 	}
 
-	private Integer getExpTypeId() {
-		return this.expTypeId;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setExpTypeId(Integer expTypeId) {
-		this.expTypeId = expTypeId;
+	public String getName() {
+		return this.name;
 	}
 
-	public String getExpTypeName() {
-		return this.expTypeName;
+	public void setExpTypeName(String name) {
+		this.name = name;
 	}
 
-	public void setExpTypeName(String expTypeName) {
-		this.expTypeName = expTypeName;
+	public Boolean getProdRelated() {
+		return this.prodRelated;
 	}
 
-	public Boolean getExpTypeProdRelated() {
-		return this.expTypeProdRelated;
-	}
-
-	public void setExpTypeProdRelated(Boolean expTypeProdRelated) {
-		this.expTypeProdRelated = expTypeProdRelated;
+	public void setProdRelated(Boolean prodRelated) {
+		this.prodRelated = prodRelated;
 	}
 
 	public Set<Expense> getExpenses() {
@@ -66,18 +64,18 @@ public class ExpType implements Serializable {
 		this.expenses = expenses;
 	}
 
-	public Expense addExpens(Expense expens) {
-		getExpenses().add(expens);
-		expens.setExpType(this);
+	public Expense addExpense(Expense expense) {
+		getExpenses().add(expense);
+		expense.setExpType(this);
 
-		return expens;
+		return expense;
 	}
 
-	public Expense removeExpens(Expense expens) {
-		getExpenses().remove(expens);
-		expens.setExpType(null);
+	public Expense removeExpense(Expense expense) {
+		getExpenses().remove(expense);
+		expense.setExpType(null);
 
-		return expens;
+		return expense;
 	}
 
 }

@@ -23,7 +23,7 @@ public class User implements Serializable {
 	private String name;
 
 	@Column(name="user_pwd", nullable=false, length=50)
-	private String userPwd;
+	private String pwd;
 
 	//TODO: add not nullabe to DB, maybe enum
 	@Column(name="user_role", nullable=false, length=50)
@@ -49,11 +49,11 @@ public class User implements Serializable {
 	}
 
 	public String getPwd() {
-		return this.userPwd;
+		return this.pwd;
 	}
 
 	public void setPwd(String userPwd) {
-		this.userPwd = userPwd;
+		this.pwd = userPwd;
 	}
 
 	public String getRole() {

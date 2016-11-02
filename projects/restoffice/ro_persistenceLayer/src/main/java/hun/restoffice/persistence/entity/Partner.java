@@ -2,12 +2,11 @@ package hun.restoffice.persistence.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Set;
-
 
 /**
  * The persistent class for the partners database table.
  * 
+ * revisied
  */
 @Entity
 @Table(name="partners")
@@ -19,93 +18,70 @@ public class Partner implements Serializable {
 	@SequenceGenerator(name="PARTNERS_PARNTERID_GENERATOR", sequenceName="PARTNERS_PARNTER_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PARTNERS_PARNTERID_GENERATOR")
 	@Column(name="parnter_id", updatable=false, unique=true, nullable=false)
-	private Integer parnterId;
+	private Integer id;
 
 	@Column(name="parnter_technical", nullable=false)
-	private Boolean parnterTechnical;
+	private Boolean technical;
 
 	@Column(name="partner_account", length=100)
-	private String partnerAccount;
-
-	@Column(name="partner_contact_email", length=100)
-	private String partnerContactEmail;
-
-	@Column(name="partner_contact_name", length=100)
-	private String partnerContactName;
-
-	@Column(name="partner_contact_phone", length=100)
-	private String partnerContactPhone;
+	private String account;
 
 	@Column(name="partner_name", nullable=false, length=100)
-	private String partnerName;
+	private String name;
 
-	//bi-directional many-to-one association to Expens
-	@OneToMany(mappedBy="partner")
+	@Embedded
+	private PartnerContact contact;
+
+	/*
+	//bi-directional many-to-one association to Expense
+	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY)
 	private Set<Expense> expenses;
 
 	//bi-directional many-to-one association to Income
-	@OneToMany(mappedBy="partner")
+	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY)
 	private Set<Income> incomes;
+	*/
+	
 
 	public Partner() {
 	}
 
-	public Integer getParnterId() {
-		return this.parnterId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	private void setParnterId(Integer parnterId) {
-		this.parnterId = parnterId;
-	}
 
 	public Boolean getParnterTechnical() {
-		return this.parnterTechnical;
+		return this.technical;
 	}
 
 	public void setParnterTechnical(Boolean parnterTechnical) {
-		this.parnterTechnical = parnterTechnical;
+		this.technical = parnterTechnical;
 	}
 
-	public String getPartnerAccount() {
-		return this.partnerAccount;
+	public String getAccount() {
+		return this.account;
 	}
 
-	public void setPartnerAccount(String partnerAccount) {
-		this.partnerAccount = partnerAccount;
+	public void setAccount(String partnerAccount) {
+		this.account = partnerAccount;
 	}
 
-	public String getPartnerContactEmail() {
-		return this.partnerContactEmail;
+	/**
+	 * @return the contact
+	 */
+	public PartnerContact getContact() {
+		return contact;
 	}
 
-	public void setPartnerContactEmail(String partnerContactEmail) {
-		this.partnerContactEmail = partnerContactEmail;
+	/**
+	 * @param contact the contact to set
+	 */
+	public void setContact(PartnerContact contact) {
+		this.contact = contact;
 	}
 
-	public String getPartnerContactName() {
-		return this.partnerContactName;
-	}
-
-	public void setPartnerContactName(String partnerContactName) {
-		this.partnerContactName = partnerContactName;
-	}
-
-	public String getPartnerContactPhone() {
-		return this.partnerContactPhone;
-	}
-
-	public void setPartnerContactPhone(String partnerContactPhone) {
-		this.partnerContactPhone = partnerContactPhone;
-	}
-
-	public String getPartnerName() {
-		return this.partnerName;
-	}
-
-	public void setPartnerName(String partnerName) {
-		this.partnerName = partnerName;
-	}
-
+/*
 	public Set<Expense> getExpenses() {
 		return this.expenses;
 	}
@@ -116,14 +92,14 @@ public class Partner implements Serializable {
 
 	public Expense addExpens(Expense expens) {
 		getExpenses().add(expens);
-		expens.setPartner(this);
+		expens.set(this);
 
 		return expens;
 	}
 
 	public Expense removeExpens(Expense expens) {
 		getExpenses().remove(expens);
-		expens.setPartner(null);
+		expens.set(null);
 
 		return expens;
 	}
@@ -138,16 +114,17 @@ public class Partner implements Serializable {
 
 	public Income addIncome(Income income) {
 		getIncomes().add(income);
-		income.setPartner(this);
+		income.set(this);
 
 		return income;
 	}
 
 	public Income removeIncome(Income income) {
 		getIncomes().remove(income);
-		income.setPartner(null);
+		income.set(null);
 
 		return income;
 	}
+*/
 
 }

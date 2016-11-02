@@ -11,51 +11,48 @@ import java.util.Set;
  */
 @Entity
 @Table(name="inc_types")
-@NamedQuery(name="IncType.findAll", query="SELECT i FROM IncType i")
+@NamedQuery(name=".findAll", query="SELECT i FROM  i")
 public class IncType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@SequenceGenerator(name="INC_TYPES_INCTYPEID_GENERATOR", sequenceName="INC_TYPES_INC_TYPE_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INC_TYPES_INCTYPEID_GENERATOR")
-	@Column(name="inc_type_id", updatable=false, unique=true, nullable=false)
-	private Integer incTypeId;
+	@Column(name="inc_type_id")
+	private Integer id;
 
-	@Column(name="inc_type_name", nullable=false, length=100)
-	private String incTypeName;
+	//TODO: set this unique in db
+	@Column(name="inc_type_name", unique=true, nullable=false, length=100)
+	private String name;
 
 	@Column(name="inc_type_prod_related", nullable=false)
-	private Boolean incTypeProdRelated;
+	private Boolean prodRelated;
 
 	//bi-directional many-to-one association to Income
-	@OneToMany(mappedBy="incType")
+	@OneToMany(mappedBy="", fetch=FetchType.LAZY)
 	private Set<Income> incomes;
 
 	public IncType() {
 	}
 
-	public Integer getIncTypeId() {
-		return this.incTypeId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	private void setIncTypeId(Integer incTypeId) {
-		this.incTypeId = incTypeId;
+	public String getName() {
+		return this.name;
 	}
 
-	public String getIncTypeName() {
-		return this.incTypeName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setIncTypeName(String incTypeName) {
-		this.incTypeName = incTypeName;
+	public Boolean getProdRelated() {
+		return this.prodRelated;
 	}
 
-	public Boolean getIncTypeProdRelated() {
-		return this.incTypeProdRelated;
-	}
-
-	public void setIncTypeProdRelated(Boolean incTypeProdRelated) {
-		this.incTypeProdRelated = incTypeProdRelated;
+	public void setProdRelated(Boolean prodRelated) {
+		this.prodRelated = prodRelated;
 	}
 
 	public Set<Income> getIncomes() {
