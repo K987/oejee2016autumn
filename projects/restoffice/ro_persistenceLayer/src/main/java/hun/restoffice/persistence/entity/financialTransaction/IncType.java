@@ -32,7 +32,7 @@ public class IncType implements Serializable {
 	private Boolean prodRelated;
 
 	//bi-directional many-to-one association to Income
-	@OneToMany(mappedBy="", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="", fetch=FetchType.LAZY, targetEntity=Income.class)
 	private Set<Income> incomes;
 	
 	

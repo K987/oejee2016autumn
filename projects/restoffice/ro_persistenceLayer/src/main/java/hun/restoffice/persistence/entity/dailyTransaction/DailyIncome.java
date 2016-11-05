@@ -35,7 +35,7 @@ public class DailyIncome implements Serializable {
 
 	//TODO: add not nullable in DB
 	@OneToOne
-	@JoinColumn(name="daily_income_employee_shift", nullable=false)
+	@JoinColumn(name="daily_income_employee_shift", referencedColumnName="employee_shift_id", nullable=false)
 	private EmployeeShift dailyIncomeEmployeeShift;
 
 	@Column(name="daily_pos_sum", nullable=false)

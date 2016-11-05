@@ -28,7 +28,7 @@ public class RegisterClose implements Serializable {
 
 	//bi-directional many-to-one association to Register
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="register_close_register_id", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="register_close_register_id", referencedColumnName="register_id", nullable=false, insertable=false, updatable=false)
 	private Register register;
 
 	public RegisterClose() {

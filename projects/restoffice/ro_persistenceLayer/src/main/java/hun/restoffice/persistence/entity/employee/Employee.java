@@ -38,7 +38,7 @@ public class Employee implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to EmployeeShift
-	@OneToMany(mappedBy="employee", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="employee", fetch=FetchType.LAZY, targetEntity=EmployeeShift.class)
 	private Set<EmployeeShift> employeeShifts;
 
 	//constructors

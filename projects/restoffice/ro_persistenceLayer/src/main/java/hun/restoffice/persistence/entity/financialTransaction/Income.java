@@ -26,8 +26,8 @@ import javax.persistence.*;
 		@AttributeOverride(name="lastModifiedAt", column=@Column(name="income_last_modified_dt"))
 })
 @AssociationOverrides(value = { 
-		@AssociationOverride(name="party", joinColumns=@JoinColumn(name="income_liable")),
-		@AssociationOverride(name="lastModifiedBy", joinColumns=@JoinColumn(name="income_last_modified_by"))
+		@AssociationOverride(name="party", joinColumns=@JoinColumn(name="income_liable", referencedColumnName="partner_id")),
+		@AssociationOverride(name="lastModifiedBy", joinColumns=@JoinColumn(name="income_last_modified_by", referencedColumnName="user_id"))
 })
 public class Income extends FinancialTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;

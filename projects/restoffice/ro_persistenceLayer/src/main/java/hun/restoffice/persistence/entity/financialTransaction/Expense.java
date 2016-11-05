@@ -29,8 +29,8 @@ import javax.persistence.*;
 		@AttributeOverride(name = "accPeriod.endDate", column = @Column(name = "expense_acc_per_end")),
 		@AttributeOverride(name = "lastModifiedAt", column = @Column(name = "expense_last_modified_dt")) })
 @AssociationOverrides(value = {
-		@AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer")),
-		@AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name = "expense_last_modified_by")) })
+		@AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName="parter_id")),
+		@AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name = "expense_last_modified_by", referencedColumnName="user_id")) })
 public class Expense extends FinancialTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,12 +38,12 @@ public class Expense extends FinancialTransaction implements Serializable {
 	
 	// bi-directional many-to-one association to CostCenter
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_costcenter", nullable = false)
+	@JoinColumn(name = "expense_costcenter", nullable = false, referencedColumnName="cost_center_id")
 	private CostCenter costCenter;
 
 	// bi-directional many-to-one association to ExpType
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_type", nullable = false)
+	@JoinColumn(name = "expense_type", nullable = false, referencedColumnName="exp_type_id")
 	private ExpType expType;
 
 	//constructors

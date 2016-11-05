@@ -34,7 +34,7 @@ public class CostCenter implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Expense
-	@OneToMany(mappedBy="costCenter", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="costCenter", fetch=FetchType.LAZY, targetEntity=Expense.class)
 	private Set<Expense> expenses;
 
 	//constructors

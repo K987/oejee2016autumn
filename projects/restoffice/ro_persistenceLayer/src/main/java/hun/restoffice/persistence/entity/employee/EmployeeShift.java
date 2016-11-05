@@ -20,13 +20,13 @@ public class EmployeeShift implements Serializable {
 	//bi-directional many-to-one association to Shift
 	@Id
 	@ManyToOne
-	@JoinColumn(name="employee_shift_employee_id")
+	@JoinColumn(name="employee_shift_employee_id", referencedColumnName="employee_id")
 	private Employee employee;
 	
 	//bi-directional many-to-one association to Shift
 	@Id
 	@ManyToOne
-	@JoinColumn(name="employee_shift_shift_id")
+	@JoinColumn(name="employee_shift_shift_id", referencedColumnName="shift_id")
 	private Shift shift;
 
 	//TODO: set nullable true in DB

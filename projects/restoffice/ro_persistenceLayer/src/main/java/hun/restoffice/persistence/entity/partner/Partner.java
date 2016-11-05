@@ -39,7 +39,7 @@ public class Partner implements Serializable {
 	private PartnerContact contact;
 
 	//bi-directional many-to-one association to FinancialTransactions
-	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY, targetEntity=FinancialTransaction.class)
 	private Set<FinancialTransaction> transactions;
 	
 /*

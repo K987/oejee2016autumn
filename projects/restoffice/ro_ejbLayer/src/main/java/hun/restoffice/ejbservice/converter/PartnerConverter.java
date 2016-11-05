@@ -9,7 +9,7 @@ import java.util.Vector;
 import javax.ejb.Stateless;
 
 import hun.restoffice.ejbservice.domain.PartnerStub;
-import hun.restoffice.persistence.entity.Partner;
+import hun.restoffice.persistence.entity.partner.Partner;
 
 /**
  * @author kalmankostenszky
@@ -18,6 +18,18 @@ import hun.restoffice.persistence.entity.Partner;
 @Stateless
 public class PartnerConverter implements PartnerConverterLocal {
 
+	@Override
+	public PartnerStub to(Partner partner) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PartnerStub> toPartnerStubList(List<Partner> partners) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+/*
 	@Override
 	public PartnerStub to(Partner partner) {
 		String account = partner.getPartnerBankAccount().toString();
@@ -39,4 +51,5 @@ public class PartnerConverter implements PartnerConverterLocal {
 		}
 		return lst;
 	}
+	*/
 }

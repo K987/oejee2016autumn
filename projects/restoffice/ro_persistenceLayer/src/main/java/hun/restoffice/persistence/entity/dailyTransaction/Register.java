@@ -24,7 +24,7 @@ public class Register implements Serializable {
 	private RegisterType registerType;
 
 	//bi-directional many-to-one association to RegisterClos
-	@OneToMany(mappedBy="register")
+	@OneToMany(mappedBy="register", targetEntity=RegisterClose.class)
 	private Set<RegisterClose> registerCloses;
 
 	public Register() {
