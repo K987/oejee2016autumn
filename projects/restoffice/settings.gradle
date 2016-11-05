@@ -1,3 +1,4 @@
 include 'ro_persistenceLayer'
 include 'ro_ejbLayer'
 include 'ro_webLayer'
+include 'ro_RESTService'
