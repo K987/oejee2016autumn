@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name="register_closes")
 @NamedQuery(name="RegisterClos.findAll", query="SELECT r FROM RegisterClos r")
-public class RegisterClos implements Serializable {
+public class RegisterClose implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
@@ -31,7 +31,7 @@ public class RegisterClos implements Serializable {
 	@JoinColumn(name="register_close_register_id", nullable=false, insertable=false, updatable=false)
 	private Register register;
 
-	public RegisterClos() {
+	public RegisterClose() {
 	}
 
 	public RegisterCloseId getId() {

@@ -1,7 +1,13 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.partner;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.*;
+
+import hun.restoffice.persistence.entity.financialTransaction.Expense;
+import hun.restoffice.persistence.entity.financialTransaction.FinancialTransaction;
+import hun.restoffice.persistence.entity.financialTransaction.Income;
 
 /**
  * The persistent class for the partners database table.
@@ -32,7 +38,11 @@ public class Partner implements Serializable {
 	@Embedded
 	private PartnerContact contact;
 
-	/*
+	//bi-directional many-to-one association to FinancialTransactions
+	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY)
+	private Set<FinancialTransaction> transactions;
+	
+/*
 	//bi-directional many-to-one association to Expense
 	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY)
 	private Set<Expense> expenses;
@@ -40,12 +50,40 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to Income
 	@OneToMany(mappedBy="partner", fetch=FetchType.LAZY)
 	private Set<Income> incomes;
-	*/
+*/
 	
 
 	public Partner() {
 	}
 
+	public FinancialTransaction addTransaction(Income income) {
+		getTransactions().add(income);
+		income.setParty(this);
+
+		return income;
+	}
+
+	public FinancialTransaction removeTranscation(Income income) {
+		getTransactions().remove(income);
+		income.setParty(null);
+
+		return income;
+	}
+	
+	public FinancialTransaction addTransaction(Expense expense) {
+		getTransactions().add(expense);
+		expense.setParty(this);
+
+		return expense;
+	}
+
+	public FinancialTransaction removeTransactions(Expense expense) {
+		getTransactions().remove(expense);
+		expense.setParty(null);
+
+		return expense;
+	}
+	
 	public Integer getId() {
 		return this.id;
 	}
@@ -66,10 +104,7 @@ public class Partner implements Serializable {
 	public void setAccount(String partnerAccount) {
 		this.account = partnerAccount;
 	}
-
-	/**
-	 * @return the contact
-	 */
+	
 	public PartnerContact getContact() {
 		return contact;
 	}
@@ -81,6 +116,20 @@ public class Partner implements Serializable {
 		this.contact = contact;
 	}
 
+	/**
+	 * @return the transactions
+	 */
+	public Set<FinancialTransaction> getTransactions() {
+		return transactions;
+	}
+
+	/**
+	 * @param transactions the transactions to set
+	 */
+	public void setTransactions(Set<FinancialTransaction> transactions) {
+		this.transactions = transactions;
+	}
+
 /*
 	public Set<Expense> getExpenses() {
 		return this.expenses;
@@ -90,19 +139,7 @@ public class Partner implements Serializable {
 		this.expenses = expenses;
 	}
 
-	public Expense addExpens(Expense expens) {
-		getExpenses().add(expens);
-		expens.set(this);
 
-		return expens;
-	}
-
-	public Expense removeExpens(Expense expens) {
-		getExpenses().remove(expens);
-		expens.set(null);
-
-		return expens;
-	}
 
 	public Set<Income> getIncomes() {
 		return this.incomes;
@@ -110,20 +147,6 @@ public class Partner implements Serializable {
 
 	public void setIncomes(Set<Income> incomes) {
 		this.incomes = incomes;
-	}
-
-	public Income addIncome(Income income) {
-		getIncomes().add(income);
-		income.set(this);
-
-		return income;
-	}
-
-	public Income removeIncome(Income income) {
-		getIncomes().remove(income);
-		income.set(null);
-
-		return income;
 	}
 */
 

@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,12 +9,15 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
- * Calss for accounting period in expense and income entites
+ * The embeded class for financial periods in FinancialTransaction class
+ *
+ * @author kalmankostenszky
  *
  */
 @Embeddable
 public class AccountingPeriod {
 
+	// fields
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
@@ -24,10 +27,33 @@ public class AccountingPeriod {
 	@Transient
 	private Integer periodLength;
 
+	// constructors
 	public AccountingPeriod() {
 
 	}
 
+	//public methods 
+	
+	
+	// private methods
+	/**
+	 * sets variable period length by counting the months between start and and
+	 * dates
+	 */
+	private void setMonths() {
+		this.periodLength = 1;
+		if (this.startDate != null && this.endDate != null && this.endDate.getTime() >= this.startDate.getTime()) {
+			Calendar start = Calendar.getInstance();
+			Calendar end = Calendar.getInstance();
+			start.setTime(startDate);
+			end.setTime(endDate);
+			int years = end.get(Calendar.YEAR) - start.get(Calendar.YEAR);
+			int months = years * 12 + end.get(Calendar.MONTH) - end.get(Calendar.MONTH);
+			this.periodLength += months;
+		}
+	}
+
+	// getters setters
 	/**
 	 * @return the startDate
 	 */
@@ -70,16 +96,4 @@ public class AccountingPeriod {
 		return periodLength;
 	}
 
-	private void setMonths() {
-		this.periodLength = 1;
-		if (this.startDate != null && this.endDate != null && this.endDate.getTime() >= this.startDate.getTime()) {
-			Calendar start = Calendar.getInstance();
-			Calendar end = Calendar.getInstance();
-			start.setTime(startDate);
-			end.setTime(endDate);
-			int years = end.get(Calendar.YEAR) - start.get(Calendar.YEAR);
-			int months = years * 12 + end.get(Calendar.MONTH) - end.get(Calendar.MONTH);
-			this.periodLength += months;
-		}
-	}
 }

@@ -1,7 +1,10 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import hun.restoffice.persistence.entity.employee.EmployeeShift;
+
 import java.math.BigDecimal;
 
 

@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -9,12 +9,17 @@ import java.util.Set;
  * The persistent class for the exp_types database table.
  * 
  */
+/**
+ * @author kalmankostenszky
+ *
+ */
 @Entity
 @Table(name="exp_types")
 @NamedQuery(name="ExpType.findAll", query="SELECT e FROM ExpType e")
 public class ExpType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//fields
 	@Id
 	@SequenceGenerator(name="EXP_TYPES_EXPTYPEID_GENERATOR", sequenceName="EXP_TYPES_EXP_TYPE_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EXP_TYPES_EXPTYPEID_GENERATOR")
@@ -32,10 +37,35 @@ public class ExpType implements Serializable {
 	@OneToMany(mappedBy="", fetch=FetchType.LAZY)
 	private Set<Expense> expenses;
 
+	//constructors
 	public ExpType() {
 	}
+	
+	//public methods
+	
+	/**
+	 * @param expense
+	 * @return
+	 */
+	public Expense addExpense(Expense expense) {
+		getExpenses().add(expense);
+		expense.setExpType(this);
 
+		return expense;
+	}
 
+	/**
+	 * @param expense
+	 * @return
+	 */
+	public Expense removeExpense(Expense expense) {
+		getExpenses().remove(expense);
+		expense.setExpType(null);
+
+		return expense;
+	}
+
+	//getters setters
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -62,20 +92,6 @@ public class ExpType implements Serializable {
 
 	public void setExpenses(Set<Expense> expenses) {
 		this.expenses = expenses;
-	}
-
-	public Expense addExpense(Expense expense) {
-		getExpenses().add(expense);
-		expense.setExpType(this);
-
-		return expense;
-	}
-
-	public Expense removeExpense(Expense expense) {
-		getExpenses().remove(expense);
-		expense.setExpType(null);
-
-		return expense;
 	}
 
 }

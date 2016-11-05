@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -8,10 +8,11 @@ import java.util.Set;
 /**
  * The persistent class for the cost_centers database table.
  * 
+ * @author kalmankostenszky
+ *
  */
 @Entity
 @Table(name="cost_centers")
-//TODO: add static final fields for qry name and parameters
 @NamedQueries({ 
 	@NamedQuery(name = "CostCenter.findAll", query = "SELECT c FROM CostCenter c")
 })
@@ -36,9 +37,38 @@ public class CostCenter implements Serializable {
 	@OneToMany(mappedBy="costCenter", fetch=FetchType.LAZY)
 	private Set<Expense> expenses;
 
-	//ctors
+	//constructors
 	
+	/**
+	 * 
+	 */
 	public CostCenter() {
+	}
+	
+	//public methods
+	
+	/**
+	 * set an expense to this cost center
+	 * @param expense to be added
+	 * @return the added expense
+	 */
+	public Expense addExpense(Expense expense) {
+		getExpenses().add(expense);
+		expense.setCostCenter(this);
+
+		return expense;
+	}
+
+	/**
+	 * Remove an expense from cost center
+	 * @param expense to be removed
+	 * @return removed expense
+	 */
+	public Expense removeExpense(Expense expense) {
+		getExpenses().remove(expense);
+		expense.setCostCenter(null);
+
+		return expense;
 	}
 
 	//getters and setters
@@ -73,28 +103,6 @@ public class CostCenter implements Serializable {
 		this.expenses = expenses;
 	}
 
-	/**
-	 * set an expense to this cost center
-	 * @param expense to be added
-	 * @return the added expense
-	 */
-	public Expense addExpense(Expense expense) {
-		getExpenses().add(expense);
-		expense.setCostCenter(this);
 
-		return expense;
-	}
-
-	/**
-	 * Remove an expense from cost center
-	 * @param expense to be removed
-	 * @return removed expense
-	 */
-	public Expense removeExpense(Expense expense) {
-		getExpenses().remove(expense);
-		expense.setCostCenter(null);
-
-		return expense;
-	}
 
 }

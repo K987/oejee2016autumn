@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.employee;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -16,6 +16,8 @@ import java.util.Set;
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//fields
+	
 	@Id
 	@SequenceGenerator(name="EMPLOYEES_EMPLOYEEID_GENERATOR", sequenceName="EMPLOYEES_EMPLOYEE_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EMPLOYEES_EMPLOYEEID_GENERATOR")
@@ -28,9 +30,9 @@ public class Employee implements Serializable {
 	@Column(name="employee_default_hourly_wage")
 	private BigDecimal defaultHourlyWage;
 
-	//TODO: add enum 
+	@Enumerated(value=EnumType.ORDINAL)
 	@Column(name="employee_default_position", nullable=false)
-	private Integer defaultPosition;
+	private JobPosition defaultPosition;
 
 	@Column(name="employee_name", nullable=false, length=100)
 	private String name;
@@ -39,9 +41,33 @@ public class Employee implements Serializable {
 	@OneToMany(mappedBy="employee", fetch=FetchType.LAZY)
 	private Set<EmployeeShift> employeeShifts;
 
+	//constructors
+	
 	public Employee() {
 	}
 
+	//public methods
+
+	/**
+	 * 
+	 * @param employeeShift
+	 * @return
+	 */
+	public EmployeeShift addEmployeeShift(EmployeeShift employeeShift) {
+		getEmployeeShifts().add(employeeShift);
+		employeeShift.setEmployee(this);
+
+		return employeeShift;
+	}
+
+	public EmployeeShift removeEmployeeShift(EmployeeShift employeeShift) {
+		getEmployeeShifts().remove(employeeShift);
+		employeeShift.setEmployee(null);
+
+		return employeeShift;
+	}
+	
+	//getters setters
 	public Integer getId() {
 		return this.id;
 	}
@@ -62,11 +88,11 @@ public class Employee implements Serializable {
 		this.defaultHourlyWage = employeeDefaultHourlyWage;
 	}
 
-	public Integer getDefaultPosition() {
+	public JobPosition getDefaultPosition() {
 		return this.defaultPosition;
 	}
 
-	public void setDefaultPosition(Integer employeeDefaultPosition) {
+	public void setDefaultPosition(JobPosition employeeDefaultPosition) {
 		this.defaultPosition = employeeDefaultPosition;
 	}
 
@@ -86,23 +112,5 @@ public class Employee implements Serializable {
 		this.employeeShifts = employeeShifts;
 	}
 
-	/**
-	 * 
-	 * @param employeeShift
-	 * @return
-	 */
-	public EmployeeShift addEmployeeShift(EmployeeShift employeeShift) {
-		getEmployeeShifts().add(employeeShift);
-		employeeShift.setEmployee(this);
-
-		return employeeShift;
-	}
-
-	public EmployeeShift removeEmployeeShift(EmployeeShift employeeShift) {
-		getEmployeeShifts().remove(employeeShift);
-		employeeShift.setEmployee(null);
-
-		return employeeShift;
-	}
 
 }

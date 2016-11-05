@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -19,12 +19,13 @@ public class Register implements Serializable {
 	@Column(name="register_id", unique=true, nullable=false, length=50)
 	private String registerId;
 
+	@Enumerated(value=EnumType.ORDINAL)
 	@Column(name="register_type", nullable=false)
-	private Integer registerType;
+	private RegisterType registerType;
 
 	//bi-directional many-to-one association to RegisterClos
 	@OneToMany(mappedBy="register")
-	private Set<RegisterClos> registerCloses;
+	private Set<RegisterClose> registerCloses;
 
 	public Register() {
 	}
@@ -37,30 +38,30 @@ public class Register implements Serializable {
 		this.registerId = registerId;
 	}
 
-	public Integer getRegisterType() {
+	public RegisterType getRegisterType() {
 		return this.registerType;
 	}
 
-	public void setRegisterType(Integer registerType) {
+	public void setRegisterType(RegisterType registerType) {
 		this.registerType = registerType;
 	}
 
-	public Set<RegisterClos> getRegisterCloses() {
+	public Set<RegisterClose> getRegisterCloses() {
 		return this.registerCloses;
 	}
 
-	public void setRegisterCloses(Set<RegisterClos> registerCloses) {
+	public void setRegisterCloses(Set<RegisterClose> registerCloses) {
 		this.registerCloses = registerCloses;
 	}
 
-	public RegisterClos addRegisterClos(RegisterClos registerClos) {
+	public RegisterClose addRegisterClose(RegisterClose registerClos) {
 		getRegisterCloses().add(registerClos);
 		registerClos.setRegister(this);
 
 		return registerClos;
 	}
 
-	public RegisterClos removeRegisterClos(RegisterClos registerClos) {
+	public RegisterClose removeRegisterClose(RegisterClose registerClos) {
 		getRegisterCloses().remove(registerClos);
 		registerClos.setRegister(null);
 

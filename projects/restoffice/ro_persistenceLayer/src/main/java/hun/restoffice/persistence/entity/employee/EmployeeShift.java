@@ -1,7 +1,8 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.employee;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 

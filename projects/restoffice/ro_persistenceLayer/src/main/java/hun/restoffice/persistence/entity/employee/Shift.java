@@ -1,7 +1,8 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.employee;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
@@ -10,7 +11,6 @@ import java.util.Set;
 /**
  * The persistent class for the shifts database table.
  * 
- * revised: 16.11.01
  * TODO: maybe set to composite key start date and start time
  */
 @Entity
@@ -19,6 +19,7 @@ import java.util.Set;
 public class Shift implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//fields
 	@Id
 	@SequenceGenerator(name="SHIFTS_SHIFTID_GENERATOR", sequenceName="SHIFTS_SHIFT_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHIFTS_SHIFTID_GENERATOR")
@@ -37,12 +38,30 @@ public class Shift implements Serializable {
 	private Date startTime;
 
 	//bi-directional many-to-one association to EmployeeShift
-	@OneToMany(mappedBy="shift")
+	@OneToMany(mappedBy="shift", fetch=FetchType.LAZY)
 	private Set<EmployeeShift> employeeShifts;
 
+	//constructors
 	public Shift() {
 	}
+	
+	//public methods
+	
+	public EmployeeShift addEmployeeShift(EmployeeShift employeeShift) {
+		getEmployeeShifts().add(employeeShift);
+		employeeShift.setShift(this);
 
+		return employeeShift;
+	}
+
+	public EmployeeShift removeEmployeeShift(EmployeeShift employeeShift) {
+		getEmployeeShifts().remove(employeeShift);
+		employeeShift.setShift(null);
+
+		return employeeShift;
+	}
+
+	//getters setters
 	public Integer getId() {
 		return this.id;
 	}
@@ -77,20 +96,6 @@ public class Shift implements Serializable {
 
 	public void setEmployeeShifts(Set<EmployeeShift> employeeShifts) {
 		this.employeeShifts = employeeShifts;
-	}
-
-	public EmployeeShift addEmployeeShift(EmployeeShift employeeShift) {
-		getEmployeeShifts().add(employeeShift);
-		employeeShift.setShift(this);
-
-		return employeeShift;
-	}
-
-	public EmployeeShift removeEmployeeShift(EmployeeShift employeeShift) {
-		getEmployeeShifts().remove(employeeShift);
-		employeeShift.setShift(null);
-
-		return employeeShift;
 	}
 
 }

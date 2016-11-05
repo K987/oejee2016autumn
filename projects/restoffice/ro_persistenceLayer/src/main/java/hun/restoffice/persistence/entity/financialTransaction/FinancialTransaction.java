@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,14 +18,20 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import hun.restoffice.persistence.entity.User;
+import hun.restoffice.persistence.entity.partner.Partner;
+
 /**
- * Superclass for expense and income entites
+ * Superclass for expense and income persistence entities
+ *
+ * @author kalmankostenszky
  *
  */
-
 @MappedSuperclass
 public abstract class FinancialTransaction {
 
+	//fields
+	
 	@Id
 	@Column(length = 100)
 	private String docId;
@@ -66,10 +72,12 @@ public abstract class FinancialTransaction {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User lastModifiedBy;
 
+	//constructors
 	public FinancialTransaction() {
 
 	}
 
+	//getters and setters
 	/**
 	 * @return the docId
 	 */

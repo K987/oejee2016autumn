@@ -1,4 +1,4 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;

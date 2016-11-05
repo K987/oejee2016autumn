@@ -1,10 +1,7 @@
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.sql.Timestamp;
 
 
 /**
@@ -32,18 +29,22 @@ import java.sql.Timestamp;
 		@AssociationOverride(name="party", joinColumns=@JoinColumn(name="income_liable")),
 		@AssociationOverride(name="lastModifiedBy", joinColumns=@JoinColumn(name="income_last_modified_by"))
 })
-public class Income implements Serializable {
+public class Income extends FinancialTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//fields
+	
 	//bi-directional many-to-one association to IncType
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="income_type", nullable=false)
 	private IncType incType;
 
+	//constructors
 	public Income() {
 	}
 
 
+	//getters setters
 	public IncType getIncType() {
 		return this.incType;
 	}

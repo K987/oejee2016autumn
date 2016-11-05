@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.persistence.entity;
+package hun.restoffice.persistence.entity.partner;
 
 import javax.persistence.*;
 
