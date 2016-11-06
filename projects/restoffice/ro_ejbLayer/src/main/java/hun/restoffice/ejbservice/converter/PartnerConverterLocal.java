@@ -20,7 +20,7 @@ public interface PartnerConverterLocal {
 
 	PartnerStub to(Partner partner);
 
-	List<PartnerStub> toPartnerStubList(List<Partner> partners);
+	List<PartnerStub> to(List<Partner> partners);
 
 	/**
 	 * Convert contact info of partner
@@ -28,4 +28,11 @@ public interface PartnerConverterLocal {
 	 * @return 
 	 */
 	PartnerContactStub toContact(Partner partner);
+
+	/**
+	 * Convert contact info of a list of partners
+	 * @param readAll
+	 * @return
+	 */
+	List<PartnerStub> toContact(List<Partner> readAll);
 }

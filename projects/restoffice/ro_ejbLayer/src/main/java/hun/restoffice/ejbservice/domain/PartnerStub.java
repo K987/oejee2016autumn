@@ -1,34 +1,57 @@
+/**
+ * 
+ */
 package hun.restoffice.ejbservice.domain;
 
+import org.apache.log4j.Logger;
+
+import hun.restoffice.persistence.entity.partner.Partner;
+
+/**
+ * DTO for partner entity
+ *
+ * @author kalmankostenszky
+ */
 public class PartnerStub {
-	private String name;
-	private String contact;
-	private String address;
-	private String bankAccount;
-	private String technical;
-	
-	public PartnerStub(){
-		
+
+	private static final Logger LOG = Logger.getLogger(PartnerStub.class);
+
+	// fields
+	private final String name;
+	private final String account;
+	private final PartnerContactStub contact;
+
+	// constructor
+	/**
+	 * Creates a partner entity
+	 * 
+	 * @param partner
+	 * @param account
+	 *            required
+	 */
+	public PartnerStub(final Partner partner, final boolean account) {
+		this.name = partner.getName();
+		if (account)
+			this.account = (partner.getAccount() == null || partner.getAccount() == "") ? "No account number available"
+					: partner.getAccount();
+		else
+			this.account = "XXXXXXXXXXXXXXXXXXXXXXXX";
+		if (partner.getContact() != null)
+			this.contact = new PartnerContactStub(partner.getContact());
+		else
+			this.contact = null;
 	}
 
-	public PartnerStub(String name, String contact, String address, String bankAccount, String technical) {
-		super();
-		this.name = name;
-		this.contact = contact;
-		this.address = address;
-		this.bankAccount = bankAccount;
-		this.technical = technical;
-	}
-	
-	
+	// getters setters
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return String.format("PartnerStub [name=%s, contact=%s, address=%s, bankAccount=%s, technical=%s]", name,
-				contact, address, bankAccount, technical);
+		return String.format("PartnerStub [name=%s, account=%s, contact=%s]", name, account, contact);
 	}
 
 	/**
@@ -39,68 +62,17 @@ public class PartnerStub {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @return the account
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public String getAccount() {
+		return account;
 	}
 
 	/**
 	 * @return the contact
 	 */
-	public String getContact() {
+	public PartnerContactStub getContact() {
 		return contact;
 	}
 
-	/**
-	 * @param contact the contact to set
-	 */
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
-	 * @return the bankAccount
-	 */
-	public String getBankAccount() {
-		return bankAccount;
-	}
-
-	/**
-	 * @param bankAccount the bankAccount to set
-	 */
-	public void setBankAccount(String bankAccount) {
-		this.bankAccount = bankAccount;
-	}
-
-	/**
-	 * @return the technical
-	 */
-	public String getTechnical() {
-		return technical;
-	}
-
-	/**
-	 * @param technical the technical to set
-	 */
-	public void setTechnical(String technical) {
-		this.technical = technical;
-	}
-	
-	
-	
 }

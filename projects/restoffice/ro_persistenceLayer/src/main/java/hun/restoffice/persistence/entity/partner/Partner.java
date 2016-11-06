@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.hql.internal.ast.tree.BooleanLiteralNode;
+
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
 import hun.restoffice.persistence.entity.financialTransaction.FinancialTransaction;
 import hun.restoffice.persistence.entity.financialTransaction.Income;
@@ -16,15 +18,19 @@ import hun.restoffice.persistence.entity.financialTransaction.Income;
 @Entity
 @Table(name="partners")
 @NamedQueries(value = { 
-		@NamedQuery(name="Partner.findAll", query="SELECT p FROM Partner p"),
+		@NamedQuery(name=Partner.FIND_ALL, query="SELECT p FROM Partner p"
+				+" WHERE (FALSE=:"+Partner.APPLY_CRITERIA+" or p.technical=:"+ Partner.IS_TECHNICAL+")"),
 		@NamedQuery(name=Partner.FIND_BY_NAME, query="SELECT p FROM Partner p"
 				+ " WHERE LOWER(p.name)=:"+ Partner.NAME)
 })
 public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FIND_BY_NAME = "Partner.find_by_name";
+	public static final String FIND_ALL = "Partner.findAll";
+	public static final String FIND_BY_NAME = "Partner.findByName";
 	public static final String NAME = "name";
+	public static final String IS_TECHNICAL = "technical";
+	public static final String APPLY_CRITERIA = "applyCriteria";
 
 	@Id
 	@SequenceGenerator(name="PARTNERS_PARNTERID_GENERATOR", sequenceName="PARTNERS_PARNTER_ID_SEQ")
@@ -79,6 +85,20 @@ public class Partner implements Serializable {
 	 */
 	public void setContact(PartnerContact contact) {
 		this.contact = contact;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

@@ -12,6 +12,9 @@ import hun.restoffice.persistence.entity.partner.PartnerContact;
  */
 public class PartnerContactStub {
 
+	private static final String NO_NAME = "No contact name available";
+	private static final String NO_PHONE = "No contact phone available";
+	private static final String NO_EMAIL = "No contact email available";
 	// fields
 	private final String name;
 	private final String phone;
@@ -26,16 +29,16 @@ public class PartnerContactStub {
 	 */
 	public PartnerContactStub(String name, String phone, String email) {
 		super();
-		this.name = (name == null || name == "") ? "No contact name available" : name;
-		this.phone = (phone == null || phone == "") ? "No contact phone available" : phone;
-		this.email = (email == null || email == "") ? "No contact email available" : email;
+		this.name = (name == null || name == "") ? PartnerContactStub.NO_NAME : name;
+		this.phone = (phone == null || phone == "") ? PartnerContactStub.NO_PHONE : phone;
+		this.email = (email == null || email == "") ? PartnerContactStub.NO_EMAIL : email;
 	}
 
 	/**
 	 * @param contact
 	 */
 	public PartnerContactStub(PartnerContact contact) {
-		this(contact.getName(), contact.getPhone(), contact.getEmail());
+			this(contact.getName(), contact.getPhone(), contact.getEmail());
 	}
 
 	// public methods

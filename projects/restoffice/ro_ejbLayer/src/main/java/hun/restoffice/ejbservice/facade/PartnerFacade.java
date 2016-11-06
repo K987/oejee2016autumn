@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import hun.restoffice.ejbservice.converter.PartnerConverterLocal;
 import hun.restoffice.ejbservice.domain.ApplicationError;
 import hun.restoffice.ejbservice.domain.PartnerContactStub;
+import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
@@ -31,33 +32,54 @@ public class PartnerFacade implements PartnerFacadeLocal {
 
 	@EJB
 	private PartnerServiceLocal pService;
-	
+
 	@EJB
 	private PartnerConverterLocal pConverter;
-	
-	
 
-	/* (non-Javadoc)
-	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnerContact(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnerContact(
+	 * java.lang.String)
 	 */
 	@Override
 	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException {
-		try{
+		try {
 			if (LOG.isDebugEnabled())
 				LOG.debug("getPartnerContact invoked w/ param " + partnerName);
 			final PartnerContactStub rtrn = this.pConverter.toContact(this.pService.read(partnerName));
 			return rtrn;
+		} catch (final PersistenceServiceException e) {
+			LOG.error(e.getLocalizedMessage());
+			if (e.getType().equals(PersistenceExceptionType.NOT_EXISTS)) {
+				throw new AdaptorException(ApplicationError.NOT_EXISTS, e.getMessage());
+			} else if (e.getType().equals(PersistenceExceptionType.AMBIGOUS_RESULT)) {
+				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
+			} else {
+				throw new AdaptorException(ApplicationError.UNEXPECTED,
+						"Unexpeted error occured during execution. Param: " + partnerName);
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#gatAllPartnerContact(
+	 * )
+	 */
+	@Override
+	public List<PartnerStub> gatAllPartnerContact() throws AdaptorException {
+		try{
+			if (LOG.isDebugEnabled())
+				LOG.debug("getAllPartnerContact invoked");
+			final List<PartnerStub> rtrn = this.pConverter.toContact(this.pService.readAll(false));
+			return rtrn;
 		} catch (final PersistenceServiceException e){
 			LOG.error(e.getLocalizedMessage());
-			if (e.getType().equals(PersistenceExceptionType.NOT_EXISTS)){
-				throw new AdaptorException(ApplicationError.NOT_EXISTS, e.getMessage());
-			}
-			else if(e.getType().equals(PersistenceExceptionType.AMBIGOUS_RESULT)){
-				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
-			}
-			else {
-				throw new AdaptorException(ApplicationError.UNEXPECTED, "Unexpeted error occured during execution. Param: "+ partnerName);
-			}
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
 		}
 	}
 }

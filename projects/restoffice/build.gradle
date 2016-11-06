@@ -33,3 +33,8 @@ dependencies{
 	deploy project (path: 'ro_RESTService', configuration: 'archives')
   //deploy project (path: 'ro_webLayer', configuration: 'archives')
 }
+
+task copyTask(type: Copy){
+	from 'build/libs'
+	into '/Volumes/MacHDD1/EAP-6.4.0/standalone/deployments'
+}

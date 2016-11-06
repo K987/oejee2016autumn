@@ -3,6 +3,8 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -58,6 +60,33 @@ public class PartnerService implements PartnerServiceLocal {
 			LOG.error("partner read exception: " + e.getLocalizedMessage());
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN,
 					"Error during finding partner by name " + partnerName, e);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.PartnerServiceLocal#readAll()
+	 */
+	@Override
+	public List<Partner> readAll(Boolean technical) throws PersistenceServiceException {
+		List<Partner> rtrn = null;
+		try{
+			if (technical == null){
+				//returns all
+				rtrn = this.entityManager.createNamedQuery(Partner.FIND_ALL, Partner.class)
+						.setParameter(Partner.APPLY_CRITERIA, false)
+						.setParameter(Partner.IS_TECHNICAL,false)
+						.getResultList();
+			} else {
+				//return only the tecnical or non technical ones
+				rtrn = this.entityManager.createNamedQuery(Partner.FIND_ALL, Partner.class)
+						.setParameter(Partner.APPLY_CRITERIA, true)
+						.setParameter(Partner.IS_TECHNICAL, technical)
+						.getResultList();
+			}
+			return rtrn;
+		} catch (Exception e){
+			LOG.error("read all partner exception: "+ e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during retrieving all partners", e);
 		}
 	}
 }

@@ -22,8 +22,15 @@ public interface PartnerFacadeLocal {
 	/**
 	 * Returns partner contact information if exists
 	 * @param partnerName partner company name
-	 * @return partner contact info
+	 * @return 
 	 * @throws AdaptorException 
 	 */
 	PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException;
+
+	/**
+	 * Returns all partner contact information
+	 * @return
+	 * @throws AdaptorException 
+	 */
+	List<PartnerStub> gatAllPartnerContact() throws AdaptorException;
 }
