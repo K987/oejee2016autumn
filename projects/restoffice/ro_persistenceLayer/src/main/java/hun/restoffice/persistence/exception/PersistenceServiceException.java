@@ -4,8 +4,9 @@
 package hun.restoffice.persistence.exception;
 
 /**
- * @author kalmankostenszky
+ * General exception class for persistence layer
  *
+ * @author kalmankostenszky
  */
 public class PersistenceServiceException extends Exception {
 
@@ -15,10 +16,24 @@ public class PersistenceServiceException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	//fields
+	private PersistenceExceptionType type;
 	
-	public PersistenceServiceException(String string, Exception e) {
+	//constructors
+	public PersistenceServiceException(PersistenceExceptionType type, String description, Exception e) {
 		// TODO Auto-generated constructor stub
-		super(string, e);
+		super(description, e);
+		this.type = type;
 	}
 
+	//getters setters
+
+	/**
+	 * @return the type
+	 */
+	public PersistenceExceptionType getType() {
+		return type;
+	}
+
+	
 }

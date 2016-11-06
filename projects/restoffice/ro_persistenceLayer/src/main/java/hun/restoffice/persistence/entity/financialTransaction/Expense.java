@@ -29,7 +29,7 @@ import javax.persistence.*;
 		@AttributeOverride(name = "accPeriod.endDate", column = @Column(name = "expense_acc_per_end")),
 		@AttributeOverride(name = "lastModifiedAt", column = @Column(name = "expense_last_modified_dt")) })
 @AssociationOverrides(value = {
-		@AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName="parter_id")),
+		@AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName="partner_id")),
 		@AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name = "expense_last_modified_by", referencedColumnName="user_id")) })
 public class Expense extends FinancialTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;

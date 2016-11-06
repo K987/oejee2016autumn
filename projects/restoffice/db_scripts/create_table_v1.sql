@@ -27,7 +27,7 @@ ALTER TABLE doc_types OWNER TO postgres;
 */
 
 CREATE TABLE partners(
-  parnter_ID SERIAL PRIMARY KEY,
+  partner_ID SERIAL PRIMARY KEY,
   partner_account VARCHAR(100) UNIQUE,
   partner_name VARCHAR(100) NOT NULL,
   partner_contact_name VARCHAR(100),
@@ -85,7 +85,7 @@ CREATE TABLE expenses(
   CONSTRAINT FK_ETY FOREIGN KEY (expense_type) REFERENCES
   exp_types (exp_type_ID),
   CONSTRAINT FK_EIS FOREIGN KEY (expense_issuer) REFERENCES
-  partners (parnter_ID),
+  partners (partner_ID),
   CONSTRAINT FK_EXP_MODIFIER FOREIGN KEY (expense_last_modified_by) REFERENCES
   users (user_ID)
 );
@@ -111,7 +111,7 @@ CREATE TABLE incomes(
   CONSTRAINT FK_ITY FOREIGN KEY (income_type) REFERENCES
   inc_types (inc_type_ID),
   CONSTRAINT FK_ILI FOREIGN KEY (income_liable) REFERENCES
-  partners (parnter_ID),
+  partners (partner_ID),
   CONSTRAINT FK_IMB FOREIGN KEY (income_last_modified_by) REFERENCES
   users (user_ID)
   );

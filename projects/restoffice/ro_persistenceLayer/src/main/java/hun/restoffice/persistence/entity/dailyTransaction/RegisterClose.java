@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="register_closes")
-@NamedQuery(name="RegisterClos.findAll", query="SELECT r FROM RegisterClos r")
+@NamedQuery(name="RegisterClos.findAll", query="SELECT r FROM RegisterClose r")
 public class RegisterClose implements Serializable {
 	private static final long serialVersionUID = 1L;
 

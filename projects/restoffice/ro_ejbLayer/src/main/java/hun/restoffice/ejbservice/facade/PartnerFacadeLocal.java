@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import hun.restoffice.ejbservice.domain.PartnerContactStub;
 import hun.restoffice.ejbservice.domain.PartnerStub;
+import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.exception.FacadeException;
 
 /**
@@ -17,7 +19,11 @@ import hun.restoffice.ejbservice.exception.FacadeException;
 @Local
 public interface PartnerFacadeLocal {
 
-	List<PartnerStub> getPartnersWithName(CharSequence namePart) throws FacadeException;
-	
-	List<PartnerStub> getAllPartners() throws FacadeException;
+	/**
+	 * Returns partner contact information if exists
+	 * @param partnerName partner company name
+	 * @return partner contact info
+	 * @throws AdaptorException 
+	 */
+	PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException;
 }

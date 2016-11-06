@@ -13,7 +13,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="inc_types")
-@NamedQuery(name=".findAll", query="SELECT i FROM  i")
+@NamedQuery(name=".findAll", query="SELECT i FROM  IncType i")
 public class IncType implements Serializable {
 	private static final long serialVersionUID = 1L;
 

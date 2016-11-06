@@ -11,70 +11,53 @@ import javax.ejb.Stateless;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.PartnerConverterLocal;
-import hun.restoffice.ejbservice.domain.PartnerStub;
-import hun.restoffice.ejbservice.exception.FacadeException;
+import hun.restoffice.ejbservice.domain.ApplicationError;
+import hun.restoffice.ejbservice.domain.PartnerContactStub;
+import hun.restoffice.ejbservice.exception.AdaptorException;
+import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
-//import hun.restoffice.persistence.service.PartnerServiceLocal;
+import hun.restoffice.persistence.service.PartnerServiceLocal;
 
 /**
+ * Facade for partner business logic
+ * 
  * @author kalmankostenszky
  *
  */
 @Stateless(mappedName = "ejb/partnerFacade")
 public class PartnerFacade implements PartnerFacadeLocal {
 
-	private static final Logger LOGGER = Logger.getLogger(PartnerFacade.class);
+	private static final Logger LOG = Logger.getLogger(PartnerFacade.class);
 
-	//@EJB
-	//private PartnerServiceLocal psl;
+	@EJB
+	private PartnerServiceLocal pService;
+	
+	@EJB
+	private PartnerConverterLocal pConverter;
+	
+	
 
-	//@EJB
-	//private PartnerConverterLocal pcl;
-
-	@Override
-	public List<PartnerStub> getPartnersWithName(CharSequence namePart) throws FacadeException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PartnerStub> getAllPartners() throws FacadeException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnersWithName(
-	 * java.lang.CharSequence)
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnerContact(java.lang.String)
 	 */
-/*
 	@Override
-	public List<PartnerStub> getPartnersWithName(CharSequence namePart) throws FacadeException {
-		LOGGER.info("get partner invoke with name: " + namePart);
-		try {
-			return this.pcl.toPartnerStubList(this.psl.read(namePart));
-		} catch (PersistenceServiceException e) {
-			throw new FacadeException(e.getLocalizedMessage());
+	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException {
+		try{
+			if (LOG.isDebugEnabled())
+				LOG.debug("getPartnerContact invoked w/ param " + partnerName);
+			final PartnerContactStub rtrn = this.pConverter.toContact(this.pService.read(partnerName));
+			return rtrn;
+		} catch (final PersistenceServiceException e){
+			LOG.error(e.getLocalizedMessage());
+			if (e.getType().equals(PersistenceExceptionType.NOT_EXISTS)){
+				throw new AdaptorException(ApplicationError.NOT_EXISTS, e.getMessage());
+			}
+			else if(e.getType().equals(PersistenceExceptionType.AMBIGOUS_RESULT)){
+				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
+			}
+			else {
+				throw new AdaptorException(ApplicationError.UNEXPECTED, "Unexpeted error occured during execution. Param: "+ partnerName);
+			}
 		}
 	}
-*/
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getAllPartners()
-	 */
-/*
-	@Override
-	public List<PartnerStub> getAllPartners() throws FacadeException {
-		LOGGER.info("get all partner invoke");
-		try {
-			return this.pcl.toPartnerStubList(this.psl.readAll());
-		} catch (PersistenceServiceException e) {
-			throw new FacadeException(e.getLocalizedMessage());
-		}
-	}
-*/
 }
