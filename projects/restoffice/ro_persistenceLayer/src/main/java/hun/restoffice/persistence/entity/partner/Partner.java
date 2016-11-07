@@ -5,10 +5,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import org.hibernate.hql.internal.ast.tree.BooleanLiteralNode;
-
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
-import hun.restoffice.persistence.entity.financialTransaction.FinancialTransaction;
 import hun.restoffice.persistence.entity.financialTransaction.Income;
 
 /**
@@ -49,6 +46,12 @@ public class Partner implements Serializable {
 
 	@Embedded
 	private PartnerContact contact;
+	
+	@OneToMany(mappedBy="party", fetch=FetchType.LAZY, targetEntity=Expense.class)
+	private Set<Expense> expenses;
+	
+	@OneToMany(mappedBy="party", fetch=FetchType.LAZY, targetEntity=Income.class)
+	private Set<Income> incomes;
 
 	
 

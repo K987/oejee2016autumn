@@ -25,23 +25,6 @@ import hun.restoffice.persistence.entity.partner.Partner;
 public class PartnerConverter implements PartnerConverterLocal {
 
 	private static final Logger LOG = Logger.getLogger(PartnerConverter.class);
-	/* (non-Javadoc)
-	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#to(hun.restoffice.persistence.entity.partner.Partner)
-	 */
-	@Override
-	public PartnerStub to(Partner partner) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toPartnerStubList(java.util.List)
-	 */
-	@Override
-	public List<PartnerStub> to(List<Partner> partners) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/* (non-Javadoc)
 	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toContact(hun.restoffice.persistence.entity.partner.Partner)
@@ -59,9 +42,22 @@ public class PartnerConverter implements PartnerConverterLocal {
 		List<PartnerStub>  rtrn = new ArrayList<>();
 		for (Partner p : readAll) {
 			rtrn.add(new PartnerStub(p, false));
-			LOG.info("Partner stub added to list");
 		}
 		return rtrn;
 	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toPartner(java.util.List)
+	 */
+	@Override
+	public List<PartnerStub> toPartner(List<Partner> partners) {
+		List<PartnerStub> rtrn = new ArrayList<>();
+		for (Partner p : partners) {
+			rtrn.add(new PartnerStub(p, true));
+		}
+		return null;
+	}
+	
+	
 
 }

@@ -33,7 +33,7 @@ CREATE TABLE partners(
   partner_contact_name VARCHAR(100),
   partner_contact_email VARCHAR(100),
   partner_contact_phone VARCHAR(100),
-  parnter_technical BOOLEAN NOT NULL
+  partner_technical BOOLEAN NOT NULL
   );
 ALTER TABLE partners OWNER TO postgres;
 
@@ -138,8 +138,8 @@ CREATE TABLE employee_shift(
   employee_shift_id SERIAL UNIQUE NOT NULL,
   employee_shift_employee_id INTEGER NOT NULL,
   employee_shift_shift_id INTEGER NOT NULL,
-  employee_shift_actual_start TIMESTAMP NOT NULL,
-  employee_shift_actual_end TIMESTAMP NOT NULL,
+  employee_shift_actual_start TIME,
+  employee_shift_actual_end TIME,
   employee_shift_actual_position INTEGER,
   CONSTRAINT PK_ES PRIMARY KEY (employee_shift_shift_id, employee_shift_employee_id),
   CONSTRAINT FK_EEI FOREIGN KEY (employee_shift_employee_id) REFERENCES

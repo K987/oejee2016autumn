@@ -48,10 +48,17 @@ public class PartnerServiceImpl implements PartnerRestService {
 	public List<PartnerStub> getAllPartnerContacts() throws AdaptorException {
 		LOG.info("Get all partners invoked");
 		List<PartnerStub> rtrn = this.facade.gatAllPartnerContact();
-		for (PartnerStub partnerStub : rtrn) {
-			LOG.info(partnerStub);
-		}
 		return rtrn;
 	}
+
+	/* (non-Javadoc)
+	 * @see hu.restoffice.restService.partner.PartnerRestService#deleteUnusedPartners()
+	 */
+	@Override
+	public List<PartnerStub> deleteUnusedPartners() throws AdaptorException {
+		LOG.info("delete unused partners invoked");
+		return this.facade.deleteUnusedPartners();
+	}
+
 
 }

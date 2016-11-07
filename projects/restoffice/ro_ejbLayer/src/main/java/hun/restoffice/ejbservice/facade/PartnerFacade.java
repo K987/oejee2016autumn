@@ -82,4 +82,20 @@ public class PartnerFacade implements PartnerFacadeLocal {
 			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#deleteUnusedPartners()
+	 */
+	@Override
+	public List<PartnerStub> deleteUnusedPartners() throws AdaptorException {
+		try {
+			if (LOG.isDebugEnabled())
+				LOG.debug("deleteUnusedPartners invoked");
+			final List<PartnerStub> rtrn = this.pConverter.toPartner(this.pService.deleteUnused());
+			return rtrn;
+		} catch (PersistenceServiceException e) {
+			// TODO: handle exception
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());		}
+	}
+
 }

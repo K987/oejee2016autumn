@@ -18,10 +18,6 @@ import hun.restoffice.persistence.entity.partner.Partner;
 @Local
 public interface PartnerConverterLocal {
 
-	PartnerStub to(Partner partner);
-
-	List<PartnerStub> to(List<Partner> partners);
-
 	/**
 	 * Convert contact info of partner
 	 * @param partner
@@ -31,8 +27,15 @@ public interface PartnerConverterLocal {
 
 	/**
 	 * Convert contact info of a list of partners
-	 * @param readAll
+	 * @param partners
 	 * @return
 	 */
-	List<PartnerStub> toContact(List<Partner> readAll);
+	List<PartnerStub> toContact(List<Partner> partners);
+
+	/**
+	 * Convert partner of a list of partners
+	 * @param partners
+	 * @return
+	 */
+	List<PartnerStub> toPartner(List<Partner> partners);
 }

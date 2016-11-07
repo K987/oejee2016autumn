@@ -26,11 +26,6 @@ public interface PartnerServiceLocal {
 	 * @return first partner who matches the search criteria
 	 * @throws PersistenceServiceException
 	 */
-	/**
-	 * @param partnerName
-	 * @return
-	 * 
-	 */
 	public Partner read(String partnerName) throws PersistenceServiceException;
 
 	/**
@@ -40,5 +35,13 @@ public interface PartnerServiceLocal {
 	 * @throws PersistenceServiceException
 	 */
 	public List<Partner> readAll(Boolean technical) throws PersistenceServiceException;
+
+
+	/**
+	 * Delete all partner enitites w/ no relation to income or expense entitites
+	 * @return
+	 * @throws PersistenceServiceException
+	 */
+	public List<Partner> deleteUnused() throws PersistenceServiceException;
 
 }

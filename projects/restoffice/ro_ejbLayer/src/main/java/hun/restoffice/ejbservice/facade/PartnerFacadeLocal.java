@@ -21,16 +21,27 @@ public interface PartnerFacadeLocal {
 
 	/**
 	 * Returns partner contact information if exists
-	 * @param partnerName partner company name
-	 * @return 
-	 * @throws AdaptorException 
+	 * 
+	 * @param partnerName
+	 *            partner company name
+	 * @return
+	 * @throws AdaptorException
 	 */
 	PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException;
 
 	/**
 	 * Returns all partner contact information
+	 * 
 	 * @return
-	 * @throws AdaptorException 
+	 * @throws AdaptorException
 	 */
 	List<PartnerStub> gatAllPartnerContact() throws AdaptorException;
+
+	/**
+	 * Delete partners without financialtransactions
+	 * 
+	 * @return
+	 */
+	List<PartnerStub> deleteUnusedPartners() throws AdaptorException;;
+
 }

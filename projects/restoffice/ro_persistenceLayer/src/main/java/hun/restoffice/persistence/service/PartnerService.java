@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-
 import org.apache.log4j.Logger;
 
 import hun.restoffice.persistence.entity.partner.Partner;
@@ -46,7 +45,6 @@ public class PartnerService implements PartnerServiceLocal {
 	@Override
 	public Partner read(String partnerName) throws PersistenceServiceException {
 
-		Partner rtrn = null;
 		try {
 			return this.entityManager.createNamedQuery(Partner.FIND_BY_NAME, Partner.class)
 					.setParameter(Partner.NAME, partnerName.toLowerCase().trim()).getSingleResult();
@@ -87,6 +85,22 @@ public class PartnerService implements PartnerServiceLocal {
 		} catch (Exception e){
 			LOG.error("read all partner exception: "+ e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during retrieving all partners", e);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.PartnerServiceLocal#deleteUnused()
+	 */
+	@Override
+	public List<Partner> deleteUnused() throws PersistenceServiceException {
+		List<Partner> rtrn = null;
+		try{
+			//get partner with old transactions
+			//delete partners from incomes
+			//delete partners from expenses
+			return rtrn;
+		} catch (Exception e) {
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during deleting unused partners", e);
 		}
 	}
 }

@@ -34,7 +34,7 @@ public class ExpType implements Serializable {
 	private Boolean prodRelated;
 
 	//bi-directional many-to-one association to Expense
-	@OneToMany(mappedBy="", fetch=FetchType.LAZY, targetEntity=Expense.class)
+	@OneToMany(mappedBy="expType", fetch=FetchType.LAZY, targetEntity=Expense.class)
 	private Set<Expense> expenses;
 
 	//constructors
