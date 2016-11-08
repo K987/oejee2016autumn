@@ -29,6 +29,16 @@ public class PersistenceServiceException extends Exception {
 	//getters setters
 
 	/**
+	 * @param type
+	 * @param description
+	 */
+	public PersistenceServiceException(PersistenceExceptionType type, String description) {
+		super(description);
+		this.type = type;
+		
+	}
+
+	/**
 	 * @return the type
 	 */
 	public PersistenceExceptionType getType() {

@@ -30,18 +30,39 @@ public interface PartnerServiceLocal {
 
 	/**
 	 * Select all partners
-	 * @param technical true: to read technical only, false: to read non-technical only, null: to read all
+	 * 
+	 * @param technical
+	 *            true: to read technical only, false: to read non-technical
+	 *            only, null: to read all
 	 * @return
 	 * @throws PersistenceServiceException
 	 */
 	public List<Partner> readAll(Boolean technical) throws PersistenceServiceException;
 
-
 	/**
 	 * Delete all partner enitites w/ no relation to income or expense entitites
+	 * 
 	 * @return
 	 * @throws PersistenceServiceException
 	 */
 	public List<Partner> deleteUnused() throws PersistenceServiceException;
+
+	/**
+	 * add partner entity if not exists by name already
+	 * 
+	 * @param fromPartner
+	 * @return
+	 * @throws PersistenceServiceException
+	 */
+	public Partner addPartner(Partner fromPartner) throws PersistenceServiceException;
+
+	/**
+	 * update partner entity if esxits by name already
+	 * 
+	 * @param fromPartner
+	 * @return
+	 * @throws PersistenceServiceException
+	 */
+	public Partner updatePartner(Partner fromPartner) throws PersistenceServiceException;
 
 }

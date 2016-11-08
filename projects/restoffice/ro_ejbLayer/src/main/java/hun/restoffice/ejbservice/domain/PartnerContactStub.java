@@ -16,9 +16,9 @@ public class PartnerContactStub {
 	private static final String NO_PHONE = "No contact phone available";
 	private static final String NO_EMAIL = "No contact email available";
 	// fields
-	private final String name;
-	private final String phone;
-	private final String email;
+	private String name;
+	private String phone;
+	private String email;
 
 	// constructors
 
@@ -38,9 +38,15 @@ public class PartnerContactStub {
 	 * @param contact
 	 */
 	public PartnerContactStub(PartnerContact contact) {
-			this(contact.getName(), contact.getPhone(), contact.getEmail());
+		this(contact.getName(), contact.getPhone(), contact.getEmail());
 	}
 
+	/**
+	 * 
+	 */
+	public PartnerContactStub() {
+		// TODO Auto-generated constructor stub
+	}
 	// public methods
 
 	/*
@@ -76,4 +82,26 @@ public class PartnerContactStub {
 		return email;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
 }

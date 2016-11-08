@@ -13,7 +13,8 @@ public enum PersistenceExceptionType {
 	//default errors
 	NOT_EXISTS(-10, "the required entity not esxists"),
 	AMBIGOUS_RESULT(-20, "more results found than expected"),
-	UNKNOWN(-99, "unknown exception happend");
+	UNKNOWN(-99, "unknown exception happend"), 
+	EXISTS_ALREADY(-30, "entity already exists") ;
 	
 	//fields
 	private final int code;

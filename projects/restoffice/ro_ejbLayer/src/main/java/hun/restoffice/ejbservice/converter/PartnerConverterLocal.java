@@ -19,23 +19,38 @@ import hun.restoffice.persistence.entity.partner.Partner;
 public interface PartnerConverterLocal {
 
 	/**
-	 * Convert contact info of partner
+	 * Convert partner entity to contact stub
 	 * @param partner
 	 * @return 
 	 */
 	PartnerContactStub toContact(Partner partner);
 
 	/**
-	 * Convert contact info of a list of partners
+	 * Convert partner entities to contact stubs
 	 * @param partners
 	 * @return
 	 */
 	List<PartnerStub> toContact(List<Partner> partners);
 
 	/**
-	 * Convert partner of a list of partners
+	 * Convert partner entites of  partner stubs
 	 * @param partners
 	 * @return
 	 */
 	List<PartnerStub> toPartner(List<Partner> partners);
+	
+	/**
+	 * Convert partner entity of  partner stub
+	 * @param partners
+	 * @return
+	 */
+	PartnerStub toPartner(Partner partner);
+
+	/**
+	 * Convert partner stub to partner entity
+	 * 
+	 * @param partner
+	 * @return
+	 */
+	Partner fromPartner(PartnerStub partner);
 }

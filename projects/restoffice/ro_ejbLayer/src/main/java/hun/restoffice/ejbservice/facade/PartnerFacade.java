@@ -72,19 +72,23 @@ public class PartnerFacade implements PartnerFacadeLocal {
 	 */
 	@Override
 	public List<PartnerStub> gatAllPartnerContact() throws AdaptorException {
-		try{
+		try {
 			if (LOG.isDebugEnabled())
 				LOG.debug("getAllPartnerContact invoked");
 			final List<PartnerStub> rtrn = this.pConverter.toContact(this.pService.readAll(false));
 			return rtrn;
-		} catch (final PersistenceServiceException e){
+		} catch (final PersistenceServiceException e) {
 			LOG.error(e.getLocalizedMessage());
 			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#deleteUnusedPartners()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#deleteUnusedPartners(
+	 * )
 	 */
 	@Override
 	public List<PartnerStub> deleteUnusedPartners() throws AdaptorException {
@@ -94,8 +98,49 @@ public class PartnerFacade implements PartnerFacadeLocal {
 			final List<PartnerStub> rtrn = this.pConverter.toPartner(this.pService.deleteUnused());
 			return rtrn;
 		} catch (PersistenceServiceException e) {
+			LOG.error(e.getLocalizedMessage());
 			// TODO: handle exception
-			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());		}
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#addPartner(hun.
+	 * restoffice.ejbservice.domain.PartnerStub)
+	 */
+	@Override
+	public PartnerStub addPartner(PartnerStub partner) throws AdaptorException {
+		try {
+			if (LOG.isDebugEnabled())
+				LOG.debug("addPartner invoked w/ param: " + partner);
+			return this.pConverter.toPartner(this.pService.addPartner(this.pConverter.fromPartner(partner)));
+		} catch (PersistenceServiceException e) {
+			LOG.error(e.getLocalizedMessage());
+			// TODO: handle exception
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#updatePartner(hun.
+	 * restoffice.ejbservice.domain.PartnerStub)
+	 */
+	@Override
+	public PartnerStub updatePartner(PartnerStub partner) throws AdaptorException {
+		try {
+			if (LOG.isDebugEnabled())
+				LOG.debug("updatePartner invoked w/ param: "+ partner);
+			return this.pConverter.toPartner(this.pService.updatePartner(this.pConverter.fromPartner(partner)));
+		} catch (PersistenceServiceException e) {
+			LOG.error(e.getLocalizedMessage());
+			// TODO: handle exception
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+		}
 	}
 
 }

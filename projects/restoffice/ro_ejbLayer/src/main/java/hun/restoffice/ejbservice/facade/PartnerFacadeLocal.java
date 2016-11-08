@@ -42,6 +42,26 @@ public interface PartnerFacadeLocal {
 	 * 
 	 * @return
 	 */
-	List<PartnerStub> deleteUnusedPartners() throws AdaptorException;;
+	List<PartnerStub> deleteUnusedPartners() throws AdaptorException;
+
+
+	/**
+	 * Add new partner
+	 * 
+	 * @param partner
+	 * @return
+	 * @throws AdaptorException
+	 */
+	PartnerStub addPartner(PartnerStub partner) throws AdaptorException;
+
+
+	/**
+	 * Remove existing partner
+	 * 
+	 * @param partner
+	 * @return
+	 * @throws AdaptorException
+	 */
+	PartnerStub updatePartner(PartnerStub partner) throws AdaptorException;
 
 }

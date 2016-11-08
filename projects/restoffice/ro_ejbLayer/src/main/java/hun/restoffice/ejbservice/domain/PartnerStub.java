@@ -17,9 +17,9 @@ public class PartnerStub {
 	private static final Logger LOG = Logger.getLogger(PartnerStub.class);
 
 	// fields
-	private final String name;
-	private final String account;
-	private final PartnerContactStub contact;
+	private String name;
+	private String account;
+	private PartnerContactStub contact;
 
 	// constructor
 	/**
@@ -40,6 +40,31 @@ public class PartnerStub {
 			this.contact = new PartnerContactStub(partner.getContact());
 		else
 			this.contact = null;
+	}
+	
+	
+
+	/**
+	 * @param name
+	 * @param account
+	 * @param contact
+	 */
+	public PartnerStub(String name, String account, PartnerContactStub contact) {
+		super();
+		this.name = name;
+		this.account = account;
+		this.contact = contact;
+	}
+	
+	public PartnerStub(String name, String account, String pName, String pPhone, String pEmail){
+		this(name,account,new PartnerContactStub(pName,pPhone,pEmail));
+	}
+
+	 /**
+	 * 
+	 */
+	public PartnerStub() {
+		// TODO Auto-generated constructor stub
 	}
 
 	// getters setters
@@ -75,4 +100,32 @@ public class PartnerStub {
 		return contact;
 	}
 
+
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	/**
+	 * @param account the account to set
+	 */
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+
+
+	/**
+	 * @param contact the contact to set
+	 */
+	public void setContact(PartnerContactStub contact) {
+		this.contact = contact;
+	}
+
+	
 }

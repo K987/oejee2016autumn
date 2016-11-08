@@ -60,5 +60,23 @@ public class PartnerServiceImpl implements PartnerRestService {
 		return this.facade.deleteUnusedPartners();
 	}
 
+	/* (non-Javadoc)
+	 * @see hu.restoffice.restService.partner.PartnerRestService#addPartner()
+	 */
+	@Override
+	public PartnerStub addPartner(PartnerStub partner) throws AdaptorException {
+		LOG.info("add new partner invoked");
+		return this.facade.addPartner(partner);
+	}
+
+	/* (non-Javadoc)
+	 * @see hu.restoffice.restService.partner.PartnerRestService#updatePartner()
+	 */
+	@Override
+	public PartnerStub updatePartner(PartnerStub partner) throws AdaptorException {
+		LOG.info("update partner invoked");
+		return this.facade.updatePartner(partner);
+	}
+
 
 }

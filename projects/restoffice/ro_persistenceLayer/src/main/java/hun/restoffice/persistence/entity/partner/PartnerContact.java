@@ -26,6 +26,16 @@ public class PartnerContact {
 		
 	}
 	/**
+	 * @param name
+	 * @param email
+	 * @param phone
+	 */
+	public PartnerContact(String name, String email, String phone) {
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+	}
+	/**
 	 * @return the name
 	 */
 	public String getName() {
