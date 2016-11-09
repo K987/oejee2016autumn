@@ -1,19 +1,17 @@
 package hu.gyigorpeter.anglerregistry.weblayer.bean;
 
-
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @ViewScoped
-@ManagedBean(name = "managedBean")
+@Named("backingBean")
 public class ManagementBean implements Serializable {
 
 	private static final long serialVersionUID = -554423484774035995L;
 
-	private String test = "test string";
+	private String test = "test string from cdi backing bean";
 
 	public String getTest() {
 		return test;
