@@ -4,44 +4,40 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
-
 /**
  * The persistent class for the inc_types database table.
  * 
  * @author kalmankostenszky
- *
  */
 @Entity
-@Table(name="inc_types")
-@NamedQuery(name=".findAll", query="SELECT i FROM  IncType i")
+@Table(name = "inc_types")
+@NamedQuery(name = ".findAll", query = "SELECT i FROM  IncType i")
 public class IncType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//fields
+	// fields
 	@Id
-	@SequenceGenerator(name="INC_TYPES_INCTYPEID_GENERATOR", sequenceName="INC_TYPES_INC_TYPE_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INC_TYPES_INCTYPEID_GENERATOR")
-	@Column(name="inc_type_id")
+	@SequenceGenerator(name = "INC_TYPES_INCTYPEID_GENERATOR", sequenceName = "INC_TYPES_INC_TYPE_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INC_TYPES_INCTYPEID_GENERATOR")
+	@Column(name = "inc_type_id")
 	private Integer id;
 
-	//TODO: set this unique in db
-	@Column(name="inc_type_name", unique=true, nullable=false, length=100)
+	// TODO: set this unique in db
+	@Column(name = "inc_type_name", unique = true, nullable = false, length = 100)
 	private String name;
 
-	@Column(name="inc_type_prod_related", nullable=false)
+	@Column(name = "inc_type_prod_related", nullable = false)
 	private Boolean prodRelated;
 
-	//bi-directional many-to-one association to Income
-	@OneToMany(mappedBy="", fetch=FetchType.LAZY, targetEntity=Income.class)
+	// bi-directional many-to-one association to Income
+	@OneToMany(mappedBy = "", fetch = FetchType.LAZY, targetEntity = Income.class)
 	private Set<Income> incomes;
-	
-	
 
-	//constructors
+	// constructors
 	public IncType() {
 	}
-	
-	//public methods
+
+	// public methods
 	public Income addIncome(Income income) {
 		getIncomes().add(income);
 		income.setIncType(this);
@@ -56,7 +52,7 @@ public class IncType implements Serializable {
 		return income;
 	}
 
-	//getters setters
+	// getters setters
 	/**
 	 * @return
 	 */

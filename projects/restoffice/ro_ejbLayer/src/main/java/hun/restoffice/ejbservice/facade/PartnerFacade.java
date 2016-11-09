@@ -11,16 +11,16 @@ import javax.ejb.Stateless;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.PartnerConverterLocal;
-import hun.restoffice.ejbservice.domain.ApplicationError;
 import hun.restoffice.ejbservice.domain.PartnerContactStub;
 import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
+import hun.restoffice.ejbservice.exception.ApplicationError;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.PartnerServiceLocal;
 
 /**
- * Facade for partner business logic
+ * Facade implementation for partner business logic
  * 
  * @author kalmankostenszky
  *
@@ -39,9 +39,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnerContact(
-	 * java.lang.String)
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnerContact( java.lang.String)
 	 */
 	@Override
 	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException {
@@ -57,8 +55,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 			} else if (e.getType().equals(PersistenceExceptionType.AMBIGOUS_RESULT)) {
 				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
 			} else {
-				throw new AdaptorException(ApplicationError.UNEXPECTED,
-						"Unexpeted error occured during execution. Param: " + partnerName);
+				throw new AdaptorException(ApplicationError.UNEXPECTED, "Unexpeted error occured during execution. Param: " + partnerName);
 			}
 		}
 	}
@@ -66,9 +63,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#gatAllPartnerContact(
-	 * )
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#gatAllPartnerContact( )
 	 */
 	@Override
 	public List<PartnerStub> gatAllPartnerContact() throws AdaptorException {
@@ -86,9 +81,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#deleteUnusedPartners(
-	 * )
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#deleteUnusedPartners( )
 	 */
 	@Override
 	public List<PartnerStub> deleteUnusedPartners() throws AdaptorException {
@@ -99,7 +92,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 			return rtrn;
 		} catch (PersistenceServiceException e) {
 			LOG.error(e.getLocalizedMessage());
-			// TODO: handle exception
+			// TODO:delete exception
 			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
 		}
 	}
@@ -115,31 +108,37 @@ public class PartnerFacade implements PartnerFacadeLocal {
 		try {
 			if (LOG.isDebugEnabled())
 				LOG.debug("addPartner invoked w/ param: " + partner);
-			return this.pConverter.toPartner(this.pService.addPartner(this.pConverter.fromPartner(partner)));
+			return this.pConverter.toPartner(this.pService.create(this.pConverter.fromPartner(partner)));
 		} catch (PersistenceServiceException e) {
 			LOG.error(e.getLocalizedMessage());
-			// TODO: handle exception
-			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+			if (e.getType().equals(PersistenceExceptionType.EXISTS_ALREADY))
+				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
+			else
+				throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.facade.PartnerFacadeLocal#updatePartner(hun.
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#updatePartner(hun.
 	 * restoffice.ejbservice.domain.PartnerStub)
 	 */
 	@Override
 	public PartnerStub updatePartner(PartnerStub partner) throws AdaptorException {
 		try {
 			if (LOG.isDebugEnabled())
-				LOG.debug("updatePartner invoked w/ param: "+ partner);
-			return this.pConverter.toPartner(this.pService.updatePartner(this.pConverter.fromPartner(partner)));
+				LOG.debug("updatePartner invoked w/ param: " + partner);
+			return this.pConverter.toPartner(this.pService.update(this.pConverter.fromPartner(partner)));
 		} catch (PersistenceServiceException e) {
 			LOG.error(e.getLocalizedMessage());
-			// TODO: handle exception
-			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+			if (e.getType().equals(PersistenceExceptionType.NOT_EXISTS)) {
+				throw new AdaptorException(ApplicationError.NOT_EXISTS, e.getMessage());
+			} else if (e.getType().equals(PersistenceExceptionType.AMBIGOUS_RESULT)) {
+				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
+			} else {
+				throw new AdaptorException(ApplicationError.UNEXPECTED, "Unexpeted error occured during execution. Param: " + partner);
+			}
 		}
 	}
 

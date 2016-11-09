@@ -10,6 +10,7 @@ package hun.restoffice.ejbservice.exception;
 public class FacadeException extends Exception {
 
 	/**
+	 * General exception class for services
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

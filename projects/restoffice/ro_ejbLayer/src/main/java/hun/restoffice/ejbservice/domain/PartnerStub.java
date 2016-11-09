@@ -64,7 +64,7 @@ public class PartnerStub {
 	 * 
 	 */
 	public PartnerStub() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	// getters setters

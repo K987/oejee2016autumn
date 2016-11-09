@@ -5,48 +5,48 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
-
 /**
  * The persistent class for the employees database table.
  * 
+ * @author kalmankostenszky
  */
 @Entity
-@Table(name="employees")
-@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
+@Table(name = "employees")
+@NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//fields
-	
+	// fields
+
 	@Id
-	@SequenceGenerator(name="EMPLOYEES_EMPLOYEEID_GENERATOR", sequenceName="EMPLOYEES_EMPLOYEE_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EMPLOYEES_EMPLOYEEID_GENERATOR")
-	@Column(name="employee_id")
+	@SequenceGenerator(name = "EMPLOYEES_EMPLOYEEID_GENERATOR", sequenceName = "EMPLOYEES_EMPLOYEE_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLOYEES_EMPLOYEEID_GENERATOR")
+	@Column(name = "employee_id")
 	private Integer id;
 
-	@Column(name="employee_active", nullable=false)
+	@Column(name = "employee_active", nullable = false)
 	private Boolean active;
 
-	@Column(name="employee_default_hourly_wage")
+	@Column(name = "employee_default_hourly_wage")
 	private BigDecimal defaultHourlyWage;
 
-	@Enumerated(value=EnumType.ORDINAL)
-	@Column(name="employee_default_position", nullable=false)
+	@Enumerated(value = EnumType.ORDINAL)
+	@Column(name = "employee_default_position", nullable = false)
 	private JobPosition defaultPosition;
 
-	@Column(name="employee_name", nullable=false, length=100)
+	@Column(name = "employee_name", nullable = false, length = 100)
 	private String name;
 
-	//bi-directional many-to-one association to EmployeeShift
-	@OneToMany(mappedBy="employee", fetch=FetchType.LAZY, targetEntity=EmployeeShift.class)
+	// bi-directional many-to-one association to EmployeeShift
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, targetEntity = EmployeeShift.class)
 	private Set<EmployeeShift> employeeShifts;
 
-	//constructors
-	
+	// constructors
+
 	public Employee() {
 	}
 
-	//public methods
+	// public methods
 
 	/**
 	 * 
@@ -66,8 +66,8 @@ public class Employee implements Serializable {
 
 		return employeeShift;
 	}
-	
-	//getters setters
+
+	// getters setters
 	public Integer getId() {
 		return this.id;
 	}
@@ -111,6 +111,5 @@ public class Employee implements Serializable {
 	public void setEmployeeShifts(Set<EmployeeShift> employeeShifts) {
 		this.employeeShifts = employeeShifts;
 	}
-
 
 }

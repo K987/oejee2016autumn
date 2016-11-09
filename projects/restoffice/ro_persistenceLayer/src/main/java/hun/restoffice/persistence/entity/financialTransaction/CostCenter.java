@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
-
 /**
  * The persistent class for the cost_centers database table.
  * 
@@ -12,44 +11,44 @@ import java.util.Set;
  *
  */
 @Entity
-@Table(name="cost_centers")
-@NamedQueries({ 
-	@NamedQuery(name = "CostCenter.findAll", query = "SELECT c FROM CostCenter c")
-})
+@Table(name = "cost_centers")
+@NamedQueries({ @NamedQuery(name = "CostCenter.findAll", query = "SELECT c FROM CostCenter c") })
 public class CostCenter implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//fields
+	// fields
 	@Id
-	@SequenceGenerator(name="COST_CENTERS_COSTCENTERID_GENERATOR", sequenceName="COST_CENTERS_COST_CENTER_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="COST_CENTERS_COSTCENTERID_GENERATOR")
-	@Column(name="cost_center_id")
+	@SequenceGenerator(name = "COST_CENTERS_COSTCENTERID_GENERATOR", sequenceName = "COST_CENTERS_COST_CENTER_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COST_CENTERS_COSTCENTERID_GENERATOR")
+	@Column(name = "cost_center_id")
 	private Integer id;
 
-	@Column(name="cost_center_default", nullable=false)
+	@Column(name = "cost_center_default", nullable = false)
 	private Boolean defaultCostCenter;
 
-	//TODO: set this to unique in the database as well
-	@Column(name="cost_center_name", nullable=false, unique=true, length=100)
+	// TODO: set this to unique in the database as well
+	@Column(name = "cost_center_name", nullable = false, unique = true, length = 100)
 	private String name;
 
-	//bi-directional many-to-one association to Expense
-	@OneToMany(mappedBy="costCenter", fetch=FetchType.LAZY, targetEntity=Expense.class)
+	// bi-directional many-to-one association to Expense
+	@OneToMany(mappedBy = "costCenter", fetch = FetchType.LAZY, targetEntity = Expense.class)
 	private Set<Expense> expenses;
 
-	//constructors
-	
+	// constructors
+
 	/**
 	 * 
 	 */
 	public CostCenter() {
 	}
-	
-	//public methods
-	
+
+	// public methods
+
 	/**
 	 * set an expense to this cost center
-	 * @param expense to be added
+	 * 
+	 * @param expense
+	 *            to be added
 	 * @return the added expense
 	 */
 	public Expense addExpense(Expense expense) {
@@ -61,7 +60,9 @@ public class CostCenter implements Serializable {
 
 	/**
 	 * Remove an expense from cost center
-	 * @param expense to be removed
+	 * 
+	 * @param expense
+	 *            to be removed
 	 * @return removed expense
 	 */
 	public Expense removeExpense(Expense expense) {
@@ -71,8 +72,8 @@ public class CostCenter implements Serializable {
 		return expense;
 	}
 
-	//getters and setters
-	
+	// getters and setters
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -81,9 +82,9 @@ public class CostCenter implements Serializable {
 		return this.defaultCostCenter;
 	}
 
-	//TODO: if true set this cost center to default and set previous default to false
+	// TODO: if true set this cost center to default and set previous default to false
 	public void setDefault(Boolean costCenterDefault) {
-		
+
 		this.defaultCostCenter = costCenterDefault;
 	}
 
@@ -102,7 +103,5 @@ public class CostCenter implements Serializable {
 	public void setExpenses(Set<Expense> expenses) {
 		this.expenses = expenses;
 	}
-
-
 
 }

@@ -32,8 +32,7 @@ public interface PartnerServiceLocal {
 	 * Select all partners
 	 * 
 	 * @param technical
-	 *            true: to read technical only, false: to read non-technical
-	 *            only, null: to read all
+	 *            true: to read technical only, false: to read non-technical only, null: to read all
 	 * @return
 	 * @throws PersistenceServiceException
 	 */
@@ -50,19 +49,19 @@ public interface PartnerServiceLocal {
 	/**
 	 * add partner entity if not exists by name already
 	 * 
-	 * @param fromPartner
-	 * @return
+	 * @param partner
+	 * @return persisted partner
 	 * @throws PersistenceServiceException
 	 */
-	public Partner addPartner(Partner fromPartner) throws PersistenceServiceException;
+	public Partner create(Partner partner) throws PersistenceServiceException;
 
 	/**
 	 * update partner entity if esxits by name already
 	 * 
-	 * @param fromPartner
-	 * @return
+	 * @param partner
+	 * @return updated partner
 	 * @throws PersistenceServiceException
 	 */
-	public Partner updatePartner(Partner fromPartner) throws PersistenceServiceException;
+	public Partner update(Partner partner) throws PersistenceServiceException;
 
 }

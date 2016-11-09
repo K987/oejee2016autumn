@@ -19,17 +19,18 @@ import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 
 /**
- *  REST services for partner management
- *  
+ * REST services for partner management
+ * 
  * @author kalmankostenszky
  */
 @Path("/partner")
 public interface PartnerRestService {
 
-
 	/**
 	 * Returns partner contact information
-	 * @param partnerName the partners company name
+	 * 
+	 * @param partnerName
+	 *            the partners company name
 	 * @return
 	 * @throws AdaptorException
 	 */
@@ -37,10 +38,10 @@ public interface PartnerRestService {
 	@Path("get/{partnerName}")
 	@Produces("application/json")
 	PartnerContactStub getPartnerContact(@PathParam("partnerName") String partnerName) throws AdaptorException;
-	
-	
+
 	/**
-	 * Returns partner contact information too all partners 
+	 * Returns partner contact information too all partners
+	 * 
 	 * @return
 	 * @throws AdaptorException
 	 */
@@ -48,7 +49,6 @@ public interface PartnerRestService {
 	@Path("get/allContacts")
 	@Produces("application/json")
 	List<PartnerStub> getAllPartnerContacts() throws AdaptorException;
-	
 
 	/**
 	 * Delete all partners who have no financial transactions
@@ -60,11 +60,12 @@ public interface PartnerRestService {
 	@Path("/delete")
 	@Produces("application/json")
 	List<PartnerStub> deleteUnusedPartners() throws AdaptorException;
-	
+
 	/**
 	 * Add new partner
 	 * 
 	 * @param partner
+	 *            partner data to add
 	 * @return
 	 * @throws AdaptorException
 	 */
@@ -73,11 +74,12 @@ public interface PartnerRestService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	PartnerStub addPartner(PartnerStub partner) throws AdaptorException;
-	
+
 	/**
 	 * Update existing partner
 	 * 
 	 * @param partner
+	 *            partner data to update
 	 * @return
 	 * @throws AdaptorException
 	 */

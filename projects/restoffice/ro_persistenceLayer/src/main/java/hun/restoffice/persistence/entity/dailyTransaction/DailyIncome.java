@@ -7,38 +7,36 @@ import hun.restoffice.persistence.entity.employee.EmployeeShift;
 
 import java.math.BigDecimal;
 
-
 /**
  * The persistent class for the daily_incomes database table.
  * 
+ * @author kalmankostenszky
  */
 @Entity
-@Table(name="daily_incomes")
-//TODO: add static final fields for qry name and params
-@NamedQueries({ 
-	@NamedQuery(name = "DailyIncome.findAll", query = "SELECT d FROM DailyIncome d")
-})
+@Table(name = "daily_incomes")
+// TODO: add static final fields for qry name and params
+@NamedQueries({ @NamedQuery(name = "DailyIncome.findAll", query = "SELECT d FROM DailyIncome d") })
 public class DailyIncome implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DAILY_INCOMES_DAILYINCOMEID_GENERATOR", sequenceName="DAILY_INCOMES_DAILY_INCOME_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DAILY_INCOMES_DAILYINCOMEID_GENERATOR")
-	@Column(name="daily_income_id")
+	@SequenceGenerator(name = "DAILY_INCOMES_DAILYINCOMEID_GENERATOR", sequenceName = "DAILY_INCOMES_DAILY_INCOME_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DAILY_INCOMES_DAILYINCOMEID_GENERATOR")
+	@Column(name = "daily_income_id")
 	private Integer id;
 
-	@Column(name="daily_income_card")
+	@Column(name = "daily_income_card")
 	private BigDecimal cardSum;
 
-	@Column(name="daily_income_cash")
+	@Column(name = "daily_income_cash")
 	private BigDecimal cashSum;
 
-	//TODO: add not nullable in DB
+	// TODO: add not nullable in DB
 	@OneToOne
-	@JoinColumn(name="daily_income_employee_shift", referencedColumnName="employee_shift_id", nullable=false)
+	@JoinColumn(name = "daily_income_employee_shift", referencedColumnName = "employee_shift_id", nullable = false)
 	private EmployeeShift dailyIncomeEmployeeShift;
 
-	@Column(name="daily_pos_sum", nullable=false)
+	@Column(name = "daily_pos_sum", nullable = false)
 	private BigDecimal posSum;
 
 	public DailyIncome() {
@@ -67,7 +65,8 @@ public class DailyIncome implements Serializable {
 	public EmployeeShift getEmployeeShift() {
 		return this.dailyIncomeEmployeeShift;
 	}
-	//TODO: set map connection vica-versa
+
+	// TODO: set map connection vica-versa
 	public void setEmployeeShift(EmployeeShift dailyIncomeEmployeeShift) {
 		this.dailyIncomeEmployeeShift = dailyIncomeEmployeeShift;
 	}

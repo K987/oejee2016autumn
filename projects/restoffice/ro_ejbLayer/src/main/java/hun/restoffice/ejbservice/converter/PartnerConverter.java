@@ -28,8 +28,7 @@ public class PartnerConverter implements PartnerConverterLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.converter.PartnerConverterLocal#toContact(hun.
+	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toContact(hun.
 	 * restoffice.persistence.entity.partner.Partner)
 	 */
 	@Override
@@ -40,9 +39,7 @@ public class PartnerConverter implements PartnerConverterLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.converter.PartnerConverterLocal#toContact(java.
-	 * util.List)
+	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toContact(java. util.List)
 	 */
 	@Override
 	public List<PartnerStub> toContact(List<Partner> readAll) {
@@ -56,9 +53,7 @@ public class PartnerConverter implements PartnerConverterLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.converter.PartnerConverterLocal#toPartner(java.
-	 * util.List)
+	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toPartner(java. util.List)
 	 */
 	@Override
 	public List<PartnerStub> toPartner(List<Partner> partners) {
@@ -72,8 +67,7 @@ public class PartnerConverter implements PartnerConverterLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.converter.PartnerConverterLocal#toPartner(hun.
+	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#toPartner(hun.
 	 * restoffice.persistence.entity.partner.Partner)
 	 */
 	@Override
@@ -84,14 +78,13 @@ public class PartnerConverter implements PartnerConverterLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hun.restoffice.ejbservice.converter.PartnerConverterLocal#fromPartner(hun
+	 * @see hun.restoffice.ejbservice.converter.PartnerConverterLocal#fromPartner(hun
 	 * .restoffice.ejbservice.domain.PartnerStub)
 	 */
 	@Override
 	public Partner fromPartner(PartnerStub partner) {
-		return new Partner(partner.getName(), partner.getAccount(), false, partner.getContact().getName(),
-				partner.getContact().getEmail(), partner.getContact().getPhone());
+		return new Partner(partner.getName(), partner.getAccount(), false, partner.getContact().getName(), partner.getContact().getEmail(),
+				partner.getContact().getPhone());
 	}
 
 }

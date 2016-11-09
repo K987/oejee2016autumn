@@ -5,47 +5,47 @@ import javax.persistence.*;
 
 import java.util.Date;
 
-
 /**
  * The persistent class for the employee_shift database table.
  * 
+ * @author kalmankostenszky
  */
 @Entity
-@Table(name="employee_shift")
+@Table(name = "employee_shift")
 @IdClass(EmployeeShiftId.class)
-@NamedQuery(name="EmployeeShift.findAll", query="SELECT e FROM EmployeeShift e")
+@NamedQuery(name = "EmployeeShift.findAll", query = "SELECT e FROM EmployeeShift e")
 public class EmployeeShift implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//bi-directional many-to-one association to Shift
+	// bi-directional many-to-one association to Shift
 	@Id
 	@ManyToOne
-	@JoinColumn(name="employee_shift_employee_id", referencedColumnName="employee_id")
+	@JoinColumn(name = "employee_shift_employee_id", referencedColumnName = "employee_id")
 	private Employee employee;
-	
-	//bi-directional many-to-one association to Shift
+
+	// bi-directional many-to-one association to Shift
 	@Id
 	@ManyToOne
-	@JoinColumn(name="employee_shift_shift_id", referencedColumnName="shift_id")
+	@JoinColumn(name = "employee_shift_shift_id", referencedColumnName = "shift_id")
 	private Shift shift;
 
-	//TODO: set nullable true in DB
-	@Column(name="employee_shift_actual_start")
+	// TODO: set nullable true in DB
+	@Column(name = "employee_shift_actual_start")
 	@Temporal(TemporalType.TIME)
 	private Date actualStart;
-	
-	//TODO: set nullable true in DB
-	@Column(name="employee_shift_actual_end")
+
+	// TODO: set nullable true in DB
+	@Column(name = "employee_shift_actual_end")
 	@Temporal(TemporalType.TIME)
 	private Date actualEnd;
 
-	//TODO: set position enum
-	@Column(name="employee_shift_actual_position")
+	// TODO: set position enum
+	@Column(name = "employee_shift_actual_position")
 	private Integer actualPosition;
 
-	@SequenceGenerator(name="employee_shift_employee_shift_id_generator", sequenceName="employee_shift_employee_shift_id_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="employee_shift_employee_shift_id_generator")
-	@Column(name="employee_shift_id", updatable=false)
+	@SequenceGenerator(name = "employee_shift_employee_shift_id_generator", sequenceName = "employee_shift_employee_shift_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_shift_employee_shift_id_generator")
+	@Column(name = "employee_shift_id", updatable = false)
 	private Integer rowId;
 
 	public Date getActualEnd() {

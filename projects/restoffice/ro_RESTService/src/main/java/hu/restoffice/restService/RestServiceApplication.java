@@ -11,8 +11,7 @@ import javax.ws.rs.core.Application;
  *
  * @author kalmankostenszky
  */
-
 @ApplicationPath("/rest")
 public class RestServiceApplication extends Application {
-
+	
 }

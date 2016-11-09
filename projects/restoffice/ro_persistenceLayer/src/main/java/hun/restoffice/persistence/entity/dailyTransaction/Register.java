@@ -4,27 +4,27 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
-
 /**
  * The persistent class for the registers database table.
  * 
+ * @author kalmankostenszky
  */
 @Entity
-@Table(name="registers")
-@NamedQuery(name="Register.findAll", query="SELECT r FROM Register r")
+@Table(name = "registers")
+@NamedQuery(name = "Register.findAll", query = "SELECT r FROM Register r")
 public class Register implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="register_id", unique=true, nullable=false, length=50)
+	@Column(name = "register_id", unique = true, nullable = false, length = 50)
 	private String registerId;
 
-	@Enumerated(value=EnumType.ORDINAL)
-	@Column(name="register_type", nullable=false)
+	@Enumerated(value = EnumType.ORDINAL)
+	@Column(name = "register_type", nullable = false)
 	private RegisterType registerType;
 
-	//bi-directional many-to-one association to RegisterClos
-	@OneToMany(mappedBy="register", targetEntity=RegisterClose.class)
+	// bi-directional many-to-one association to RegisterClos
+	@OneToMany(mappedBy = "register", targetEntity = RegisterClose.class)
 	private Set<RegisterClose> registerCloses;
 
 	public Register() {

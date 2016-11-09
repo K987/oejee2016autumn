@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
-
 /**
  * The persistent class for the exp_types database table.
  * 
@@ -14,35 +13,35 @@ import java.util.Set;
  *
  */
 @Entity
-@Table(name="exp_types")
-@NamedQuery(name="ExpType.findAll", query="SELECT e FROM ExpType e")
+@Table(name = "exp_types")
+@NamedQuery(name = "ExpType.findAll", query = "SELECT e FROM ExpType e")
 public class ExpType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//fields
+	// fields
 	@Id
-	@SequenceGenerator(name="EXP_TYPES_EXPTYPEID_GENERATOR", sequenceName="EXP_TYPES_EXP_TYPE_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EXP_TYPES_EXPTYPEID_GENERATOR")
-	@Column(name="exp_type_id")
+	@SequenceGenerator(name = "EXP_TYPES_EXPTYPEID_GENERATOR", sequenceName = "EXP_TYPES_EXP_TYPE_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXP_TYPES_EXPTYPEID_GENERATOR")
+	@Column(name = "exp_type_id")
 	private Integer id;
 
-	//TODO: set this to unique in the database as well
-	@Column(name="exp_type_name", nullable=false, unique=true, length=100)
+	// TODO: set this to unique in the database as well
+	@Column(name = "exp_type_name", nullable = false, unique = true, length = 100)
 	private String name;
 
-	@Column(name="exp_type_prod_related", nullable=false)
+	@Column(name = "exp_type_prod_related", nullable = false)
 	private Boolean prodRelated;
 
-	//bi-directional many-to-one association to Expense
-	@OneToMany(mappedBy="expType", fetch=FetchType.LAZY, targetEntity=Expense.class)
+	// bi-directional many-to-one association to Expense
+	@OneToMany(mappedBy = "expType", fetch = FetchType.LAZY, targetEntity = Expense.class)
 	private Set<Expense> expenses;
 
-	//constructors
+	// constructors
 	public ExpType() {
 	}
-	
-	//public methods
-	
+
+	// public methods
+
 	/**
 	 * @param expense
 	 * @return
@@ -65,7 +64,7 @@ public class ExpType implements Serializable {
 		return expense;
 	}
 
-	//getters setters
+	// getters setters
 	public void setId(Integer id) {
 		this.id = id;
 	}

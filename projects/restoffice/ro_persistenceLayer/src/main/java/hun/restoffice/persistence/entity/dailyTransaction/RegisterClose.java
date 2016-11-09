@@ -5,30 +5,30 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-
 /**
  * The persistent class for the register_closes database table.
  * 
+ * @author kalmankostenszky
  */
 @Entity
-@Table(name="register_closes")
-@NamedQuery(name="RegisterClos.findAll", query="SELECT r FROM RegisterClose r")
+@Table(name = "register_closes")
+@NamedQuery(name = "RegisterClos.findAll", query = "SELECT r FROM RegisterClose r")
 public class RegisterClose implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private RegisterCloseId id;
 
-	@Column(name="register_close_amt", precision=131089)
+	@Column(name = "register_close_amt", precision = 131089)
 	private BigDecimal registerCloseAmt;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="register_close_date", nullable=false)
+	@Column(name = "register_close_date", nullable = false)
 	private Date registerCloseDate;
 
-	//bi-directional many-to-one association to Register
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="register_close_register_id", referencedColumnName="register_id", nullable=false, insertable=false, updatable=false)
+	// bi-directional many-to-one association to Register
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "register_close_register_id", referencedColumnName = "register_id", nullable = false, insertable = false, updatable = false)
 	private Register register;
 
 	public RegisterClose() {
