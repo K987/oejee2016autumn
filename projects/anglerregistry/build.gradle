@@ -15,8 +15,8 @@ ext {
 	jbossjee6Version = '3.0.3.Final'  
 	commonsloggingVersion = '1.2'
 	
-	webserviceArchiveName = 'ar-webservice.war'
-	webserviceContextPath = 'anglerregistry'
+	//webserviceArchiveName = 'ar-webservice.war'
+	//webserviceContextPath = 'anglerregistry'
 }
 
 subprojects {
@@ -30,13 +30,13 @@ subprojects {
 	
 ear {
     deploymentDescriptor { 
-    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    	//webModule( webserviceArchiveName, webserviceContextPath ) 
     }
 }
 	
-dependencies {
+dependencies {	
 	deploy project('ar-ejbservice')
 	deploy project('ar-persistence')
 	deploy project(path: 'ar-weblayer', configuration: 'archives')
-	deploy project(path: 'ar-webservice', configuration: 'archives')
+	//deploy project(path: 'ar-webservice', configuration: 'archives')
 }

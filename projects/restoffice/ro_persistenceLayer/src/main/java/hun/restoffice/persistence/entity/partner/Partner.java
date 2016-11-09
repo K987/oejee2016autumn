@@ -11,17 +11,15 @@ import hun.restoffice.persistence.entity.financialTransaction.Income;
 /**
  * The persistent class for the partners database table.
  * 
+ * @author kalmankostenszky
  */
 @Entity
 @Table(name = "partners")
 @NamedQueries(value = {
-		@NamedQuery(name = Partner.FIND_ALL, query = "SELECT p FROM Partner p WHERE (FALSE=:"
-				+ Partner.APPLY_CRITERIA + " or p.technical=:" + Partner.IS_TECHNICAL + ")"),
-		@NamedQuery(name = Partner.FIND_BY_NAME, query = "SELECT p FROM Partner p WHERE LOWER(p.name)=:"
-				+ Partner.NAME),
-		@NamedQuery(name = Partner.COUNT, query = "SELECT COUNT(P) FROM Partner p WHERE LOWER(p.name)=:"
-				+ Partner.NAME)
-})
+		@NamedQuery(name = Partner.FIND_ALL, query = "SELECT p FROM Partner p WHERE (FALSE=:" + Partner.APPLY_CRITERIA + " or p.technical=:"
+				+ Partner.IS_TECHNICAL + ")"),
+		@NamedQuery(name = Partner.FIND_BY_NAME, query = "SELECT p FROM Partner p WHERE LOWER(p.name)=:" + Partner.NAME),
+		@NamedQuery(name = Partner.COUNT, query = "SELECT COUNT(P) FROM Partner p WHERE LOWER(p.name)=:" + Partner.NAME) })
 public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -174,7 +172,7 @@ public class Partner implements Serializable {
 		this.setAccount(partner.getAccount());
 		this.setParnterTechnical(partner.getParnterTechnical());
 		this.setContact(partner.getContact());
-		
+
 	}
 
 }

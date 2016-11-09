@@ -32,8 +32,8 @@ import hun.restoffice.persistence.entity.partner.Partner;
 @MappedSuperclass
 public class FinancialTransaction {
 
-	//fields
-	
+	// fields
+
 	@Id
 	@Column(length = 100)
 	private String docId;
@@ -74,12 +74,12 @@ public class FinancialTransaction {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User lastModifiedBy;
 
-	//constructors
+	// constructors
 	public FinancialTransaction() {
 
 	}
 
-	//getters and setters
+	// getters and setters
 	/**
 	 * @return the docId
 	 */

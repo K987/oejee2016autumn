@@ -3,30 +3,29 @@ package hun.restoffice.persistence.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the users database table.
  * 
- * revision: 16.11.01
+ * @author kalmankostenszky
  */
 @Entity
-@Table(name="users")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@Table(name = "users")
+@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="user_id", length=50)
+	@Column(name = "user_id", length = 50)
 	private String id;
 
-	@Column(name="user_name", length=100)
+	@Column(name = "user_name", length = 100)
 	private String name;
 
-	@Column(name="user_pwd", nullable=false, length=50)
+	@Column(name = "user_pwd", nullable = false, length = 50)
 	private String pwd;
 
-	//TODO: add not nullabe to DB, maybe enum
-	@Column(name="user_role", nullable=false, length=50)
+	// TODO: add not nullabe to DB, maybe enum
+	@Column(name = "user_role", nullable = false, length = 50)
 	private String role;
 
 	public User() {

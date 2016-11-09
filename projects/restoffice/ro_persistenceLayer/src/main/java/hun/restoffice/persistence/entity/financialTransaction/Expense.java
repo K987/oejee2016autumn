@@ -28,29 +28,28 @@ import javax.persistence.*;
 		@AttributeOverride(name = "accPeriod.startDate", column = @Column(name = "expense_acc_per_start")),
 		@AttributeOverride(name = "accPeriod.endDate", column = @Column(name = "expense_acc_per_end")),
 		@AttributeOverride(name = "lastModifiedAt", column = @Column(name = "expense_last_modified_dt")) })
-@AssociationOverrides(value = {
-		@AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName="partner_id")),
-		@AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name = "expense_last_modified_by", referencedColumnName="user_id")) })
+@AssociationOverrides(value = { @AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName = "partner_id")),
+		@AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name = "expense_last_modified_by", referencedColumnName = "user_id")) })
 public class Expense extends FinancialTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//fields
-	
+	// fields
+
 	// bi-directional many-to-one association to CostCenter
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_costcenter", nullable = false, referencedColumnName="cost_center_id")
+	@JoinColumn(name = "expense_costcenter", nullable = false, referencedColumnName = "cost_center_id")
 	private CostCenter costCenter;
 
 	// bi-directional many-to-one association to ExpType
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_type", nullable = false, referencedColumnName="exp_type_id")
+	@JoinColumn(name = "expense_type", nullable = false, referencedColumnName = "exp_type_id")
 	private ExpType expType;
 
-	//constructors
+	// constructors
 	public Expense() {
 	}
 
-	//getters setters
+	// getters setters
 	/**
 	 * @return
 	 */
@@ -69,12 +68,13 @@ public class Expense extends FinancialTransaction implements Serializable {
 	public void setExpType(ExpType expType) {
 		this.expType = expType;
 	}
+
 	/**
 	 * turns gt 0 to lt 0
 	 */
 	@Override
 	public void setGrossTotal(BigDecimal grossTotal) {
-		if (grossTotal.compareTo(new BigDecimal(0)) == 1) 
+		if (grossTotal.compareTo(new BigDecimal(0)) == 1)
 			grossTotal.negate();
 		super.setGrossTotal(grossTotal);
 	}

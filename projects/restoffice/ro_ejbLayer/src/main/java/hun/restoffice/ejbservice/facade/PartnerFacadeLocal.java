@@ -10,11 +10,10 @@ import javax.ejb.Local;
 import hun.restoffice.ejbservice.domain.PartnerContactStub;
 import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
-import hun.restoffice.ejbservice.exception.FacadeException;
 
 /**
+ * 
  * @author kalmankostenszky
- *
  */
 @Local
 public interface PartnerFacadeLocal {
@@ -44,22 +43,22 @@ public interface PartnerFacadeLocal {
 	 */
 	List<PartnerStub> deleteUnusedPartners() throws AdaptorException;
 
-
 	/**
 	 * Add new partner
 	 * 
 	 * @param partner
-	 * @return
+	 *            partner to add
+	 * @return added partner data
 	 * @throws AdaptorException
 	 */
 	PartnerStub addPartner(PartnerStub partner) throws AdaptorException;
-
 
 	/**
 	 * Remove existing partner
 	 * 
 	 * @param partner
-	 * @return
+	 *            partner to updated
+	 * @return updated partner data
 	 * @throws AdaptorException
 	 */
 	PartnerStub updatePartner(PartnerStub partner) throws AdaptorException;

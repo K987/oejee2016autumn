@@ -7,46 +7,47 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-
 /**
  * The persistent class for the shifts database table.
  * 
- * TODO: maybe set to composite key start date and start time
+ * @author kalmankostenszky
+ * 
+ * @TODO maybe set to composite key start date and start time
  */
 @Entity
-@Table(name="shifts")
-@NamedQuery(name="Shift.findAll", query="SELECT s FROM Shift s")
+@Table(name = "shifts")
+@NamedQuery(name = "Shift.findAll", query = "SELECT s FROM Shift s")
 public class Shift implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//fields
+	// fields
 	@Id
-	@SequenceGenerator(name="SHIFTS_SHIFTID_GENERATOR", sequenceName="SHIFTS_SHIFT_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHIFTS_SHIFTID_GENERATOR")
-	@Column(name="shift_id")
+	@SequenceGenerator(name = "SHIFTS_SHIFTID_GENERATOR", sequenceName = "SHIFTS_SHIFT_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHIFTS_SHIFTID_GENERATOR")
+	@Column(name = "shift_id")
 	private Integer id;
 
-	@Column(name="shift_duration", nullable=false)
+	@Column(name = "shift_duration", nullable = false)
 	private BigDecimal duration;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="shift_start_d", nullable=false)
+	@Column(name = "shift_start_d", nullable = false)
 	private Date startDate;
 
 	@Temporal(TemporalType.TIME)
-	@Column(name="shift_start_t", nullable=false)
+	@Column(name = "shift_start_t", nullable = false)
 	private Date startTime;
 
-	//bi-directional many-to-one association to EmployeeShift
-	@OneToMany(mappedBy="shift", fetch=FetchType.LAZY, targetEntity=EmployeeShift.class)
+	// bi-directional many-to-one association to EmployeeShift
+	@OneToMany(mappedBy = "shift", fetch = FetchType.LAZY, targetEntity = EmployeeShift.class)
 	private Set<EmployeeShift> employeeShifts;
 
-	//constructors
+	// constructors
 	public Shift() {
 	}
-	
-	//public methods
-	
+
+	// public methods
+
 	public EmployeeShift addEmployeeShift(EmployeeShift employeeShift) {
 		getEmployeeShifts().add(employeeShift);
 		employeeShift.setShift(this);
@@ -61,7 +62,7 @@ public class Shift implements Serializable {
 		return employeeShift;
 	}
 
-	//getters setters
+	// getters setters
 	public Integer getId() {
 		return this.id;
 	}

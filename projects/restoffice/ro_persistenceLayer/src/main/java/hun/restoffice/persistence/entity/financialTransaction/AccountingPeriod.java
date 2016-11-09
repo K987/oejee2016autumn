@@ -32,13 +32,11 @@ public class AccountingPeriod {
 
 	}
 
-	//public methods 
-	
-	
+	// public methods
+
 	// private methods
 	/**
-	 * sets variable period length by counting the months between start and and
-	 * dates
+	 * sets variable period length by counting the months between start and and dates
 	 */
 	private void setMonths() {
 		this.periodLength = 1;

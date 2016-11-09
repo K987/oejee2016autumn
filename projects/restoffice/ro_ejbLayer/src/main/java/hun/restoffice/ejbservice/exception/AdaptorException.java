@@ -3,18 +3,15 @@
  */
 package hun.restoffice.ejbservice.exception;
 
-import hun.restoffice.ejbservice.domain.ApplicationError;
 import hun.restoffice.ejbservice.domain.ErrorStub;
 
 /**
- * Exception class for REST methods
- *
+ * Exception class for HTTP callers
+ * 
  */
 public class AdaptorException extends Exception {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -7350719779321181727L;
 	
 	private final ApplicationError error;

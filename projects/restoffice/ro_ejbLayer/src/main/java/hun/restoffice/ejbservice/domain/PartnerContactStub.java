@@ -6,7 +6,7 @@ package hun.restoffice.ejbservice.domain;
 import hun.restoffice.persistence.entity.partner.PartnerContact;
 
 /**
- * 
+ * DTO for partner contact entity
  *
  * @author kalmankostenszky
  */
@@ -45,7 +45,7 @@ public class PartnerContactStub {
 	 * 
 	 */
 	public PartnerContactStub() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	// public methods
 

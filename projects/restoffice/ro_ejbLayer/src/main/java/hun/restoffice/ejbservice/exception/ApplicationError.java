@@ -1,7 +1,9 @@
 /**
  * 
  */
-package hun.restoffice.ejbservice.domain;
+package hun.restoffice.ejbservice.exception;
+
+import hun.restoffice.ejbservice.domain.ErrorStub;
 
 /**
  *
@@ -13,7 +15,7 @@ public enum ApplicationError {
 	UNEXPECTED(-10, 500, "Unexpected error"), // Internal Server Error
 	NOT_EXISTS(-44, 404, "Resource not found"), // Not Found
 	HAS_DEPENDENCY(-41, 412, "Has dependency"), // Precondition Failed
-	UNEXPECTED_RESULT(-44, 409, "Unexpected result"); //Conflict
+	UNEXPECTED_RESULT(-44, 409, "Unexpected result");// Conflict
 
 	private final int code;
 	private final int httpStatusCode;

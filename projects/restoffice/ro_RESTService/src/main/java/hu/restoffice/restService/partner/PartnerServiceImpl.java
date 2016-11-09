@@ -16,8 +16,8 @@ import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.PartnerFacadeLocal;
 
 /**
+ * Impelentation class of REST services on partner
  * 
- *
  * @author kalmankostenszky
  */
 @Stateless
@@ -31,17 +31,17 @@ public class PartnerServiceImpl implements PartnerRestService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * hu.restoffice.restService.partner.PartnerRestService#getPartnerContact(
-	 * java.lang.String)
+	 * @see hu.restoffice.restService.partner.PartnerRestService#getPartnerContact( java.lang.String)
 	 */
 	@Override
-	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException{
+	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException {
 		LOG.info("Get partner contact invoked. Name: " + partnerName);
 		return this.facade.getPartnerContact(partnerName);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hu.restoffice.restService.partner.PartnerRestService#getAllPartnerContacts()
 	 */
 	@Override
@@ -51,7 +51,9 @@ public class PartnerServiceImpl implements PartnerRestService {
 		return rtrn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hu.restoffice.restService.partner.PartnerRestService#deleteUnusedPartners()
 	 */
 	@Override
@@ -60,7 +62,9 @@ public class PartnerServiceImpl implements PartnerRestService {
 		return this.facade.deleteUnusedPartners();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hu.restoffice.restService.partner.PartnerRestService#addPartner()
 	 */
 	@Override
@@ -69,7 +73,9 @@ public class PartnerServiceImpl implements PartnerRestService {
 		return this.facade.addPartner(partner);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hu.restoffice.restService.partner.PartnerRestService#updatePartner()
 	 */
 	@Override
@@ -77,6 +83,5 @@ public class PartnerServiceImpl implements PartnerRestService {
 		LOG.info("update partner invoked");
 		return this.facade.updatePartner(partner);
 	}
-
 
 }

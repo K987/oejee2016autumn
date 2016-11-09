@@ -8,23 +8,24 @@ import javax.persistence.*;
 /**
  * The embeded class for partner contact information
  *
+ * @author kalmankostenszky
  */
 @Embeddable
 public class PartnerContact {
-	
-	@Column(name="partner_contact_name")
+
+	@Column(name = "partner_contact_name")
 	private String name;
-	
-	@Column(name="partner_contact_phone")
+
+	@Column(name = "partner_contact_phone")
 	private String phone;
-	
-	@Column(name="partner_contact_email")
+
+	@Column(name = "partner_contact_email")
 	private String email;
 
-	
-	public PartnerContact(){
-		
+	public PartnerContact() {
+
 	}
+
 	/**
 	 * @param name
 	 * @param email
@@ -35,6 +36,7 @@ public class PartnerContact {
 		this.email = email;
 		this.phone = phone;
 	}
+
 	/**
 	 * @return the name
 	 */
@@ -43,7 +45,8 @@ public class PartnerContact {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -57,7 +60,8 @@ public class PartnerContact {
 	}
 
 	/**
-	 * @param phone the phone to set
+	 * @param phone
+	 *            the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -71,12 +75,11 @@ public class PartnerContact {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
 }

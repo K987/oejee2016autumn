@@ -20,27 +20,31 @@ public interface PartnerConverterLocal {
 
 	/**
 	 * Convert partner entity to contact stub
+	 * 
 	 * @param partner
-	 * @return 
+	 * @return
 	 */
 	PartnerContactStub toContact(Partner partner);
 
 	/**
 	 * Convert partner entities to contact stubs
+	 * 
 	 * @param partners
 	 * @return
 	 */
 	List<PartnerStub> toContact(List<Partner> partners);
 
 	/**
-	 * Convert partner entites of  partner stubs
+	 * Convert partner entites of partner stubs
+	 * 
 	 * @param partners
 	 * @return
 	 */
 	List<PartnerStub> toPartner(List<Partner> partners);
-	
+
 	/**
-	 * Convert partner entity of  partner stub
+	 * Convert partner entity of partner stub
+	 * 
 	 * @param partners
 	 * @return
 	 */
