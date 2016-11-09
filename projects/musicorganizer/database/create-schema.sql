@@ -2,12 +2,12 @@ CREATE TABLE user (
 	user_id SERIAL NOT NULL,
 	user_name CHARACTER VARYING(20) NOT NULL,
 	user_password CHARACTER VARYING(20) NOT NULL,
-	user_emailaddr CHARACTER VARYING(40) NULL,
+	user_emailaddr CHARACTER VARYING(40) NOT NULL,
 	CONSTRAINT PK_USER_ID PRIMARY KEY (user_id)
 );
 ALTER TABLE user OWNER TO postgres;
 
-
+-- TODO user_id + name should be unique
 CREATE TABLE tracklist (
 	tracklist_id SERIAL NOT NULL,
 	tracklist_user_id INTEGER NOT NULL,

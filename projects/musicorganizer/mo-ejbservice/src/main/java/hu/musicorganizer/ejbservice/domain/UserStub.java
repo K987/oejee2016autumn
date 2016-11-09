@@ -3,7 +3,7 @@ package hu.musicorganizer.ejbservice.domain;
 public class UserStub {
 
 	private String username;
-	private String emailAddr;
+	private String emailAddress;
 	
 	public String getUsername() {
 		return username;
@@ -11,11 +11,11 @@ public class UserStub {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getEmailAddr() {
-		return emailAddr;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
-	public void setEmailAddr(String emailAddr) {
-		this.emailAddr = emailAddr;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 	
 	

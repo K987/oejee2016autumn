@@ -1,6 +1,7 @@
 
 include 'mo-ejbservice'
 include 'mo-weblayer'
+include 'mo-persistence'
 
 include 'shared'
 include 'api'
