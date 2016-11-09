@@ -1,0 +1,1 @@
+DROP DATABASE anglerregistry_db;

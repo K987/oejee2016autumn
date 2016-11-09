@@ -1,0 +1,8 @@
+jar { archiveName 'ar-ejbservice.jar' }
+
+dependencies {
+	//testCompile 'junit:junit:4.12'
+	compile group: 'log4j', name: 'log4j', version: log4jVersion
+	compile group: 'javax', name: 'javaee-api', version: jeeVersion
+	compile project(':ar-persistence')
+}

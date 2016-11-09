@@ -1,0 +1,32 @@
+apply plugin: 'war'
+
+war { archiveName 'ar-weblayer.war' }
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+	//testCompile 'junit:junit:4.12'
+	providedCompile project(':ar-ejbservice')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+	runtime 'javax.servlet:javax.servlet-api:3.1.0'
+	compile group: 'javax.faces', name: 'jsf-api', version: '2.1'
+	compile group: 'org.primefaces', name: 'primefaces', version: '6.0'
+	compile 'org.primefaces:primefaces:6.0'
+	compile 'com.sun.faces:jsf-api:2.+'
+    runtime 'com.sun.faces:jsf-impl:2.+'
+}
+
+eclipse {
+    wtp {
+        facet {
+            facet name: "java", version: "1.7"          // Java version
+            facet name: "jst.web", version: "3.0"       // Dynamic Web Application
+            facet name: "jst.jsf", version: "2.2"       // Java Server Faces
+            facet name: "wst.jsdt.web", version: "1.0"  // JavaScript
+        }
+    }
+}
