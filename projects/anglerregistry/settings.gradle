@@ -1,5 +1,0 @@
-include 'ar-ejbservice'
-include 'ar-weblayer'
-include 'ar-webservice'
-include 'ar-persistence'
-include 'ar-restclient'
