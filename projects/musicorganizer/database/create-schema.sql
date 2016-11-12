@@ -34,17 +34,17 @@ CREATE TABLE streamingurl (
 	streamingurl_type CHARACTER VARYING(40) NOT NULL,
 	streamingurl_url CHARACTER VARYING(200) NOT NULL,
 	CONSTRAINT PK_STREAMINGURL_ID PRIMARY KEY (streamingurl_id),
-	CONSTRAINT FK_streamingurl_song_id FOREIGN KEY (tracklist_song_id)
+	CONSTRAINT FK_streamingurl_song_id FOREIGN KEY (streamingurl_song_id)
 	  REFERENCES song (song_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
 );
-CREATE INDEX IDX_streamingurl_song_id ON streamingurl USING btree (song_id);
+CREATE INDEX IDX_streamingurl_song_id ON streamingurl USING btree (streamingurl_song_id);
 ALTER TABLE streamingurl OWNER TO postgres;
 
 
 CREATE TABLE trackliststreamingurl (
 	song_id INTEGER NOT NULL,
 	streamingurl_id INTEGER NOT NULL,
-	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id, streamingurl_id)
+	CONSTRAINT PK_TRACKLISTSTREAMINGURL_ID PRIMARY KEY (song_id, streamingurl_id)
 );
 CREATE UNIQUE INDEX UI_tracklistsong_pk ON trackliststreamingurl USING btree (streamingurl_id, song_id);
 ALTER TABLE trackliststreamingurl OWNER TO postgres;
@@ -56,7 +56,7 @@ CREATE TABLE album (
 	album_releasedate DATE NULL,
 	album_genre CHARACTER VARYING(40) NULL,
 	album_label CHARACTER VARYING(40) NULL,
-	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id)
+	CONSTRAINT PK_ALBUM_ID PRIMARY KEY (album_id)
 );
 ALTER TABLE album OWNER TO postgres;
 
@@ -68,14 +68,14 @@ CREATE TABLE albumsong (
 	song_id INTEGER NOT NULL,
 	CONSTRAINT PK_ALBUMSONG_ID PRIMARY KEY (song_id, album_id)
 );
-CREATE UNIQUE INDEX UI_tracklistsong_pk ON albumsong USING btree (album_id, song_id);
+CREATE UNIQUE INDEX UI_albumsong_pk ON albumsong USING btree (album_id, song_id);
 ALTER TABLE albumsong OWNER TO postgres;
 
 
 CREATE TABLE artist (
 	artist_id SERIAL NOT NULL,
 	artist_name CHARACTER VARYING(100) NOT NULL,
-	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id)
+	CONSTRAINT PK_ARTIST_ID PRIMARY KEY (artist_id)
 );
 ALTER TABLE artist OWNER TO postgres;
 
@@ -84,7 +84,7 @@ ALTER TABLE artist OWNER TO postgres;
 CREATE TABLE artistsong (
 	song_id INTEGER NOT NULL,
 	artist_id INTEGER NOT NULL,
-	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id, artist_id)
+	CONSTRAINT PK_ARTISTSONG_ID PRIMARY KEY (song_id, artist_id)
 );
-CREATE UNIQUE INDEX UI_tracklistsong_pk ON albumsong USING btree (artist_id, song_id);
+CREATE UNIQUE INDEX UI_artistsong_pk ON artistsong USING btree (artist_id, song_id);
 ALTER TABLE albumsong OWNER TO postgres;

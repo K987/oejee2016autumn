@@ -1,9 +1,9 @@
-DROP TABLE customer;
+DROP TABLE artistsong;
+DROP TABLE albumsong;
+DROP TABLE trackliststreamingurl;
+DROP TABLE streamingurl;
 DROP TABLE tracklist;
 DROP TABLE song;
-DROP TABLE streamingurl;
-DROP TABLE tracklistsong;
+DROP TABLE customer;
 DROP TABLE album;
-DROP TABLE albumsong;
 DROP TABLE artist;
-DROP TABLE artistsong;
