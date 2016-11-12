@@ -1,4 +1,4 @@
-DROP TABLE user;
+DROP TABLE customer;
 DROP TABLE tracklist;
 DROP TABLE song;
 DROP TABLE streamingurl;

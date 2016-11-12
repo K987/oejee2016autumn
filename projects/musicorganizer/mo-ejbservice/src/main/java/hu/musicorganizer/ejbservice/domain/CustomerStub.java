@@ -1,15 +1,15 @@
 package hu.musicorganizer.ejbservice.domain;
 
-public class UserStub {
+public class CustomerStub {
 
-	private String username;
+	private String nickname;
 	private String emailAddress;
 	
-	public String getUsername() {
-		return username;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setNickname(String username) {
+		this.nickname = username;
 	}
 	public String getEmailAddress() {
 		return emailAddress;

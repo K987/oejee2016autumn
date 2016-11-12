@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hu.musicorganizer.ejbservice.domain.UserStub;
-import hu.musicorganizer.ejbservice.facade.UserFacade;
+import hu.musicorganizer.ejbservice.domain.CustomerStub;
+import hu.musicorganizer.ejbservice.facade.CustomerFacade;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	
 	@EJB
-	private UserFacade userFacade;
+	private CustomerFacade customerFacade;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		resp.setCharacterEncoding("UTF-8");
 		PrintWriter out = resp.getWriter();
 		
-		UserStub user = userFacade.authenticate("levair", "Levair123");
+		CustomerStub user = customerFacade.authenticate("levair", "Levair123");
 		
-		out.println("Welcome to Music Organizer! \n Logged in as " + user.getUsername());
+		out.println("Welcome to Music Organizer! \n Logged in as " + user.getNickname());
 		out.close();
 	}
 	

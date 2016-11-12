@@ -13,16 +13,16 @@ public class TrackList {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "tracklist_user_id", referencedColumnName = "user_id", nullable = false)
-	private User user;
+	@JoinColumn(name = "tracklist_customer_id", referencedColumnName = "customer_id", nullable = false)
+	private Customer customer;
 	
 	@Column(name = "tracklist_name", nullable = false)
 	private String name;
 
-	public TrackList(Long id, User user, String name) {
+	public TrackList(Long id, Customer customer, String name) {
 		super();
 		this.id = id;
-		this.user = user;
+		this.customer = customer;
 		this.name = name;
 	}
 
@@ -34,12 +34,12 @@ public class TrackList {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCustomer(Customer user) {
+		this.customer = user;
 	}
 
 	public String getName() {
