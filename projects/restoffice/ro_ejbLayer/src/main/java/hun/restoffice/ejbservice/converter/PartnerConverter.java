@@ -23,7 +23,7 @@ import hun.restoffice.persistence.entity.partner.Partner;
 @Stateless
 public class PartnerConverter implements PartnerConverterLocal {
 
-	private static final Logger LOG = Logger.getLogger(PartnerConverter.class);
+	//private static final Logger LOG = Logger.getLogger(PartnerConverter.class);
 
 	/*
 	 * (non-Javadoc)

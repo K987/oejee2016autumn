@@ -12,5 +12,5 @@ package hun.restoffice.persistence.entity.employee;
 public enum JobPosition {
 	WAITER,
 	BARTENDER,
-	CHEF
+	CHEF;
 }

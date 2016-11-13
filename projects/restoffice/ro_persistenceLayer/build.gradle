@@ -11,4 +11,5 @@
 // In this section you declare the dependencies for your production and test code
 dependencies {
   compile group: 'org.hibernate', name: 'hibernate-core', version: '4.3.10.Final'
+  compile group: 'javax', name: 'javaee-api', version: '6.0'
 }

@@ -13,5 +13,13 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationPath("/rest")
 public class RestServiceApplication extends Application {
+	/*
+	@Override
+	public Set<Object> getSingletons(){
+		HashSet<Object> singletons = new HashSet<>();
+		singletons.add(new JacksonJaxbJsonProvider());
+		return singletons;
+	}
+	*/
 	
 }

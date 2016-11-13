@@ -14,7 +14,7 @@ import hun.restoffice.persistence.entity.partner.Partner;
  */
 public class PartnerStub {
 
-	private static final Logger LOG = Logger.getLogger(PartnerStub.class);
+	//private static final Logger LOG = Logger.getLogger(PartnerStub.class);
 
 	// fields
 	private String name;

@@ -1,18 +1,20 @@
 /**
  * 
  */
-package hu.restoffice.restService.partner;
+package hu.restoffice.restService.service;
 
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import hun.restoffice.ejbservice.domain.PartnerContactStub;
 import hun.restoffice.ejbservice.domain.PartnerStub;
@@ -37,6 +39,7 @@ public interface PartnerRestService {
 	@GET
 	@Path("get/{partnerName}")
 	@Produces("application/json")
+	// Response getPartnerContact(@PathParam("partnerName") String partnerName) throws AdaptorException;
 	PartnerContactStub getPartnerContact(@PathParam("partnerName") String partnerName) throws AdaptorException;
 
 	/**
@@ -88,4 +91,14 @@ public interface PartnerRestService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	PartnerStub updatePartner(PartnerStub partner) throws AdaptorException;
+
+	/**
+	 * 
+	 * @param path 
+	 * @return
+	 * @throws AdaptorException
+	 */
+	@OPTIONS
+	//@Path("{path:.*}")
+	Response optionsAll(@PathParam("path") String path) throws AdaptorException;
 }

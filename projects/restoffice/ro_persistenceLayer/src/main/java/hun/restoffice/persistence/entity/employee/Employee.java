@@ -1,9 +1,22 @@
 package hun.restoffice.persistence.entity.employee;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the employees database table.
@@ -12,9 +25,20 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "employees")
-@NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
+@NamedQueries(value = {
+		@NamedQuery(name = Employee.FIND_ALL, query = "SELECT e FROM Employee e"), 
+		@NamedQuery(name = Employee.GET_EMPLOYEE_SCHEDULE, query = "SELECT e FROM Employee e LEFT JOIN FETCH e.employeeShifts es LEFT JOIN FETCH es.shift s "
+				+ "WHERE e.name=:"+Employee.NAME+" AND s.startDate BETWEEN :"+Employee.START_DATE+" AND :"+Employee.END_DATE)
+		})
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL = "Employee.findAll";
+	public static final String GET_EMPLOYEE_SCHEDULE = "Employee.getSchedule";
+	
+	public static final String NAME = "name";
+	public static final String START_DATE = "startDate";
+	public static final String END_DATE = "endDate";
 
 	// fields
 
