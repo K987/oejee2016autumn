@@ -13,37 +13,39 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "hal")
-public class Hal implements Serializable{
+public class HalEntity implements Serializable {
 
 	@Transient
 	private static final long serialVersionUID = -2650585615626806254L;
 
 	@Id
+	// @SequenceGenerator(name = " generatorHal", sequenceName = "hal_hal_id_seq", allocationSize = 1)
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorHal")
 	@Column(name = "id", nullable = false)
 	private long id;
-	
+
 	@Column(name = "halnev", nullable = false)
 	private String halNev;
-	
+
 	@Column(name = "minimummeret")
 	private int minimumMeret;
-	
+
 	@Column(name = "napidarabszam", nullable = false)
 	private int napiDarabSzam;
-	
-	@Column(name = "tilalmiidoszakvege")
+
+	@Column(name = "tilalmiidoszakkezdete")
 	@Temporal(TemporalType.DATE)
 	private Date tilalmiIdoszakKezdete;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "tilalmiidoszakvege")
 	private Date tilalmiIdoszakVege;
-	
+
 	@Column(name = "pusztulas")
 	private int pusztulas;
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -51,7 +53,7 @@ public class Hal implements Serializable{
 	}
 
 	public String getHalNev() {
-		return halNev;
+		return this.halNev;
 	}
 
 	public void setHalNev(String halNev) {
@@ -59,7 +61,7 @@ public class Hal implements Serializable{
 	}
 
 	public int getMinimumMeret() {
-		return minimumMeret;
+		return this.minimumMeret;
 	}
 
 	public void setMinimumMeret(int minimumMeret) {
@@ -67,7 +69,7 @@ public class Hal implements Serializable{
 	}
 
 	public int getNapiDarabSzam() {
-		return napiDarabSzam;
+		return this.napiDarabSzam;
 	}
 
 	public void setNapiDarabSzam(int napiDarabSzam) {
@@ -75,7 +77,7 @@ public class Hal implements Serializable{
 	}
 
 	public Date getTilalmiIdoszakKezdete() {
-		return tilalmiIdoszakKezdete;
+		return this.tilalmiIdoszakKezdete;
 	}
 
 	public void setTilalmiIdoszakKezdete(Date tilalmiIdoszakKezdete) {
@@ -83,7 +85,7 @@ public class Hal implements Serializable{
 	}
 
 	public Date getTilalmiIdoszakVege() {
-		return tilalmiIdoszakVege;
+		return this.tilalmiIdoszakVege;
 	}
 
 	public void setTilalmiIdoszakVege(Date tilalmiIdoszakVege) {
@@ -91,7 +93,7 @@ public class Hal implements Serializable{
 	}
 
 	public int getPusztulas() {
-		return pusztulas;
+		return this.pusztulas;
 	}
 
 	public void setPusztulas(int pusztulas) {
@@ -101,8 +103,5 @@ public class Hal implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
+
 }

@@ -10,12 +10,14 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "horgaszto")
-public class Horgaszto implements Serializable {
+public class HorgasztoEntity implements Serializable {
 
 	@Transient
 	private static final long serialVersionUID = 49619221020832690L;
 
 	@Id
+	// @SequenceGenerator(name = " generatorHorgaszto", sequenceName = "horgaszto_horgaszto_id_seq", allocationSize = 1)
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorHorgaszto")
 	@Column(name = "id", nullable = false)
 	private long id;
 
