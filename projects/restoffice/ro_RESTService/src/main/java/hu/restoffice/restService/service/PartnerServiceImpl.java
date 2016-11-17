@@ -37,6 +37,7 @@ public class PartnerServiceImpl implements PartnerRestService {
 	@Override
 	//public Response getPartnerContact(String partnerName) throws AdaptorException {
 	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException {
+		
 		LOG.info("Get partner contact invoked. Name: " + partnerName);
 		//PartnerContactStub rtrn = this.facade.getPartnerContact(partnerName);
 		//return Response.ok(rtrn).build();

@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.EmployeeConverterLocal;
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
@@ -24,7 +23,7 @@ import hun.restoffice.persistence.service.EmployeeServiceLocal;
  *
  * @author kalmankostenszky
  */
-@Stateless(mappedName="ejb/employeeFacade")
+@Stateless(mappedName = "ejb/employeeFacade")
 public class EmployeeFacade implements EmployeeFacadeLocal {
 
 	private static Logger LOG = Logger.getLogger(EmployeeFacade.class);
@@ -78,9 +77,11 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 	public EmployeeStub removeEmployee(String employeeName) throws AdaptorException {
 		if (LOG.isDebugEnabled())
 			LOG.debug("removeEmployee invoked w/ param " + employeeName);
-
-		// TODO: na most itt ki kell találni, hogy tényleg employee-t adjak vissza
-		throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
+		try {
+			return this.eConverter.to(this.eService.deleteEmployee(employeeName));
+		} catch (Exception e) {
+			throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
+		}
 	}
 
 	/*
@@ -93,10 +94,9 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 	public EmployeeScheduleStub getEmployeeSchedule(String name, Calendar from, Calendar to) throws AdaptorException {
 		if (LOG.isDebugEnabled())
 			LOG.debug("getEmployeeSchedule invoked w/ param: [employee name: " + name + ", from: " + from + ", to: " + to + "]");
-		try{
-		return this.eConverter.toSchedule(this.eService.queryEmpSchedule(name, from, to));
+		try {
+			return this.eConverter.toSchedule(this.eService.queryEmpSchedule(name, from, to));
 		} catch (PersistenceServiceException e) {
-			
 			throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
 		}
 	}
@@ -104,16 +104,19 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see hun.restoffice.ejbservice.facade.EmployeeFacadeLocal#getCalendarSchedule(java.util.Calendar,
-	 * java.util.Calendar)
+	 * @see hun.restoffice.ejbservice.facade.EmployeeFacadeLocal#updateEmployee(hun.restoffice.ejbservice.domain.
+	 * EmployeeStub)
 	 */
 	@Override
-	public CalendarScheduleStub getCalendarSchedule(Calendar from, Calendar to) throws AdaptorException {
+	public EmployeeStub updateEmployee(EmployeeStub employee) throws AdaptorException {
 		if (LOG.isDebugEnabled())
-			LOG.debug("getEmployeeSchedule invoked w/ param: [from: " + from + ", to: " + to + "]");
-
-		// TODO: na most itt ki kell találni, hogy mit is akarjak visszadni
-		throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
+			;
+		LOG.debug("updateEmployee invoked w/ params: " + employee);
+		try {
+			return this.eConverter.to(this.eService.updateEmployee(this.eConverter.from(employee)));
+		} catch (PersistenceServiceException e) {
+			throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
+		}
 	}
 
 }

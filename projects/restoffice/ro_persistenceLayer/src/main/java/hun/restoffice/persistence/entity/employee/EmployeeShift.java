@@ -1,9 +1,23 @@
 package hun.restoffice.persistence.entity.employee;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the employee_shift database table.
@@ -39,9 +53,9 @@ public class EmployeeShift implements Serializable {
 	@Temporal(TemporalType.TIME)
 	private Date actualEnd;
 
-	// TODO: set position enum
+	@Enumerated(value = EnumType.ORDINAL)
 	@Column(name = "employee_shift_actual_position")
-	private Integer actualPosition;
+	private JobPosition actualPosition;
 
 	@SequenceGenerator(name = "employee_shift_employee_shift_id_generator", sequenceName = "employee_shift_employee_shift_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_shift_employee_shift_id_generator")
@@ -56,11 +70,12 @@ public class EmployeeShift implements Serializable {
 		this.actualEnd = employeeShiftActualEnd;
 	}
 
-	public Integer getActualPosition() {
+	
+	public JobPosition getActualPosition() {
 		return this.actualPosition;
 	}
 
-	public void setActualPosition(Integer employeeShiftActualPosition) {
+	public void setActualPosition(JobPosition employeeShiftActualPosition) {
 		this.actualPosition = employeeShiftActualPosition;
 	}
 

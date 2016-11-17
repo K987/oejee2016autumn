@@ -10,13 +10,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import hu.restoffice.restService.converter.RESTDate;
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
+import hu.restoffice.restService.exception.RestError;
+import hu.restoffice.restService.param.DateParam;
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
@@ -31,10 +30,10 @@ import hun.restoffice.ejbservice.facade.EmployeeFacadeLocal;
 public class EmployeeRestServiceImpl implements EmployeeRestService {
 
 	private static final Logger LOG = Logger.getLogger(EmployeeRestServiceImpl.class);
-	
+
 	@EJB
 	private EmployeeFacadeLocal facade;
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -67,7 +66,7 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 	@Override
 	public EmployeeStub updateEmployee(EmployeeStub employee) throws AdaptorException {
 		LOG.info("update employee invoked w/ param: " + employee);
-		return this.facade.addEmployee(employee);
+		return this.facade.updateEmployee(employee);
 	}
 
 	/*
@@ -88,44 +87,26 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 	 * hu.restoffice.restService.converter.RESTDate, hu.restoffice.restService.converter.RESTDate)
 	 */
 	@Override
-	public EmployeeScheduleStub getEmployeeSchedule(String name, UriInfo ui) throws AdaptorException, WebApplicationException {
-		
-		LOG.info("get employee schedule invoked w/ params: [name : " + name + ", from: " + ui.getQueryParameters().getFirst("from") + ", to: " + ui.getQueryParameters().getFirst("to")  + "]");
-		MultivaluedMap<String, String>  = ui.getQueryParameters();
-		
-		//TODO: ezt befejezni
-		Calendar f = from.getDate() != null ? from.getDate() : Calendar.getInstance();
-
+	public EmployeeScheduleStub getEmployeeSchedule(String name, DateParam from, DateParam to) throws AdaptorException, WebApplicationException {
+		LOG.info("get employee schedule invoked");
+		Calendar f = null;
 		Calendar t = null;
-		if (to.getDate() != null) {
-			t = to.getDate();
-		} else {
-			t = (Calendar) f.clone();
-			t.add(Calendar.DAY_OF_YEAR, 14);
+		try {
+			f = from.getDate() != null ? from.getDate() : Calendar.getInstance();
+			if (to.getDate() != null) {
+				t = to.getDate();
+			} else {
+				t = (Calendar) f.clone();
+				t.add(Calendar.DAY_OF_YEAR, 14);
+			}
+		} catch (Exception e) {
+			throw new WebApplicationException(e, Response.status(400).entity(new RestError(-100, "missing parameter")).build());
 		}
+
 		EmployeeScheduleStub rtrn = this.facade.getEmployeeSchedule(name, f, t);
 		Collections.sort(rtrn.getWorkdays());
 		return rtrn;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see hu.restoffice.restService.service.EmployeeRestService#getCalendarSchedule(java.lang.String,
-	 * hu.restoffice.restService.converter.RESTDate, hu.restoffice.restService.converter.RESTDate)
-	 */
-	@Override
-	public CalendarScheduleStub getCalendarSchedule(RESTDate from, RESTDate to) throws AdaptorException {
-		LOG.info("get calendar schedule invoked w/ params: [from: "+from.getDate()+", to: "+to.getDate()+"]");
-		Calendar f = from.getDate() != null ? from.getDate() : Calendar.getInstance();
-		
-		Calendar t = null;
-		if (to.getDate() != null){
-			t = to.getDate();
-		} else {
-			t = (Calendar)f.clone();
-			t.add(Calendar.DAY_OF_YEAR, 14);
-		}
-		return this.facade.getCalendarSchedule(f,t);
-	}
+	
 }

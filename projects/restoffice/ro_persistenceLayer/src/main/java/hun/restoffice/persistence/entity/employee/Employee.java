@@ -25,20 +25,26 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "employees")
-@NamedQueries(value = {
-		@NamedQuery(name = Employee.FIND_ALL, query = "SELECT e FROM Employee e"), 
-		@NamedQuery(name = Employee.GET_EMPLOYEE_SCHEDULE, query = "SELECT e FROM Employee e LEFT JOIN FETCH e.employeeShifts es LEFT JOIN FETCH es.shift s "
-				+ "WHERE e.name=:"+Employee.NAME+" AND s.startDate BETWEEN :"+Employee.START_DATE+" AND :"+Employee.END_DATE)
-		})
+@NamedQueries(value = { @NamedQuery(name = Employee.FIND_ALL, query = "SELECT e FROM Employee e"),
+		@NamedQuery(name = Employee.GET_EMPLOYEE_SCHEDULE, query = "SELECT e FROM Employee e LEFT JOIN FETCH e.employeeShifts es LEFT JOIN es.shift s "
+				+ "WHERE e.name=:" + Employee.NAME + " AND s.startDate BETWEEN :" + Employee.START_DATE + " AND :" + Employee.END_DATE),
+		@NamedQuery(name = Employee.GET_EMPLOYEE_BY_NAME, query = "SELECT e FROM Employee e WHERE e.name = LOWER(:" + Employee.NAME+")"),
+		@NamedQuery(name = Employee.COUNT_DAYS_WORKED, query = "SELECT e, COUNT(es.rowId)  FROM Employee e LEFT JOIN FETCH e.employeeShifts es LEFT JOIN es.shift s "
+				+ "WHERE e.name=:" + Employee.NAME + " AND s.startDate <=:" + Employee.END_DATE + " AND es.actualStart != null")
+
+})
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Employee.findAll";
+	public static final String GET_EMPLOYEE_BY_NAME = "Employee.getByName";
 	public static final String GET_EMPLOYEE_SCHEDULE = "Employee.getSchedule";
-	
+	public static final String COUNT_DAYS_WORKED = "Employee.DaysWorked";
+
 	public static final String NAME = "name";
 	public static final String START_DATE = "startDate";
 	public static final String END_DATE = "endDate";
+
 
 	// fields
 

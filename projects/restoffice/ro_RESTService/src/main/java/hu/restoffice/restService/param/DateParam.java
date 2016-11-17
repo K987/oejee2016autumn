@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hu.restoffice.restService.converter;
+package hu.restoffice.restService.param;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,33 +9,35 @@ import java.util.Calendar;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.apache.log4j.Logger;
 
+import hu.restoffice.restService.exception.RestError;
+
 /**
- * String to Calendar converter type
+ * String to date param type
  *
  * @author kalmankostenszky
  */
-public class RESTDate  {
+public class DateParam {
 
-	private static final Logger LOG = Logger.getLogger(RESTDate.class);
-	
+	private static final Logger LOG = Logger.getLogger(DateParam.class);
+
 	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	private Calendar date;
 
-	public RESTDate(String date) throws WebApplicationException {
+	public DateParam(String date) throws WebApplicationException {
 		if (date == null || date.equalsIgnoreCase("")) {
 			this.date = null;
+			LOG.info("null date created");
 		} else {
 			try {
+				LOG.info("date created");
 				this.date = Calendar.getInstance();
 				this.date.setTime((df.parse(date)));
 			} catch (Exception e) {
-				LOG.error(e.getMessage());
-				
-				throw new WebApplicationException("valid format is yyyy-MM-dd",e,Response.status(Status.BAD_REQUEST).entity("valid date format is: yyyy-MM-dd").build());
+				LOG.error("konverziós hiba");
+				throw new WebApplicationException(e, Response.status(400).entity(new RestError(-99, "date format allowed: yyyy-MM-dd")).build());
 			}
 		}
 	}

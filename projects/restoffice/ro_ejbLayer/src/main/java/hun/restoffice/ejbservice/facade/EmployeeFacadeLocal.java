@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
@@ -47,10 +46,9 @@ public interface EmployeeFacadeLocal {
 	EmployeeScheduleStub getEmployeeSchedule(String name, Calendar from, Calendar to) throws AdaptorException;
 
 	/**
-	 * @param f
-	 * @param t
+	 * @param employee
 	 * @return
 	 */
-	CalendarScheduleStub getCalendarSchedule(Calendar f, Calendar t) throws AdaptorException;
+	EmployeeStub updateEmployee(EmployeeStub employee) throws AdaptorException;
 
 }

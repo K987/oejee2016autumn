@@ -1,11 +1,23 @@
 package hun.restoffice.persistence.entity.employee;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the shifts database table.
@@ -16,9 +28,18 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "shifts")
-@NamedQuery(name = "Shift.findAll", query = "SELECT s FROM Shift s")
+@NamedQueries( value = { 
+		@NamedQuery(name = "Shift.findAll", query = "SELECT s FROM Shift s"),
+		@NamedQuery(name = "Shift.getSchedule", query = "SELECT s FROM Shift s JOIN FETCH s.employeeShifts es WHERE s.startDate BETWEEN :"+Employee.START_DATE+" AND :"+Employee.END_DATE)
+		})
 public class Shift implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String GET_SCHEDULE = "Shift.getSchedule";
+
+	public static final String TO_DATE = "toDate";
+	public static final String FROM_DATE = "fromDate";
+
 
 	// fields
 	@Id

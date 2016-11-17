@@ -40,4 +40,18 @@ public interface EmployeeServiceLocal {
 	 */
 	Employee queryEmpSchedule(String name, Calendar from, Calendar to) throws PersistenceServiceException;
 
+	/**
+	 * @param employeeName
+	 * @return
+	 */
+	Employee deleteEmployee(String employeeName) throws PersistenceServiceException;
+
+	/**
+	 * @param employee
+	 * @return
+	 */
+	Employee updateEmployee(Employee employee) throws PersistenceServiceException;
+	
+	
+
 }
