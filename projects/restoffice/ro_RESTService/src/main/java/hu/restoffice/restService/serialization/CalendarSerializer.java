@@ -13,7 +13,7 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 
 /**
- *  
+ *  Calendar type serializer for JSON
  *
  * @author kalmankostenszky
  */

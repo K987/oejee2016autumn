@@ -23,7 +23,7 @@ import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- * 
+ * Employee persistence facade
  *
  * @author kalmankostenszky
  */
@@ -132,9 +132,11 @@ public class EmployeeService implements EmployeeServiceLocal {
 	}
 
 	/**
+	 * Checks if an employee has completed workdays before a date
+	 * 
 	 * @param employeeName
 	 * @param time
-	 * @return
+	 * @return true: if worked before
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private boolean workedBefore(String employeeName, Calendar time) throws PersistenceServiceException {
@@ -149,6 +151,7 @@ public class EmployeeService implements EmployeeServiceLocal {
 	}
 
 	/**
+	 * retrieves employee by name
 	 * 
 	 * @param employeeName
 	 * @return

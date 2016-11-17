@@ -22,7 +22,7 @@ import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.ShiftFacadeLocal;
 
 /**
- * 
+ * An implementation for shift services
  *
  * @author kalmankostenszky
  */

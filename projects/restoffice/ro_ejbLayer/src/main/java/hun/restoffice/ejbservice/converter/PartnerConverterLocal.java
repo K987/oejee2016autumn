@@ -12,8 +12,9 @@ import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.persistence.entity.partner.Partner;
 
 /**
+ * Convert partner entity and stub back and forth
+ * 
  * @author kalmankostenszky
- *
  */
 @Local
 public interface PartnerConverterLocal {

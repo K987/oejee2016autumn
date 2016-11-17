@@ -17,7 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-
+/**
+ * cross origin filter
+ *  
+ * @author kalmankostenszky
+ */
 @WebFilter(filterName = "CrossOriginRequestFilter", urlPatterns = { "/*" })
 public class CrossOriginRequestFilter implements Filter {
 

@@ -21,7 +21,7 @@ import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- *  
+ *  Shift service facade
  *
  * @author kalmankostenszky
  */

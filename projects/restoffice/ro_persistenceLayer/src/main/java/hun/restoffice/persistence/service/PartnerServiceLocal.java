@@ -11,7 +11,7 @@ import hun.restoffice.persistence.entity.partner.Partner;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- * Local persistence services for partner entity
+ * Partner persistence facade
  *
  * @author kalmankostenszky
  */

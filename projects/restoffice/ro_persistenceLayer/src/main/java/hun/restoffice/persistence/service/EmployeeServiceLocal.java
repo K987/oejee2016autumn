@@ -12,7 +12,7 @@ import hun.restoffice.persistence.entity.employee.Employee;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- *  
+ * Employee service facade
  *
  * @author kalmankostenszky
  */
@@ -20,11 +20,15 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 public interface EmployeeServiceLocal {
 
 	/**
+	 * Retrieve all employees
+	 * 
 	 * @return
+	 * @throws PersistenceServiceException
 	 */
 	List<Employee> readAll() throws PersistenceServiceException;
 
 	/**
+	 * Create new employee
 	 * 
 	 * @param employee
 	 * @return
@@ -33,25 +37,32 @@ public interface EmployeeServiceLocal {
 	public Employee create(Employee employee) throws PersistenceServiceException;
 
 	/**
+	 * Queries employee work schedule betwee two dates
+	 * 
 	 * @param name
 	 * @param from
 	 * @param to
 	 * @return
+	 * @throws PersistenceServiceException
 	 */
 	Employee queryEmpSchedule(String name, Calendar from, Calendar to) throws PersistenceServiceException;
 
 	/**
+	 * Deletes employee
+	 * 
 	 * @param employeeName
 	 * @return
+	 * @throws PersistenceServiceException
 	 */
 	Employee deleteEmployee(String employeeName) throws PersistenceServiceException;
 
 	/**
+	 * Updates employee data
+	 * 
 	 * @param employee
 	 * @return
+	 * @throws PersistenceServiceException
 	 */
 	Employee updateEmployee(Employee employee) throws PersistenceServiceException;
-	
-	
 
 }

@@ -20,6 +20,7 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.EmployeeServiceLocal;
 
 /**
+ * Employee business facade
  *
  * @author kalmankostenszky
  */

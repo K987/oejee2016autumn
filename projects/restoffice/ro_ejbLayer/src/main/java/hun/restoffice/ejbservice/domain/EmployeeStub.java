@@ -9,7 +9,7 @@ import hun.restoffice.persistence.entity.employee.Employee;
 import hun.restoffice.persistence.entity.employee.JobPosition;
 
 /**
- *  
+ * DTO for employee  
  *
  * @author kalmankostenszky
  */
@@ -20,16 +20,10 @@ public class EmployeeStub {
 	private BigDecimal wage;
 	private Boolean active;
 
-	/**
-	 * 
-	 */
 	public EmployeeStub(){
 		
 	}
 	
-	/**
-	 * @param emp
-	 */
 	public EmployeeStub(Employee emp) {
 		this.name = emp.getEmployeeName();
 		this.position = emp.getDefaultPosition();
@@ -91,6 +85,14 @@ public class EmployeeStub {
 	 */
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("EmployeeStub [name=%s, position=%s, wage=%s, active=%s]", name, position, wage, active);
 	}
 	
 	

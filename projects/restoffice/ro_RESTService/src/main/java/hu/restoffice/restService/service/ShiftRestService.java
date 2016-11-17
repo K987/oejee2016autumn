@@ -16,7 +16,7 @@ import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 
 /**
- *  
+ *  REST services for shift management
  *
  * @author kalmankostenszky
  */
@@ -24,7 +24,8 @@ import hun.restoffice.ejbservice.exception.AdaptorException;
 public interface ShiftRestService {
 
 	/**
-	 * 
+	 * Get workdays schedule between two dates
+	 * 	if now dates given: from: today - to: today + 14 days
 	 * 
 	 * @param uriInfo
 	 * @return

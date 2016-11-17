@@ -4,11 +4,10 @@
 package hun.restoffice.ejbservice.domain;
 
 /**
- * Stub class for error messages  
+ * DTO for error messages
  *
  */
 public class ErrorStub {
-
 
 	private int code;
 

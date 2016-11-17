@@ -13,16 +13,17 @@ import hun.restoffice.ejbservice.domain.EmployeeStub;
 import hun.restoffice.persistence.entity.employee.Employee;
 
 /**
- *  
+ *  Convert employee entity and stub back and forth
  *
  * @author kalmankostenszky
  */
+
 @Stateless
 public class EmployeeConverter implements EmployeeConverterLocal {
 
-	/**
-	 * @param readAll
-	 * @return
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.EmployeeConverterLocal#to(java.util.List)
 	 */
 	@Override
 	public List<EmployeeStub> to(List<Employee> readAll) {
@@ -33,18 +34,18 @@ public class EmployeeConverter implements EmployeeConverterLocal {
 		return rtrn;
 	}
 
-	/**
-	 * @param create
-	 * @return
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.EmployeeConverterLocal#to(hun.restoffice.persistence.entity.employee.Employee)
 	 */
 	@Override
 	public EmployeeStub to(Employee create) {
 		return new EmployeeStub(create);
 	}
 
-	/**
-	 * @param employee
-	 * @return
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.EmployeeConverterLocal#from(hun.restoffice.ejbservice.domain.EmployeeStub)
 	 */
 	@Override
 	public Employee from(EmployeeStub employee) {
@@ -55,6 +56,7 @@ public class EmployeeConverter implements EmployeeConverterLocal {
 		rtrn.setDefaultHourlyWage(employee.getWage());
 		return rtrn;
 	}
+
 
 	/* (non-Javadoc)
 	 * @see hun.restoffice.ejbservice.converter.EmployeeConverterLocal#toSchedule(hun.restoffice.persistence.entity.employee.Employee)

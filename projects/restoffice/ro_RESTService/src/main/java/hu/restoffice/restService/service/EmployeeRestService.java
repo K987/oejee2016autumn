@@ -30,28 +30,62 @@ import hun.restoffice.ejbservice.exception.AdaptorException;
 @Path("/employee")
 public interface EmployeeRestService {
 
+	/**
+	 * getl all employees as JSON
+	 * @return
+	 * @throws AdaptorException
+	 */
 	@GET
 	@Path("/getAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	List<EmployeeStub> getAllEmployees() throws AdaptorException;
 
+	/**
+	 * add new employee
+	 * @param employee
+	 * @return
+	 * @throws AdaptorException
+	 */
 	@PUT
 	@Path("/addEmployee")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeStub addEmployee(EmployeeStub employee) throws AdaptorException;
 
+	/**
+	 * update employee data
+	 * @param employee
+	 * @return
+	 * @throws AdaptorException
+	 */
 	@POST
 	@Path("/updateEmployee")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeStub updateEmployee(EmployeeStub employee) throws AdaptorException;
 
+	/**
+	 * obsolete employee
+	 * 
+	 * @param emplyoeeName
+	 * @return
+	 * @throws AdaptorException
+	 */
 	@DELETE
 	@Path("/deleteEmployee/{employeeName}")
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeStub removeEmployee(@PathParam("employeeName") String emplyoeeName) throws AdaptorException;
 
+	/**
+	 * get employee schedule between to dates
+	 * 	in case of missing data params from: today - to: today + 14 days
+	 * @param name
+	 * @param from
+	 * @param to
+	 * @return
+	 * @throws AdaptorException
+	 * @throws WebApplicationException
+	 */
 	@GET
 	@Path("/getEmployeeSchedule/{employeeName}")
 	@Produces(MediaType.APPLICATION_JSON)

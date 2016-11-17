@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,7 +29,7 @@ import javax.persistence.Table;
 @NamedQueries(value = { @NamedQuery(name = Employee.FIND_ALL, query = "SELECT e FROM Employee e"),
 		@NamedQuery(name = Employee.GET_EMPLOYEE_SCHEDULE, query = "SELECT e FROM Employee e LEFT JOIN FETCH e.employeeShifts es LEFT JOIN es.shift s "
 				+ "WHERE e.name=:" + Employee.NAME + " AND s.startDate BETWEEN :" + Employee.START_DATE + " AND :" + Employee.END_DATE),
-		@NamedQuery(name = Employee.GET_EMPLOYEE_BY_NAME, query = "SELECT e FROM Employee e WHERE e.name = LOWER(:" + Employee.NAME+")"),
+		@NamedQuery(name = Employee.GET_EMPLOYEE_BY_NAME, query = "SELECT e FROM Employee e WHERE e.name = LOWER(:" + Employee.NAME + ")"),
 		@NamedQuery(name = Employee.COUNT_DAYS_WORKED, query = "SELECT e, COUNT(es.rowId)  FROM Employee e LEFT JOIN FETCH e.employeeShifts es LEFT JOIN es.shift s "
 				+ "WHERE e.name=:" + Employee.NAME + " AND s.startDate <=:" + Employee.END_DATE + " AND es.actualStart != null")
 
@@ -44,7 +45,6 @@ public class Employee implements Serializable {
 	public static final String NAME = "name";
 	public static final String START_DATE = "startDate";
 	public static final String END_DATE = "endDate";
-
 
 	// fields
 
@@ -68,7 +68,7 @@ public class Employee implements Serializable {
 	private String name;
 
 	// bi-directional many-to-one association to EmployeeShift
-	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, targetEntity = EmployeeShift.class)
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, targetEntity = EmployeeShift.class, orphanRemoval = true, cascade = CascadeType.ALL)
 	private Set<EmployeeShift> employeeShifts;
 
 	// constructors

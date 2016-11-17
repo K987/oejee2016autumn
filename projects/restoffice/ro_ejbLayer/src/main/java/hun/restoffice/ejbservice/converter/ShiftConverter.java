@@ -12,13 +12,18 @@ import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.persistence.entity.employee.Shift;
 
 /**
- * 
+ * Convert shift entity and stub back and forth
  *
  * @author kalmankostenszky
  */
 @Stateless
 public class ShiftConverter implements ShiftConverterLocal {
 
+	
+	/**
+	 * @param shift
+	 * @return
+	 */
 	private CalendarScheduleStub to(Shift shift) {
 		return new CalendarScheduleStub(shift.getStartDate(), shift.getStartTime(), shift.getEmployeeShifts());
 	}

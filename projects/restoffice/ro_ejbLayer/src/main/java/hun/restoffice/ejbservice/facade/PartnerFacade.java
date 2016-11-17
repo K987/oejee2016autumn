@@ -20,7 +20,7 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.PartnerServiceLocal;
 
 /**
- * Facade implementation for partner business logic
+ * Partner business facade
  * 
  * @author kalmankostenszky
  *
@@ -112,7 +112,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 		} catch (PersistenceServiceException e) {
 			LOG.error(e.getLocalizedMessage());
 			if (e.getType().equals(PersistenceExceptionType.EXISTS_ALREADY))
-				throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
+				throw new AdaptorException(ApplicationError.EXISTS_ALREADY, e.getMessage());
 			else
 				throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
 		}

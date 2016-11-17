@@ -18,7 +18,7 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.ShiftServiceLocal;
 
 /**
- *  
+ *  Shift business faacade
  *
  * @author kalmankostenszky
  */

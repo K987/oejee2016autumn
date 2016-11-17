@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 import hu.restoffice.restService.exception.RestError;
 
 /**
- * String to date param type
+ * String to date - for param type conversion
  *
  * @author kalmankostenszky
  */
@@ -32,11 +32,10 @@ public class DateParam {
 			LOG.info("null date created");
 		} else {
 			try {
-				LOG.info("date created");
 				this.date = Calendar.getInstance();
 				this.date.setTime((df.parse(date)));
 			} catch (Exception e) {
-				LOG.error("konverziós hiba");
+				LOG.error(e);
 				throw new WebApplicationException(e, Response.status(400).entity(new RestError(-99, "date format allowed: yyyy-MM-dd")).build());
 			}
 		}

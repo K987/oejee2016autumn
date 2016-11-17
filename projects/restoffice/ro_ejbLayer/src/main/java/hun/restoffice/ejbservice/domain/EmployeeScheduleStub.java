@@ -14,7 +14,7 @@ import java.util.Set;
 import hun.restoffice.persistence.entity.employee.EmployeeShift;
 
 /**
- * 
+ * DTO for employee schedule
  *
  * @author kalmankostenszky
  */
@@ -25,16 +25,6 @@ public class EmployeeScheduleStub {
 
 	private final List<EmployeeWorkDay> workdays;
 
-	public EmployeeScheduleStub() {
-		this.name = null;
-		this.workdays = new ArrayList<>();
-	}
-
-	/**
-	 * @param employeeName
-	 * @param isActive
-	 * @param employeeShifts
-	 */
 	public EmployeeScheduleStub(String employeeName, Boolean isActive, Set<EmployeeShift> employeeShifts) {
 		this.name = employeeName;
 		this.active = isActive;
@@ -71,6 +61,16 @@ public class EmployeeScheduleStub {
 		return active;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("EmployeeScheduleStub [name=%s, active=%s, workdays=%s]", name, active, workdays);
+	}
+
 	private class EmployeeWorkDay implements Comparable<EmployeeWorkDay> {
 
 		private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,11 +79,6 @@ public class EmployeeScheduleStub {
 		private Calendar actualStart = null;
 		private Calendar actualEnd = null;
 
-		/**
-		 * @param startDate
-		 * @param startTime
-		 * @param duration
-		 */
 		public EmployeeWorkDay(Date startDate, Date startTime, BigDecimal duration) {
 			this.start = Calendar.getInstance();
 			this.start.setTime(startDate);
@@ -95,13 +90,6 @@ public class EmployeeScheduleStub {
 
 		}
 
-		/**
-		 * @param startDate
-		 * @param startTime
-		 * @param duration2
-		 * @param actualStart
-		 * @param actualEnd
-		 */
 		public EmployeeWorkDay(Date startDate, Date startTime, BigDecimal duration, Date actualStart, Date actualEnd) {
 			this(startDate, startTime, duration);
 
@@ -147,7 +135,19 @@ public class EmployeeScheduleStub {
 			return this.actualEnd;
 		}
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return String.format("EmployeeWorkDay [df=%s, start=%s, duration=%s, actualStart=%s, actualEnd=%s]", df, start, duration, actualStart, actualEnd);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Comparable#compareTo(java.lang.Object)
 		 */
 		@Override
