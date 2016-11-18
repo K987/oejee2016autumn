@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
 @IdClass(EmployeeShiftId.class)
 @NamedQueries(value = { @NamedQuery(name = "EmployeeShift.findAll", query = "SELECT es FROM EmployeeShift es"),
 		@NamedQuery(name = EmployeeShift.GET_ENTITES, query = "SELECT es FROM EmployeeShift es  WHERE employee=:" + EmployeeShift.EMPLOYEE
-				+ " AND shift.startDate >TO_DATE(:" + EmployeeShift.FROM_DATE+" , 'YYYY-MM-DD')") })
+				+ " AND shift.startDate >:" + EmployeeShift.FROM_DATE) })
 public class EmployeeShift implements Serializable {
 	private static final long serialVersionUID = 1L;
 

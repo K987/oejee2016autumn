@@ -47,8 +47,10 @@ public class ShiftService implements ShiftServiceLocal {
 	@Override
 	public List<Shift> readCalendarSchedule(Calendar from, Calendar to) throws PersistenceServiceException {
 		try {
-			return this.entityManager.createNamedQuery(Shift.GET_SCHEDULE, Shift.class).setParameter(Shift.FROM_DATE, from.getTime())
+			List<Shift> lst = this.entityManager.createNamedQuery(Shift.GET_SCHEDULE, Shift.class).setParameter(Shift.FROM_DATE, from.getTime())
 					.setParameter(Shift.TO_DATE, to.getTime()).getResultList();
+			LOG.info(lst.size());
+			return lst;
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
@@ -63,12 +65,10 @@ public class ShiftService implements ShiftServiceLocal {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Shift> removeEmployeeFromShift(Employee Employee) throws PersistenceServiceException {
-		LOG.info("removeEmployeeFromShift invoked");
 		List<Shift> rtrn = new ArrayList<>();
 		try {
 			List<EmployeeShift> lstEmpShifts = this.entityManager.createNamedQuery(EmployeeShift.GET_ENTITES, EmployeeShift.class)
-					// Calendar.getInstance().getTime()
-					.setParameter(EmployeeShift.EMPLOYEE, Employee).setParameter(EmployeeShift.FROM_DATE, "2016-11-08").getResultList();
+					.setParameter(EmployeeShift.EMPLOYEE, Employee).setParameter(EmployeeShift.FROM_DATE, Calendar.getInstance().getTime()).getResultList();
 			for (EmployeeShift es : lstEmpShifts) {
 				rtrn.add(es.getShift());
 				this.entityManager.remove(es);

@@ -6,6 +6,7 @@ package hu.restoffice.restService.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 
+import hu.restoffice.restService.exception.RestError;
 import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.ShiftFacadeLocal;
@@ -56,15 +58,12 @@ public class ShiftRestServiceImpl implements ShiftRestService {
 			from = convertToCalendar(paramFrom);
 			to = convertToCalendar(paramTo);
 		} catch (ParseException e) {
-			throw new WebApplicationException(e, Response.status(400).entity("Allowed date format: yyyy-MM-dd").build());
-		}
-		if (from == null) {
-			to = (Calendar) from.clone();
-			to.add(Calendar.DAY_OF_YEAR, 14);
+			throw new WebApplicationException(e, Response.status(400).entity(new RestError(-100, "Allowed date format is yyyy-MM-dd")).build());
 		}
 		LOG.info("invoking get schedule");
-		return this.facade.getCalendarSchedule(from, to);
-
+		List<CalendarScheduleStub> rtrn = this.facade.getCalendarSchedule(from, to);
+		Collections.sort(rtrn);
+		return rtrn;
 	}
 
 	/**

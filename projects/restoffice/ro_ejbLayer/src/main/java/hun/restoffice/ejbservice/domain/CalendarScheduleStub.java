@@ -17,7 +17,7 @@ import hun.restoffice.persistence.entity.employee.JobPosition;
  *
  * @author kalmankostenszky
  */
-public class CalendarScheduleStub {
+public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
 
 	private final Calendar start;
 	private final List<Assignee> assignees;
@@ -42,6 +42,16 @@ public class CalendarScheduleStub {
 	@Override
 	public String toString() {
 		return String.format("CalendarScheduleStub [start=%s, assignees=%s]", start, assignees);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(CalendarScheduleStub o) {
+		return start.compareTo(o.getStart());
 	}
 
 	/**
@@ -143,5 +153,4 @@ public class CalendarScheduleStub {
 		}
 
 	}
-
 }
