@@ -32,7 +32,7 @@ public interface ShiftRestService {
 	 * @throws AdaptorException
 	 */
 	@GET
-	@Path("/getCalendarSchedule")
+	@Path("/getSchedule")
 	@Produces(MediaType.APPLICATION_JSON)
 	List<CalendarScheduleStub> getCalendarSchedule(@Context UriInfo uriInfo) throws AdaptorException;
 

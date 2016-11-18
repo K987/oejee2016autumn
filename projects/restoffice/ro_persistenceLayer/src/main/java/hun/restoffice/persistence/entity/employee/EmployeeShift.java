@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -27,9 +28,16 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "employee_shift")
 @IdClass(EmployeeShiftId.class)
-@NamedQuery(name = "EmployeeShift.findAll", query = "SELECT e FROM EmployeeShift e")
+@NamedQueries(value = { @NamedQuery(name = "EmployeeShift.findAll", query = "SELECT es FROM EmployeeShift es"),
+		@NamedQuery(name = EmployeeShift.GET_ENTITES, query = "SELECT es FROM EmployeeShift es  WHERE employee=:" + EmployeeShift.EMPLOYEE
+				+ " AND shift.startDate >TO_DATE(:" + EmployeeShift.FROM_DATE+" , 'YYYY-MM-DD')") })
 public class EmployeeShift implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String GET_ENTITES = "EmployeeShift.getEntites";
+
+	public static final String EMPLOYEE = "employee";
+	public static final String FROM_DATE = "fromDate";
 
 	// bi-directional many-to-one association to Shift
 	@Id
@@ -70,7 +78,6 @@ public class EmployeeShift implements Serializable {
 		this.actualEnd = employeeShiftActualEnd;
 	}
 
-	
 	public JobPosition getActualPosition() {
 		return this.actualPosition;
 	}

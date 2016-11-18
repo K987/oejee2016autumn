@@ -10,6 +10,7 @@ import javax.ejb.Local;
 
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
+import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 
 /**
@@ -44,7 +45,7 @@ public interface EmployeeFacadeLocal {
 	 * @return
 	 * @throws AdaptorException
 	 */
-	EmployeeStub removeEmployee(String employeeName) throws AdaptorException;
+	List<ShiftStub> removeEmployee(String employeeName) throws AdaptorException;
 
 	/**
 	 * Get schedule of employee between two dates

@@ -62,7 +62,7 @@ public class ShiftRestServiceImpl implements ShiftRestService {
 			to = (Calendar) from.clone();
 			to.add(Calendar.DAY_OF_YEAR, 14);
 		}
-
+		LOG.info("invoking get schedule");
 		return this.facade.getCalendarSchedule(from, to);
 
 	}

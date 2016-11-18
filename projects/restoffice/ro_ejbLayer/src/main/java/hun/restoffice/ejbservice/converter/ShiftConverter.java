@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 
 import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
+import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.persistence.entity.employee.Shift;
 
 /**
@@ -34,10 +35,22 @@ public class ShiftConverter implements ShiftConverterLocal {
 	 * @see hun.restoffice.ejbservice.converter.ShiftConverterLocal#to(java.util.List)
 	 */
 	@Override
-	public List<CalendarScheduleStub> to(List<Shift> shifts) {
+	public List<CalendarScheduleStub> toSchedule(List<Shift> shifts) {
 		List<CalendarScheduleStub> rtrn = new ArrayList<>();
 		for (Shift s : shifts) {
 			rtrn.add(to(s));
+		}
+		return rtrn;
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.ShiftConverterLocal#to(java.util.List)
+	 */
+	@Override
+	public List<ShiftStub> to(List<Shift> shifts) {
+		List<ShiftStub> rtrn = new ArrayList<>();
+		for (Shift s : shifts) {
+			rtrn.add(new ShiftStub(s));
 		}
 		return rtrn;
 	}

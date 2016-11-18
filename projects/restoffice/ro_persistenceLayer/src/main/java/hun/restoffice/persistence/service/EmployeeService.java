@@ -3,9 +3,11 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -19,6 +21,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.persistence.entity.employee.Employee;
+import hun.restoffice.persistence.entity.employee.Shift;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
@@ -36,6 +39,9 @@ public class EmployeeService implements EmployeeServiceLocal {
 
 	@PersistenceContext(unitName = "ro-persistence-unit")
 	private EntityManager entityManager;
+
+	@EJB
+	private ShiftServiceLocal shiftService;
 
 	/*
 	 * (non-Javadoc)
@@ -61,13 +67,18 @@ public class EmployeeService implements EmployeeServiceLocal {
 	 */
 	@Override
 	public Employee create(Employee employee) throws PersistenceServiceException {
-		try {
-			Employee rtrn = this.entityManager.merge(employee);
-			this.entityManager.flush();
-			return rtrn;
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
+		if (count(employee.getEmployeeName()) == 0) {
+			try {
+				Employee rtrn = this.entityManager.merge(employee);
+				this.entityManager.flush();
+				return rtrn;
+
+			} catch (Exception e) {
+				LOG.error(e.getMessage());
+				throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
+			}
+		} else {
+			throw new PersistenceServiceException(PersistenceExceptionType.EXISTS_ALREADY, employee.getEmployeeName() + " already exists");
 		}
 	}
 
@@ -101,16 +112,19 @@ public class EmployeeService implements EmployeeServiceLocal {
 	 * @see hun.restoffice.persistence.service.EmployeeServiceLocal#removeEmployee(java.lang.String)
 	 */
 	@Override
-	public Employee deleteEmployee(String employeeName) throws PersistenceServiceException {
+	public List<Shift> deleteEmployee(String employeeName) throws PersistenceServiceException {
+		List<Shift> rtrn = new ArrayList<>();
 		Employee emp = read(employeeName);
-		if (workedBefore(employeeName, Calendar.getInstance())) {
+		if (!workedBefore(employeeName, Calendar.getInstance())) {
 			this.entityManager.remove(emp);
 			this.entityManager.flush();
-			return emp;
+			return rtrn;
 		} else {
+			LOG.info("else is active: "+ emp != null);
 			emp.setActive(false);
+			rtrn = this.shiftService.removeEmployeeFromShift(emp);
 			this.entityManager.flush();
-			return emp;
+			return rtrn;
 		}
 	}
 
@@ -136,13 +150,17 @@ public class EmployeeService implements EmployeeServiceLocal {
 	 * 
 	 * @param employeeName
 	 * @param time
-	 * @return true: if worked before
+	 * @return true: if worked before the given date
+	 * @throws PersistenceServiceException
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private boolean workedBefore(String employeeName, Calendar time) throws PersistenceServiceException {
 		try {
-			return 0 != this.entityManager.createNamedQuery(Employee.COUNT_DAYS_WORKED, Long.class)
-					.setParameter(Employee.NAME, employeeName.toLowerCase().trim()).setParameter(Employee.END_DATE, time.getTime()).getSingleResult();
+			LOG.info("worked before invoked");
+			 return 0 < this.entityManager.createNamedQuery(Employee.COUNT_DAYS_WORKED, Long.class)
+					.setParameter(Employee.NAME, employeeName.toLowerCase().trim()).setParameter(Employee.END_DATE, time.getTime()).getSingleResult()
+					.intValue();
+
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN,
@@ -171,6 +189,22 @@ public class EmployeeService implements EmployeeServiceLocal {
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unkonow error during querying for name: " + employeeName);
+		}
+	}
+
+	/**
+	 * Checks if employee exists by name
+	 * 
+	 * @param employee
+	 * @return
+	 * @throws PersistenceServiceException
+	 */
+	private int count(String employeeName) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(Employee.COUNT, Long.class).setParameter(Employee.NAME, employeeName.toLowerCase().trim())
+					.getSingleResult().intValue();
+		} catch (Exception e) {
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unkonown excption occured while counting " + employeeName);
 		}
 	}
 

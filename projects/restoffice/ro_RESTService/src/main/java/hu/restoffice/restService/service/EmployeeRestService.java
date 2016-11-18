@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import hu.restoffice.restService.param.DateParam;
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
+import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 
 /**
@@ -47,7 +48,7 @@ public interface EmployeeRestService {
 	 * @throws AdaptorException
 	 */
 	@PUT
-	@Path("/addEmployee")
+	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeStub addEmployee(EmployeeStub employee) throws AdaptorException;
@@ -59,7 +60,7 @@ public interface EmployeeRestService {
 	 * @throws AdaptorException
 	 */
 	@POST
-	@Path("/updateEmployee")
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeStub updateEmployee(EmployeeStub employee) throws AdaptorException;
@@ -72,9 +73,9 @@ public interface EmployeeRestService {
 	 * @throws AdaptorException
 	 */
 	@DELETE
-	@Path("/deleteEmployee/{employeeName}")
+	@Path("/delete/{employeeName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	EmployeeStub removeEmployee(@PathParam("employeeName") String emplyoeeName) throws AdaptorException;
+	List<ShiftStub> removeEmployee(@PathParam("employeeName") String emplyoeeName) throws AdaptorException;
 
 	/**
 	 * get employee schedule between to dates
@@ -87,7 +88,7 @@ public interface EmployeeRestService {
 	 * @throws WebApplicationException
 	 */
 	@GET
-	@Path("/getEmployeeSchedule/{employeeName}")
+	@Path("/getSchedule/{employeeName}")
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeScheduleStub getEmployeeSchedule(@PathParam("employeeName") String name,@QueryParam("from") DateParam from, @QueryParam("to") DateParam to)
 			throws AdaptorException, WebApplicationException;

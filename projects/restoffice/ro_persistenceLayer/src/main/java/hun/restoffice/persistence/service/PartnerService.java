@@ -153,10 +153,8 @@ public class PartnerService implements PartnerServiceLocal {
 	private int count(Partner partner) throws PersistenceServiceException {
 		try {
 			LOG.info(partner.getName().toLowerCase().trim());
-			int i = this.entityManager.createNamedQuery(Partner.COUNT, Long.class).setParameter(Partner.NAME, partner.getName().toLowerCase().trim())
+			return this.entityManager.createNamedQuery(Partner.COUNT, Long.class).setParameter(Partner.NAME, partner.getName().toLowerCase().trim())
 					.getSingleResult().intValue();
-			LOG.info("az eredmény: " + i);
-			return i;
 		} catch (Exception e) {
 			LOG.error(e.getLocalizedMessage());
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during counting occurences of partner " + partner, e);

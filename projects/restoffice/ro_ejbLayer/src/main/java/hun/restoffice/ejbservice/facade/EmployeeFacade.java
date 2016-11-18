@@ -12,8 +12,10 @@ import javax.ejb.Stateless;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.EmployeeConverterLocal;
+import hun.restoffice.ejbservice.converter.ShiftConverterLocal;
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
+import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.exception.ApplicationError;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
@@ -34,6 +36,9 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 
 	@EJB
 	private EmployeeConverterLocal eConverter;
+	
+	@EJB
+	private ShiftConverterLocal sConverter;
 
 	/*
 	 * (non-Javadoc)
@@ -65,7 +70,12 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 		try {
 			return this.eConverter.to(this.eService.create(this.eConverter.from(employee)));
 		} catch (PersistenceServiceException e) {
-			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+			switch (e.getType()) {
+				case EXISTS_ALREADY:
+					throw new AdaptorException(ApplicationError.EXISTS_ALREADY, e.getMessage());
+				default:
+					throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+			}
 		}
 	}
 
@@ -75,11 +85,11 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 	 * @see hun.restoffice.ejbservice.facade.EmployeeFacadeLocal#removeEmployee(java.lang.String)
 	 */
 	@Override
-	public EmployeeStub removeEmployee(String employeeName) throws AdaptorException {
+	public List<ShiftStub> removeEmployee(String employeeName) throws AdaptorException {
 		if (LOG.isDebugEnabled())
 			LOG.debug("removeEmployee invoked w/ param " + employeeName);
 		try {
-			return this.eConverter.to(this.eService.deleteEmployee(employeeName));
+			return this.sConverter.to(this.eService.deleteEmployee(employeeName));
 		} catch (Exception e) {
 			throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
 		}
@@ -116,7 +126,14 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
 		try {
 			return this.eConverter.to(this.eService.updateEmployee(this.eConverter.from(employee)));
 		} catch (PersistenceServiceException e) {
-			throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
+			switch (e.getType()) {
+				case AMBIGOUS_RESULT:
+					throw new AdaptorException(ApplicationError.UNEXPECTED_RESULT, e.getMessage());
+				case NOT_EXISTS:
+					throw new AdaptorException(ApplicationError.NOT_EXISTS, e.getMessage());
+				default:
+					throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
+			}
 		}
 	}
 

@@ -10,6 +10,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import org.apache.log4j.Logger;
+
 import hun.restoffice.ejbservice.converter.ShiftConverterLocal;
 import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
@@ -25,6 +27,7 @@ import hun.restoffice.persistence.service.ShiftServiceLocal;
 @Stateless(mappedName="ejb/shiftFacade")
 public class ShiftFacade implements ShiftFacadeLocal{
 
+	private static final Logger LOG = Logger.getLogger(ShiftFacade.class);
 	@EJB
 	private ShiftServiceLocal sService;
 	
@@ -38,9 +41,10 @@ public class ShiftFacade implements ShiftFacadeLocal{
 		List<CalendarScheduleStub> rtrn = new ArrayList<>();
 		try{
 			
-			rtrn = this.sConverter.to(this.sService.readCalendarSchedule(from,to));
+			rtrn = this.sConverter.toSchedule(this.sService.readCalendarSchedule(from,to));
 			return rtrn;
 		} catch (PersistenceServiceException e){
+			LOG.error(e);
 			throw new AdaptorException(ApplicationError.UNEXPECTED, "excepion occured: getCalendarSchedule params "+from+", "+to);
 		}
 			

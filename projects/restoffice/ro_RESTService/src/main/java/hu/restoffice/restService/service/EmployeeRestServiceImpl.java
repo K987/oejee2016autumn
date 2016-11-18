@@ -18,6 +18,7 @@ import hu.restoffice.restService.exception.RestError;
 import hu.restoffice.restService.param.DateParam;
 import hun.restoffice.ejbservice.domain.EmployeeScheduleStub;
 import hun.restoffice.ejbservice.domain.EmployeeStub;
+import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.EmployeeFacadeLocal;
 
@@ -75,7 +76,7 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 	 * @see hu.restoffice.restService.service.EmployeeRestService#removeEmployee(java.lang.String)
 	 */
 	@Override
-	public EmployeeStub removeEmployee(String employeeName) throws AdaptorException {
+	public List<ShiftStub> removeEmployee(String employeeName) throws AdaptorException {
 		LOG.info("remove employee invoked w/ param: " + employeeName);
 		return this.facade.removeEmployee(employeeName);
 	}

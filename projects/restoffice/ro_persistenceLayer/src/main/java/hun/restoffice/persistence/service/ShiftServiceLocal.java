@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import hun.restoffice.persistence.entity.employee.Employee;
 import hun.restoffice.persistence.entity.employee.Shift;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
@@ -30,4 +31,12 @@ public interface ShiftServiceLocal {
 	 */
 	List<Shift> readCalendarSchedule(Calendar from, Calendar to) throws PersistenceServiceException;
 
+	/**
+	 * removes employee from future shifts
+	 * 
+	 * @param Employee
+	 * @return
+	 * @throws PersistenceServiceException
+	 */
+	List<Shift> removeEmployeeFromShift(Employee Employee) throws PersistenceServiceException;
 }
