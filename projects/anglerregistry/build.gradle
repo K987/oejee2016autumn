@@ -40,3 +40,55 @@ dependencies {
 	deploy project(path: 'ar-weblayer', configuration: 'archives')
 	//deploy project(path: 'ar-webservice', configuration: 'archives')
 }
+
+task deploy(dependsOn: ear, type: Copy) {
+ 
+     println "configure task deploy"
+ 
+     from('build/libs/') {
+ 
+          include '*.ear'
+ 
+     }
+ 
+     into "$System.env.JBOSS_HOME"+"/standalone/deployments/"
+ 
+     /*def target="${project.name}.ear"
+ 
+     def ok=new File("${System.env.JBOSS_HOME}/standalone/deployments/${target}.deployed");
+ 
+     def nok=new File("${System.env.JBOSS_HOME}/standalone/deployments/${target}.failed");   
+ 
+     doFirst {
+ 
+          println "deploy doFirst"
+ 
+          if(ok.exists()) { ok.delete() }
+ 
+          if(nok.exists()) { nok.delete() }
+ 
+     }
+ 
+     doLast {
+ 
+          println "executing wildfly deploy..."
+ 
+          def deployed=false
+ 
+          for(def i=0;i<80;i++) {
+ 
+               if(ok.exists()) { deployed=true; break }
+ 
+               if(nok.exists()) { break }
+ 
+               //sleep(500);
+ 
+          }
+ 
+          if(deployed) { println("deploy ok.") }
+ 
+          else { throw new RuntimeException("Deployment failed, see Wildfly logs!") }
+ 
+     }*/
+ 
+}

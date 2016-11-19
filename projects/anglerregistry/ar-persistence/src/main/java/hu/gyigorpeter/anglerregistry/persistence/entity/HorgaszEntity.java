@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,108 +22,12 @@ import javax.persistence.Transient;
 		@NamedQuery(name = "HorgaszEntity.GET_ALL", query = "SELECT horgasz FROM HorgaszEntity horgasz ORDER BY horgasz.nev") })
 public class HorgaszEntity implements Serializable {
 
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNev() {
-		return this.nev;
-	}
-
-	public void setNev(String nev) {
-		this.nev = nev;
-	}
-
-	public String getAnyjaNeve() {
-		return this.anyjaNeve;
-	}
-
-	public void setAnyjaNeve(String anyjaNeve) {
-		this.anyjaNeve = anyjaNeve;
-	}
-
-	public Date getSzuletesiIdo() {
-		return this.szuletesiIdo;
-	}
-
-	public void setSzuletesiIdo(Date szuletesiIdo) {
-		this.szuletesiIdo = szuletesiIdo;
-	}
-
-	public String getSzuletesiHely() {
-		return this.szuletesiHely;
-	}
-
-	public void setSzuletesiHely(String szuletesiHely) {
-		this.szuletesiHely = szuletesiHely;
-	}
-
-	public int getIrsz() {
-		return this.irsz;
-	}
-
-	public void setIrsz(int irsz) {
-		this.irsz = irsz;
-	}
-
-	public String getVaros() {
-		return this.varos;
-	}
-
-	public void setVaros(String varos) {
-		this.varos = varos;
-	}
-
-	public String getCim() {
-		return this.cim;
-	}
-
-	public void setCim(String cim) {
-		this.cim = cim;
-	}
-
-	public int getTarsadalmiMunka() {
-		return this.tarsadalmiMunka;
-	}
-
-	public void setTarsadalmiMunka(int tarsadalmiMunka) {
-		this.tarsadalmiMunka = tarsadalmiMunka;
-	}
-
-	public Date getEltiltas() {
-		return this.eltiltas;
-	}
-
-	public void setEltiltas(Date eltiltas) {
-		this.eltiltas = eltiltas;
-	}
-
-	public boolean isTagE() {
-		return this.tagE;
-	}
-
-	public void setTagE(boolean tagE) {
-		this.tagE = tagE;
-	}
-
-	public boolean isTitkarsagiTagE() {
-		return this.titkarsagiTagE;
-	}
-
-	public void setTitkarsagiTagE(boolean titkarsagiTagE) {
-		this.titkarsagiTagE = titkarsagiTagE;
-	}
-
 	@Transient
 	private static final long serialVersionUID = -4705781742838571940L;
 
 	@Id
-	// @SequenceGenerator(name = " generatorHorgasz", sequenceName = "horgasz_horgasz_id_seq", allocationSize = 1)
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorHorgasz")
+	@SequenceGenerator(name = " generatorHorgasz", sequenceName = "horgasz_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorHorgasz")
 	@Column(name = "id", nullable = false)
 	private long id;
 
@@ -157,5 +64,101 @@ public class HorgaszEntity implements Serializable {
 
 	@Column(name = "titkarsagitage", nullable = false)
 	private boolean titkarsagiTagE;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNev() {
+		return nev;
+	}
+
+	public void setNev(String nev) {
+		this.nev = nev;
+	}
+
+	public String getAnyjaNeve() {
+		return anyjaNeve;
+	}
+
+	public void setAnyjaNeve(String anyjaNeve) {
+		this.anyjaNeve = anyjaNeve;
+	}
+
+	public Date getSzuletesiIdo() {
+		return szuletesiIdo;
+	}
+
+	public void setSzuletesiIdo(Date szuletesiIdo) {
+		this.szuletesiIdo = szuletesiIdo;
+	}
+
+	public String getSzuletesiHely() {
+		return szuletesiHely;
+	}
+
+	public void setSzuletesiHely(String szuletesiHely) {
+		this.szuletesiHely = szuletesiHely;
+	}
+
+	public int getIrsz() {
+		return irsz;
+	}
+
+	public void setIrsz(int irsz) {
+		this.irsz = irsz;
+	}
+
+	public String getVaros() {
+		return varos;
+	}
+
+	public void setVaros(String varos) {
+		this.varos = varos;
+	}
+
+	public String getCim() {
+		return cim;
+	}
+
+	public void setCim(String cim) {
+		this.cim = cim;
+	}
+
+	public int getTarsadalmiMunka() {
+		return tarsadalmiMunka;
+	}
+
+	public void setTarsadalmiMunka(int tarsadalmiMunka) {
+		this.tarsadalmiMunka = tarsadalmiMunka;
+	}
+
+	public Date getEltiltas() {
+		return eltiltas;
+	}
+
+	public void setEltiltas(Date eltiltas) {
+		this.eltiltas = eltiltas;
+	}
+
+	public boolean isTagE() {
+		return tagE;
+	}
+
+	public void setTagE(boolean tagE) {
+		this.tagE = tagE;
+	}
+
+	public boolean isTitkarsagiTagE() {
+		return titkarsagiTagE;
+	}
+
+	public void setTitkarsagiTagE(boolean titkarsagiTagE) {
+		this.titkarsagiTagE = titkarsagiTagE;
+	}
 
 }

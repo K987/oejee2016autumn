@@ -5,7 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,8 +22,8 @@ public class HalEntity implements Serializable {
 	private static final long serialVersionUID = -2650585615626806254L;
 
 	@Id
-	// @SequenceGenerator(name = " generatorHal", sequenceName = "hal_hal_id_seq", allocationSize = 1)
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorHal")
+	@SequenceGenerator(name = " generatorHal", sequenceName = "hal_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorHal")
 	@Column(name = "id", nullable = false)
 	private long id;
 
@@ -45,7 +48,7 @@ public class HalEntity implements Serializable {
 	private int pusztulas;
 
 	public long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(long id) {
@@ -53,7 +56,7 @@ public class HalEntity implements Serializable {
 	}
 
 	public String getHalNev() {
-		return this.halNev;
+		return halNev;
 	}
 
 	public void setHalNev(String halNev) {
@@ -61,7 +64,7 @@ public class HalEntity implements Serializable {
 	}
 
 	public int getMinimumMeret() {
-		return this.minimumMeret;
+		return minimumMeret;
 	}
 
 	public void setMinimumMeret(int minimumMeret) {
@@ -69,7 +72,7 @@ public class HalEntity implements Serializable {
 	}
 
 	public int getNapiDarabSzam() {
-		return this.napiDarabSzam;
+		return napiDarabSzam;
 	}
 
 	public void setNapiDarabSzam(int napiDarabSzam) {
@@ -77,7 +80,7 @@ public class HalEntity implements Serializable {
 	}
 
 	public Date getTilalmiIdoszakKezdete() {
-		return this.tilalmiIdoszakKezdete;
+		return tilalmiIdoszakKezdete;
 	}
 
 	public void setTilalmiIdoszakKezdete(Date tilalmiIdoszakKezdete) {
@@ -85,7 +88,7 @@ public class HalEntity implements Serializable {
 	}
 
 	public Date getTilalmiIdoszakVege() {
-		return this.tilalmiIdoszakVege;
+		return tilalmiIdoszakVege;
 	}
 
 	public void setTilalmiIdoszakVege(Date tilalmiIdoszakVege) {
@@ -93,7 +96,7 @@ public class HalEntity implements Serializable {
 	}
 
 	public int getPusztulas() {
-		return this.pusztulas;
+		return pusztulas;
 	}
 
 	public void setPusztulas(int pusztulas) {

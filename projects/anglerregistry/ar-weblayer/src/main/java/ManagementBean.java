@@ -22,97 +22,86 @@ public class ManagementBean implements Serializable {
 
 	private List<Horgasz> horgaszList = new ArrayList<Horgasz>();
 
-	private boolean[] viewFlag = new boolean[6];
-	private int halViewFlag = 1;
-	private int horgaszViewFlag = 2;
-	private int horgasztoViewFlag = 3;
-	private int engedelyViewFlag = 4;
-	private int telepitesViewFlag = 5;
-	private int fogsiNaploViewFlag = 6;
+	private boolean halViewFlag = false;
+	private boolean horgaszViewFlag = false;
+	private boolean horgasztoViewFlag = false;
+	private boolean engedelyViewFlag = false;
+	private boolean telepitesViewFlag = false;
+	private boolean fogsiNaploViewFlag = false;
 
 	@PostConstruct
 	public void init() {
-		this.horgaszList = this.horgaszFacade.getAllHorgasz();
+		horgaszList = horgaszFacade.getAllHorgasz();
 	}
 
 	public List<Horgasz> getHorgaszList() {
-		return this.horgaszList;
+		return horgaszList;
 	}
 
 	public void setHorgaszList(List<Horgasz> horgaszList) {
 		this.horgaszList = horgaszList;
 	}
 
-	public boolean[] getViewFlag() {
-		return this.viewFlag;
+	public boolean isHalViewFlag() {
+		return halViewFlag;
 	}
 
-	public int getHalViewFlag() {
-		return this.halViewFlag;
-	}
-
-	public void setHalViewFlag(int halViewFlag) {
+	public void setHalViewFlag(boolean halViewFlag) {
 		this.halViewFlag = halViewFlag;
 	}
 
-	public int getHorgaszViewFlag() {
-		return this.horgaszViewFlag;
+	public boolean isHorgaszViewFlag() {
+		return horgaszViewFlag;
 	}
 
-	public void setHorgaszViewFlag(int horgaszViewFlag) {
+	public void setHorgaszViewFlag(boolean horgaszViewFlag) {
 		this.horgaszViewFlag = horgaszViewFlag;
 	}
 
-	public int getHorgasztoViewFlag() {
-		return this.horgasztoViewFlag;
+	public boolean isHorgasztoViewFlag() {
+		return horgasztoViewFlag;
 	}
 
-	public void setHorgasztoViewFlag(int horgasztoViewFlag) {
+	public void setHorgasztoViewFlag(boolean horgasztoViewFlag) {
 		this.horgasztoViewFlag = horgasztoViewFlag;
 	}
 
-	public int getEngedelyViewFlag() {
-		return this.engedelyViewFlag;
+	public boolean isEngedelyViewFlag() {
+		return engedelyViewFlag;
 	}
 
-	public void setEngedelyViewFlag(int engedelyViewFlag) {
+	public void setEngedelyViewFlag(boolean engedelyViewFlag) {
 		this.engedelyViewFlag = engedelyViewFlag;
 	}
 
-	public int getTelepitesViewFlag() {
-		return this.telepitesViewFlag;
+	public boolean isTelepitesViewFlag() {
+		return telepitesViewFlag;
 	}
 
-	public void setTelepitesViewFlag(int telepitesViewFlag) {
+	public void setTelepitesViewFlag(boolean telepitesViewFlag) {
 		this.telepitesViewFlag = telepitesViewFlag;
 	}
 
-	public int getFogsiNaploViewFlag() {
-		return this.fogsiNaploViewFlag;
+	public boolean isFogsiNaploViewFlag() {
+		return fogsiNaploViewFlag;
 	}
 
-	public void setFogsiNaploViewFlag(int fogasiNaploViewFlag) {
-		this.fogsiNaploViewFlag = fogasiNaploViewFlag;
-	}
-
-	public void viewButtonAction(int index) {
-		for (int i = 0; i < this.viewFlag.length; i++) {
-			if (i == index) {
-				this.viewFlag[i] = true;
-			} else {
-				this.viewFlag[i] = false;
-			}
-		}
+	public void setFogsiNaploViewFlag(boolean fogsiNaploViewFlag) {
+		this.fogsiNaploViewFlag = fogsiNaploViewFlag;
 	}
 
 	public void viewButtonAction() {
-		for (int i = 0; i < this.viewFlag.length; i++) {
-			if (i == 1) {
-				this.viewFlag[i] = true;
-			} else {
-				this.viewFlag[i] = false;
-			}
-		}
+		// for (int i = 0; i < viewFlag.length; i++) {
+		// if (i == 1) {
+		// viewFlag[i] = !viewFlag[i];
+		// } else {
+		// viewFlag[i] = false;
+		// }
+		// }
+	}
+
+	public void horgaszViewButtonActionListener() {
+		horgasztoViewFlag = !horgaszViewFlag;
 	}
 
 }

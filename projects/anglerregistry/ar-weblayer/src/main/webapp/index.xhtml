@@ -10,25 +10,26 @@
 <h:body>
 	<h1>Management registry for angler associations</h1>
 
-	<p:fieldset legend="Menü" style="margin-bottom:30px">
-		<h:panelGrid columns="6" cellpadding="5">
-			<p:commandButton value="Hal" id="bt_hal" update="@all"
-				actionListener="#{backingBean.viewButtonAction(backingBean.halViewFlag)}" />
-			<p:commandButton value="Horgász" id="bt_horgasz" update="@all"
-				actionListener="#{backingBean.viewButtonAction}" />
-			<p:commandButton value="Tó" id="bt_horgaszto" update="@all"
-				actionListener="#{backingBean.viewButtonAction(backingBean.horgasztoViewFlag)}" />
-			<p:commandButton value="Engedély" id="bt_engedely" update="@all"
-				actionListener="#{backingBean.viewButtonAction(backingBean.engedelyViewFlag)}" />
-			<p:commandButton value="Telepítés" id="bt_telepites" update="@all"
-				actionListener="#{backingBean.viewButtonAction(backingBean.telepitesViewFlag)}" />
-			<p:commandButton value="Fogási naplók" id="bt_fogasnaplo"
-				update="@all" actionListener="#{backingBean.viewButtonAction(backingBean.fogasiNaploViewFlag)}" />
-		</h:panelGrid>
-	</p:fieldset>
-
-
-	<h:form id="horgaszForm" rendered="#{backingBean.viewFlag[backingBean.horgaszViewFlag]}">
+	<h:form id="menuForm">
+		<p:fieldset legend="Menü" style="margin-bottom:30px">
+			<h:panelGrid columns="6" cellpadding="5">
+				<p:commandButton value="Hal" id="bt_hal" update="@all"
+					actionListener="#{backingBean.viewButtonAction(backingBean.halViewFlag)}" />
+				<p:commandButton value="Horgász" id="bt_horgasz" update="@all"
+					actionListener="#{backingBean.viewButtonAction}" />
+				<p:commandButton value="Tó" id="bt_horgaszto" update="@all"
+					actionListener="#{backingBean.viewButtonAction(backingBean.horgasztoViewFlag)}" />
+				<p:commandButton value="Engedély" id="bt_engedely" update="@all"
+					actionListener="#{backingBean.viewButtonAction(backingBean.engedelyViewFlag)}" />
+				<p:commandButton value="Telepítés" id="bt_telepites" update="@all"
+					actionListener="#{backingBean.viewButtonAction(backingBean.telepitesViewFlag)}" />
+				<p:commandButton value="Fogási naplók" id="bt_fogasnaplo"
+					update="@all"
+					actionListener="#{backingBean.viewButtonAction(backingBean.fogasiNaploViewFlag)}" />
+			</h:panelGrid>
+		</p:fieldset>
+	</h:form>
+	<h:form id="horgaszForm" rendered="#{!backingBean.horgaszViewFlag}">
 		<p:fieldset legend="Horgász">
 			<p:dataTable var="horgasz" value="#{backingBean.horgaszList}"
 				style="margin-bottom:40px">
