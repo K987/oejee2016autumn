@@ -1,12 +1,13 @@
 /**
  * 
  */
-package hu.restoffice.restService.partner;
+package hu.restoffice.restService.service;
 
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
@@ -34,8 +35,12 @@ public class PartnerServiceImpl implements PartnerRestService {
 	 * @see hu.restoffice.restService.partner.PartnerRestService#getPartnerContact( java.lang.String)
 	 */
 	@Override
+	//public Response getPartnerContact(String partnerName) throws AdaptorException {
 	public PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException {
+		
 		LOG.info("Get partner contact invoked. Name: " + partnerName);
+		//PartnerContactStub rtrn = this.facade.getPartnerContact(partnerName);
+		//return Response.ok(rtrn).build();
 		return this.facade.getPartnerContact(partnerName);
 	}
 
@@ -82,6 +87,18 @@ public class PartnerServiceImpl implements PartnerRestService {
 	public PartnerStub updatePartner(PartnerStub partner) throws AdaptorException {
 		LOG.info("update partner invoked");
 		return this.facade.updatePartner(partner);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see hu.restoffice.restService.partner.PartnerRestService#optionsAll(java.lang.String)
+	 */
+	@Override
+	public Response optionsAll(String path) {
+		LOG.info("options invoked");
+		//return Response.ok("see methods").build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
 }

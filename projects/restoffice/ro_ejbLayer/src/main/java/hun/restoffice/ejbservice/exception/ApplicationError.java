@@ -15,7 +15,8 @@ public enum ApplicationError {
 	UNEXPECTED(-10, 500, "Unexpected error"), // Internal Server Error
 	NOT_EXISTS(-44, 404, "Resource not found"), // Not Found
 	HAS_DEPENDENCY(-41, 412, "Has dependency"), // Precondition Failed
-	UNEXPECTED_RESULT(-44, 409, "Unexpected result");// Conflict
+	UNEXPECTED_RESULT(-44, 409, "Unexpected result"), //Conflict
+	EXISTS_ALREADY(-40, 400, "Exists already");// Conflict
 
 	private final int code;
 	private final int httpStatusCode;

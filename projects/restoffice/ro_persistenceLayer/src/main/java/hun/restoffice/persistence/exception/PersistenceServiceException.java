@@ -10,14 +10,10 @@ package hun.restoffice.persistence.exception;
  */
 public class PersistenceServiceException extends Exception {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
-	// fields
 	private PersistenceExceptionType type;
-
 	// constructors
 	public PersistenceServiceException(PersistenceExceptionType type, String description, Exception e) {
 		// TODO Auto-generated constructor stub
@@ -25,12 +21,7 @@ public class PersistenceServiceException extends Exception {
 		this.type = type;
 	}
 
-	// getters setters
 
-	/**
-	 * @param type
-	 * @param description
-	 */
 	public PersistenceServiceException(PersistenceExceptionType type, String description) {
 		super(description);
 		this.type = type;

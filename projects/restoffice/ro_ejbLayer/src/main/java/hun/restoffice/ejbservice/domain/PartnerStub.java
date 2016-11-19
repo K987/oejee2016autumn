@@ -3,8 +3,6 @@
  */
 package hun.restoffice.ejbservice.domain;
 
-import org.apache.log4j.Logger;
-
 import hun.restoffice.persistence.entity.partner.Partner;
 
 /**
@@ -14,26 +12,16 @@ import hun.restoffice.persistence.entity.partner.Partner;
  */
 public class PartnerStub {
 
-	private static final Logger LOG = Logger.getLogger(PartnerStub.class);
+	// private static final Logger LOG = Logger.getLogger(PartnerStub.class);
 
-	// fields
 	private String name;
 	private String account;
 	private PartnerContactStub contact;
 
-	// constructor
-	/**
-	 * Creates a partner entity
-	 * 
-	 * @param partner
-	 * @param account
-	 *            required
-	 */
 	public PartnerStub(final Partner partner, final boolean account) {
 		this.name = partner.getName();
 		if (account)
-			this.account = (partner.getAccount() == null || partner.getAccount() == "") ? "No account number available"
-					: partner.getAccount();
+			this.account = (partner.getAccount() == null || partner.getAccount() == "") ? "No account number available" : partner.getAccount();
 		else
 			this.account = "XXXXXXXXXXXXXXXXXXXXXXXX";
 		if (partner.getContact() != null)
@@ -41,33 +29,21 @@ public class PartnerStub {
 		else
 			this.contact = null;
 	}
-	
-	
 
-	/**
-	 * @param name
-	 * @param account
-	 * @param contact
-	 */
 	public PartnerStub(String name, String account, PartnerContactStub contact) {
 		super();
 		this.name = name;
 		this.account = account;
 		this.contact = contact;
 	}
-	
-	public PartnerStub(String name, String account, String pName, String pPhone, String pEmail){
-		this(name,account,new PartnerContactStub(pName,pPhone,pEmail));
+
+	public PartnerStub(String name, String account, String pName, String pPhone, String pEmail) {
+		this(name, account, new PartnerContactStub(pName, pPhone, pEmail));
 	}
 
-	 /**
-	 * 
-	 */
 	public PartnerStub() {
 		super();
 	}
-
-	// getters setters
 
 	/*
 	 * (non-Javadoc)
@@ -100,32 +76,28 @@ public class PartnerStub {
 		return contact;
 	}
 
-
-
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-
 	/**
-	 * @param account the account to set
+	 * @param account
+	 *            the account to set
 	 */
 	public void setAccount(String account) {
 		this.account = account;
 	}
 
-
-
 	/**
-	 * @param contact the contact to set
+	 * @param contact
+	 *            the contact to set
 	 */
 	public void setContact(PartnerContactStub contact) {
 		this.contact = contact;
 	}
 
-	
 }

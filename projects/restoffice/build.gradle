@@ -6,7 +6,16 @@ allprojects{
 		mavenCentral()
 		maven { url "http://repository.pentaho.org/artifactory/repo" }
 	}
+	/*
+	eclipse{
+		classpath {
+			downloadJavadoc = true
+		}
+	}
+	*/
 }
+
+
 
 subprojects{
   apply plugin: 'eclipse'
@@ -23,14 +32,14 @@ subprojects{
 
 ear{
 	deploymentDescriptor {
-		webModule('ro_RESTService.war', 'partners')
+		webModule('ro_RESTService.war', 'api')
 	}
 }
 
 dependencies{
   deploy project ('ro_persistenceLayer')
   deploy project ('ro_ejbLayer')
-	deploy project (path: 'ro_RESTService', configuration: 'archives')
+deploy project (path: 'ro_RESTService', configuration: 'archives')
   //deploy project (path: 'ro_webLayer', configuration: 'archives')
 }
 

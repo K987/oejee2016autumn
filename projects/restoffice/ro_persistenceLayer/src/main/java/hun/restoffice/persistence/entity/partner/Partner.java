@@ -3,7 +3,18 @@ package hun.restoffice.persistence.entity.partner;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
 import hun.restoffice.persistence.entity.financialTransaction.Income;
@@ -57,15 +68,6 @@ public class Partner implements Serializable {
 	public Partner() {
 	}
 
-	/**
-	 *
-	 * @param name
-	 * @param account
-	 * @param technical
-	 * @param cName
-	 * @param cEmail
-	 * @param cPhone
-	 */
 	public Partner(String name, String account, boolean technical, String cName, String cEmail, String cPhone) {
 		this.name = name;
 		this.account = account;
@@ -97,25 +99,14 @@ public class Partner implements Serializable {
 		return contact;
 	}
 
-	/**
-	 * @param contact
-	 *            the contact to set
-	 */
 	public void setContact(PartnerContact contact) {
 		this.contact = contact;
 	}
 
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -128,6 +119,12 @@ public class Partner implements Serializable {
 		this.expenses = expenses;
 	}
 
+	/**
+	 * bidirectional
+	 * 
+	 * @param expense
+	 * @return
+	 */
 	public Expense addExpense(Expense expense) {
 		getExpenses().add(expense);
 		expense.setParty(this);
@@ -135,6 +132,12 @@ public class Partner implements Serializable {
 		return expense;
 	}
 
+	/**
+	 * bidirectional
+	 * 
+	 * @param expense
+	 * @return
+	 */
 	public Expense removeExpense(Expense expense) {
 		getExpenses().remove(expense);
 		expense.setParty(null);
@@ -150,6 +153,12 @@ public class Partner implements Serializable {
 		this.incomes = incomes;
 	}
 
+	/**
+	 * bidirectional
+	 * 
+	 * @param income
+	 * @return
+	 */
 	public Income addIncome(Income income) {
 		getIncomes().add(income);
 		income.setParty(this);
@@ -157,6 +166,12 @@ public class Partner implements Serializable {
 		return income;
 	}
 
+	/**
+	 * bidirectional
+	 * 
+	 * @param income
+	 * @return
+	 */
 	public Income removeIncome(Income income) {
 		getIncomes().remove(income);
 		income.setParty(null);
@@ -165,6 +180,8 @@ public class Partner implements Serializable {
 	}
 
 	/**
+	 * Updates partner data field by field
+	 * 
 	 * @param partner
 	 */
 	public void update(Partner partner) {
@@ -172,7 +189,6 @@ public class Partner implements Serializable {
 		this.setAccount(partner.getAccount());
 		this.setParnterTechnical(partner.getParnterTechnical());
 		this.setContact(partner.getContact());
-
 	}
 
 }

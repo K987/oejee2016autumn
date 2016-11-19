@@ -8,14 +8,12 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import org.apache.log4j.Logger;
-
 import hun.restoffice.ejbservice.domain.PartnerContactStub;
 import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.persistence.entity.partner.Partner;
 
 /**
- * Convert partner entites to stubs
+ * Convert partner entity and stub back and forth
  * 
  * @author kalmankostenszky
  *
@@ -23,7 +21,7 @@ import hun.restoffice.persistence.entity.partner.Partner;
 @Stateless
 public class PartnerConverter implements PartnerConverterLocal {
 
-	private static final Logger LOG = Logger.getLogger(PartnerConverter.class);
+	//private static final Logger LOG = Logger.getLogger(PartnerConverter.class);
 
 	/*
 	 * (non-Javadoc)

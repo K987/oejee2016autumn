@@ -15,18 +15,12 @@ public class PartnerContactStub {
 	private static final String NO_NAME = "No contact name available";
 	private static final String NO_PHONE = "No contact phone available";
 	private static final String NO_EMAIL = "No contact email available";
-	// fields
+
 	private String name;
 	private String phone;
 	private String email;
 
-	// constructors
 
-	/**
-	 * @param name
-	 * @param phone
-	 * @param email
-	 */
 	public PartnerContactStub(String name, String phone, String email) {
 		super();
 		this.name = (name == null || name == "") ? PartnerContactStub.NO_NAME : name;
@@ -34,20 +28,15 @@ public class PartnerContactStub {
 		this.email = (email == null || email == "") ? PartnerContactStub.NO_EMAIL : email;
 	}
 
-	/**
-	 * @param contact
-	 */
+
 	public PartnerContactStub(PartnerContact contact) {
 		this(contact.getName(), contact.getPhone(), contact.getEmail());
 	}
 
-	/**
-	 * 
-	 */
+
 	public PartnerContactStub() {
 		super();
 	}
-	// public methods
 
 	/*
 	 * (non-Javadoc)
@@ -103,5 +92,6 @@ public class PartnerContactStub {
 		this.email = email;
 	}
 
+	
 	
 }

@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 
 import hun.restoffice.persistence.entity.partner.Partner;
@@ -21,7 +22,7 @@ import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- * Persistence services for partner entity
+ * Partner persistence facade
  *
  * @author kalmankostenszky
  */
@@ -140,10 +141,20 @@ public class PartnerService implements PartnerServiceLocal {
 		}
 	}
 
+	/**
+	 * Count partners by name
+	 * 
+	 * @param partner
+	 *            name will be extracted
+	 * @return
+	 * @throws PersistenceServiceException
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private int count(Partner partner) throws PersistenceServiceException {
 		try {
-			return this.entityManager.createNamedQuery(Partner.COUNT, Long.class).setParameter(Partner.NAME, partner.getName()).getSingleResult().intValue();
+			LOG.info(partner.getName().toLowerCase().trim());
+			return this.entityManager.createNamedQuery(Partner.COUNT, Long.class).setParameter(Partner.NAME, partner.getName().toLowerCase().trim())
+					.getSingleResult().intValue();
 		} catch (Exception e) {
 			LOG.error(e.getLocalizedMessage());
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during counting occurences of partner " + partner, e);

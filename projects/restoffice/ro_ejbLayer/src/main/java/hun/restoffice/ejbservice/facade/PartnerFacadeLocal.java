@@ -12,6 +12,7 @@ import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 
 /**
+ * Partner business facade
  * 
  * @author kalmankostenszky
  */
