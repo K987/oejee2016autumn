@@ -37,11 +37,11 @@ public class EngedelyEntity implements Serializable {
 	@Column(name = "engedely_tipusa")
 	private String engedelyTipusa;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

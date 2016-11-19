@@ -1,5 +1,8 @@
 package hu.gyigorpeter.anglerregistry.ejbservice.facade;
 
-public interface EngedelyConverter {
+import javax.ejb.Local;
+
+@Local
+public interface HalFacade {
 
 }

@@ -27,7 +27,7 @@ public class TelepitesEntity implements Serializable {
 	@SequenceGenerator(name = " generatorTelepites", sequenceName = "telepites_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorTelepites")
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private long id;
 
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = HorgasztoEntity.class)
 	@JoinColumn(name = "toid", referencedColumnName = "id", nullable = false)
@@ -49,11 +49,11 @@ public class TelepitesEntity implements Serializable {
 	@Column(name = "tilalminapokszama")
 	private int tilalmiNapokSzama;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

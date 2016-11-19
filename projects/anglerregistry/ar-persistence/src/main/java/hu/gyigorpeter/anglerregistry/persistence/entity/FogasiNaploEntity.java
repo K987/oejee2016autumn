@@ -28,7 +28,7 @@ public class FogasiNaploEntity implements Serializable {
 	@SequenceGenerator(name = " generatorFogasiNaplo", sequenceName = "fogasinaplo_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorFogasiNaplo")
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private long id;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "engedelyid", referencedColumnName = "id", nullable = false)
@@ -48,7 +48,7 @@ public class FogasiNaploEntity implements Serializable {
 	@Column(name = "mennyiseg")
 	private int mennyiseg;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
