@@ -8,4 +8,5 @@
  */
 dependencies{
 	compile project(':ro_persistenceLayer')
+	compile project(':ro_remoteApplication')
 }

@@ -1,73 +1,39 @@
-apply plugin: 'application'
- 
- //http://patrickmoule.net/2012/12/16/building-and-packaging-of-javafx-applications-with-gradle/
- 
-mainClassName = 'hun.restoffice.client.Main'
 
-def javaFxHome = "${System.properties['java.home']}";
- 
-configurations {
-    providedCompile
+apply plugin: 'javafx-gradle-plugin'
+
+
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.7.0'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
 
 repositories {
 flatDir { dirs 'lib' }
 }
- 
-def buildLib = 'build/libs'
-def buildItem = '*.jar'
+
+processResources {
+  from ('src/main/java') {
+    include '**/*.fxml'
+  }
+}
 
 dependencies {
 	compile project(':ro_remoteApplication')
 	compile name: 'jboss-client', ext: 'jar'
-	providedCompile files("$javaFxHome/jre/lib/ext/jfxrt.jar")
-    compile fileTree(dir: buildLib, include: buildItem)
-}
- 
-compileJava {
-    sourceSets.main.compileClasspath += configurations.providedCompile
-}
- 
-run {
-    classpath += configurations.providedCompile
+	compile name: 'jfxrt', ext: 'jar'
 }
 
-sourceSets {
-  main {
-    resources {
-        srcDirs = ["src/main/java"]
-        includes = ["**/*.fxml"]
-    }
-  }
-}
- 
-//ant configuration for creating double-clickable, self-contained JAR
-ant.importBuild 'javafx.xml'
-ant.antJavaFxJar = "$javaFxHome/../lib/ant-javafx.jar"
-ant.mainClassName = mainClassName
-ant.fallbackClassName = 'com.javafx.main.NoJavaFXFallback'
-ant.distDir = libsDir
-ant.distName = jar.archiveName;
-ant.resourceDir = buildLib
-ant.resourceIncludePattern = buildItem
-ant.applicationTitle = 'ro_richClient'
-ant.applicationVendor = 'kalmanKostenszky'
-ant.applicationVersion = '1.0'
-ant.applicationClasses = sourceSets.main.output.classesDir
-ant.applicationResources = sourceSets.main.output.resourcesDir
- 
-//clear existing task actions and call ant task
-jar {
- 
-    doLast {
-        javafxjar.execute(); 
-}
-}
- 
-startScripts {
-    doLast {
-        unixScript.text = "java -jar ../lib/$jar.archiveName"
-        windowsScript.text = "java -jar ..\\lib\\$jar.archiveName"
-    }
+jfx {
+ mainClass = 'hun.restoffice.client.Main'
+ vendor = 'Iam'
 }
 
+task build {
+	finalizedBy 'jfxJar'
+}
