@@ -8,4 +8,8 @@ import hu.musicorganizer.ejbservice.domain.CustomerStub;
 public interface CustomerFacade {
 
 	CustomerStub authenticate(String username, String password);
+	
+	void register(CustomerStub newCustomer);
+	
+	void delete(String emailAddress);
 }

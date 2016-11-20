@@ -15,4 +15,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return user;
 	}
 
+	@Override
+	public void register(CustomerStub newCustomer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String emailAddress) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

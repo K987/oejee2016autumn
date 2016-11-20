@@ -42,11 +42,11 @@ ALTER TABLE streamingurl OWNER TO postgres;
 
 
 CREATE TABLE trackliststreamingurl (
-	song_id INTEGER NOT NULL,
+	tracklist_id INTEGER NOT NULL,
 	streamingurl_id INTEGER NOT NULL,
-	CONSTRAINT PK_TRACKLISTSTREAMINGURL_ID PRIMARY KEY (song_id, streamingurl_id)
+	CONSTRAINT PK_TRACKLISTSTREAMINGURL_ID PRIMARY KEY (song_id, tracklist_id)
 );
-CREATE UNIQUE INDEX UI_tracklistsong_pk ON trackliststreamingurl USING btree (streamingurl_id, song_id);
+CREATE UNIQUE INDEX UI_trackliststreamingurl_pk ON trackliststreamingurl USING btree (tracklist_id, song_id);
 ALTER TABLE trackliststreamingurl OWNER TO postgres;
 
 

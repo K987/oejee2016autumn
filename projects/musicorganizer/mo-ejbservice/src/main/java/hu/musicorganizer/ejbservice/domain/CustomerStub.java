@@ -18,6 +18,4 @@ public class CustomerStub {
 		this.emailAddress = emailAddress;
 	}
 	
-	
-	
 }

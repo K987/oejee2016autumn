@@ -19,9 +19,8 @@ public class TrackList {
 	@Column(name = "tracklist_name", nullable = false)
 	private String name;
 
-	public TrackList(Long id, Customer customer, String name) {
+	public TrackList(Customer customer, String name) {
 		super();
-		this.id = id;
 		this.customer = customer;
 		this.name = name;
 	}
