@@ -1,5 +1,6 @@
 apply plugin: 'eclipse'
 apply plugin: 'ear'
+apply plugin: 'java'
 
 allprojects{
 	repositories {
@@ -39,8 +40,9 @@ ear{
 dependencies{
   deploy project ('ro_persistenceLayer')
   deploy project ('ro_ejbLayer')
-deploy project (path: 'ro_RESTService', configuration: 'archives')
+	deploy project (path: 'ro_RESTService', configuration: 'archives')
   //deploy project (path: 'ro_webLayer', configuration: 'archives')
+	earlib project ('ro_remoteApplication')
 }
 
 task copyTask(type: Copy){
