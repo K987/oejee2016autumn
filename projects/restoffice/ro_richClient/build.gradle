@@ -1,5 +1,6 @@
-
+apply plugin: 'java'
 apply plugin: 'javafx-gradle-plugin'
+//https://github.com/FibreFoX/javafx-gradle-plugin
 
 
 buildscript {
@@ -30,10 +31,24 @@ dependencies {
 }
 
 jfx {
- mainClass = 'hun.restoffice.client.Main'
- vendor = 'Iam'
+
+	mainClass = 'hun.restoffice.client.Main'
+ 	appName = 'Rest Office Client'
+ 	jfxMainAppJarName = 'ro_restClient_Runnable.jar' 
+ 	copyAdditionalAppResourcesToJar = true
+ 	//bundler = 'PKG'
+ 	vendor = 'Im'
 }
 
-task build {
+build {
+	//list of available bundlers
+	//finalizedBy 'jfxListBundlers'
+	
+	//creates a runnable jar (fast and small)
 	finalizedBy 'jfxJar'
+	
+	
+	//use this if you want to create a super-duper selfcontaining installer (takes time and storage)
+	//you may want to adjust the bundler parameter of jfx task
+	//finalizedBy 'jfxNative'
 }

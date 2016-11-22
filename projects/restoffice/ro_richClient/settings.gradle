@@ -16,4 +16,6 @@ include 'api'
 include 'services:webservice'
 */
 
+include ':ro_remoteApplication'
+
 rootProject.name = 'ro_richClient'
