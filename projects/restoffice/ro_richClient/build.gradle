@@ -2,6 +2,8 @@ apply plugin: 'java'
 apply plugin: 'javafx-gradle-plugin'
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
 
 buildscript {
     dependencies {
@@ -27,12 +29,12 @@ processResources {
 dependencies {
 	compile project(':ro_remoteApplication')
 	compile name: 'jboss-client', ext: 'jar'
-	compile name: 'jfxrt', ext: 'jar'
+	//compile name: 'jfxrt', ext: 'jar'
 }
 
 jfx {
 
-	mainClass = 'hun.restoffice.client.Main'
+	mainClass = 'hun.restoffice.client.AppEntry'
  	appName = 'Rest Office Client'
  	jfxMainAppJarName = 'ro_restClient_Runnable.jar' 
  	copyAdditionalAppResourcesToJar = true

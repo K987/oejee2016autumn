@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hun.restoffice.client.workday.DateController">
+   <center>
+      <GridPane prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="110.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="290.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="130.0" minHeight="2.0" prefHeight="3.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="265.0" minHeight="10.0" prefHeight="264.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </BorderPane.margin>
+         <children>
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Válasszon napot:" />
+            <DatePicker fx:id="datePicker" onAction="#onDateSelected" prefHeight="27.0" prefWidth="297.0" GridPane.columnIndex="1" />
+            <ListView fx:id="employees" prefHeight="200.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>

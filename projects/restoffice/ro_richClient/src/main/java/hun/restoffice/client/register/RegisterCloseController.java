@@ -7,7 +7,8 @@ import java.text.NumberFormat;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.client.Main;
+import hun.restoffice.client.AppEntry;
+import hun.restoffice.client.main.WizardElement;
 import hun.restoffice.client.util.DynamicEditableTextTableCell;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -29,7 +30,7 @@ import javafx.util.converter.NumberStringConverter;
  *
  * @author kalmankostenszky
  */
-public class RegisterCloseController {
+public class RegisterCloseController implements WizardElement {
 
 	private static final Logger LOG = Logger.getLogger(RegisterCloseController.class);
 
@@ -63,7 +64,7 @@ public class RegisterCloseController {
 	@FXML
 	private Label sumLabel;
 
-	private Main main;
+	private AppEntry main;
 
 	public RegisterCloseController() {
 
@@ -72,6 +73,7 @@ public class RegisterCloseController {
 	
 	@FXML
 	private void initialize() {
+		LOG.debug("initialize called");
 
 		closeNoCol.setText(CLOSE_NO_COL);
 		amtCol.setText(SUM_COL);
@@ -163,10 +165,8 @@ public class RegisterCloseController {
 	 */
 	RegisterCloseModel rcm;
 
-	public void setMain(Main main) {
+	public void setMain(AppEntry main) {
 		this.main = main;
-		rcm = Main.getRegisterData();
-
 		
 		registerTable.setItems(rcm.getRegModels());
 
@@ -186,6 +186,46 @@ public class RegisterCloseController {
 		cashLbl.textProperty().bind(Bindings.format("%.1f Ft", rcm.getCash()));
 		sumLabel.textProperty().bind(Bindings.format("%.1f Ft", rcm.getSum()));
 
+	}
+
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.main.WizardElement#onNext()
+	 */
+	@Override
+	public void onNext() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.main.WizardElement#onPrevious()
+	 */
+	@Override
+	public void onPrevious() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.main.WizardElement#onCancel()
+	 */
+	@Override
+	public void onCancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.main.WizardElement#onSend()
+	 */
+	@Override
+	public void onSend() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
