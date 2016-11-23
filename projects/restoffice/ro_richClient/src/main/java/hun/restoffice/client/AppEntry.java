@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.client.main.MainController;
+import hun.restoffice.client.controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,10 +17,12 @@ public class AppEntry extends Application {
 	private Stage stage;
 	private Parent root;
 
-	private static final String[] uris = { "workday/DateView.fxml", //
-			"register/RegisterCloseView.fxml", //
-			"shift/ShiftView.fxml", //
-			"dailyTransaction/DailyTransactionView.fxml" };
+	private static final String[] uris = { //
+			"view/DateView.fxml", //
+			"view/RegisterCloseView.fxml", //
+			"view/ShiftView.fxml", //
+			"view/DailyTransactionView.fxml" //
+			};
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -35,7 +37,7 @@ public class AppEntry extends Application {
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(AppEntry.class.getResource("main/MainView.fxml"));
+			loader.setLocation(AppEntry.class.getResource("view/MainView.fxml"));
 
 			root = loader.load();
 			MainController controller = loader.getController();
@@ -57,6 +59,7 @@ public class AppEntry extends Application {
 	}
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 

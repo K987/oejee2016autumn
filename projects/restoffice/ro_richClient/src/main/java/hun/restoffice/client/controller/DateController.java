@@ -1,13 +1,13 @@
 /**
  * 
  */
-package hun.restoffice.client.workday;
+package hun.restoffice.client.controller;
 
 import java.time.LocalDate;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.client.main.WizardElement;
+import hun.restoffice.client.workday.EmployeeStub;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
@@ -75,6 +75,15 @@ public class DateController implements WizardElement {
 	@FXML
 	private void onDateSelected(){
 		LOG.debug("date selected :"+ datePicker.getValue());
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.controller.WizardElement#onLoad()
+	 */
+	@Override
+	public void onLoad() {
+		// TODO Auto-generated method stub
 		
 	}
 }

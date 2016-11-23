@@ -1,27 +1,26 @@
 /**
  * 
  */
-package hun.restoffice.client.register;
+package hun.restoffice.client.controller;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 
 import hun.restoffice.client.AppEntry;
-import hun.restoffice.client.main.WizardElement;
-import hun.restoffice.client.util.DynamicEditableTextTableCell;
+import hun.restoffice.client.model.RegisterCloseModel;
+import hun.restoffice.client.model.RegisterModel;
+import hun.restoffice.client.service.RemoteServiceFactory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 import javafx.util.converter.CurrencyStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
@@ -70,7 +69,6 @@ public class RegisterCloseController implements WizardElement {
 
 	}
 
-	
 	@FXML
 	private void initialize() {
 		LOG.debug("initialize called");
@@ -93,52 +91,31 @@ public class RegisterCloseController implements WizardElement {
 
 		final NumberFormat nf = NumberFormat.getInstance();
 		nf.setParseIntegerOnly(true);
-		closeNoCol.setCellFactory(new Callback<TableColumn<RegisterModel, Number>, TableCell<RegisterModel, Number>>() {
-			/* (non-Javadoc)
-			 * @see javafx.util.Callback#call(java.lang.Object)
-			 */
-			@Override
-			public TableCell<RegisterModel, Number> call(TableColumn<RegisterModel, Number> tableColumn) {
-			  final DynamicEditableTextTableCell<RegisterModel, Number> cell = new DynamicEditableTextTableCell<>(
-			    new NumberStringConverter(nf));
-			  cell.recordProperty().addListener(new ChangeListener<RegisterModel>() {
-				/* (non-Javadoc)
-				 * @see javafx.beans.value.ChangeListener#changed(javafx.beans.value.ObservableValue, java.lang.Object, java.lang.Object)
-				 */
-				@Override
-				public void changed(ObservableValue<? extends RegisterModel> ov, RegisterModel vOld, RegisterModel vNew) {
-				    cell.editableProperty().unbind();
-				    if (vNew != null)
-				      cell.editableProperty().bind(vNew.usedProperty());
-				  }
+
+		closeNoCol.setCellFactory(tableColumn -> {
+			final DynamicEditableTextTableCell<RegisterModel, Number> cell = new DynamicEditableTextTableCell<>(//
+					new NumberStringConverter(nf));
+
+			cell.recordProperty().addListener((ChangeListener<RegisterModel>) (ov, vOld, vNew) -> {
+				cell.editableProperty().unbind();
+				if (vNew != null)
+					cell.editableProperty().bind(vNew.usedProperty());
 			});
-			  return cell;
-			}
-		});		
-		
-	    amtCol.setCellFactory(new Callback<TableColumn<RegisterModel, Number>, TableCell<RegisterModel, Number>>() {
-			/* (non-Javadoc)
-			 * @see javafx.util.Callback#call(java.lang.Object)
-			 */
-			@Override
-			public TableCell<RegisterModel, Number> call(TableColumn<RegisterModel, Number> tableColumn) {
-			  final DynamicEditableTextTableCell<RegisterModel, Number> cell = new DynamicEditableTextTableCell<>(
-			    new CurrencyStringConverter());
-			  cell.recordProperty().addListener(new ChangeListener<RegisterModel>() {
-				/* (non-Javadoc)
-				 * @see javafx.beans.value.ChangeListener#changed(javafx.beans.value.ObservableValue, java.lang.Object, java.lang.Object)
-				 */
-				@Override
-				public void changed(ObservableValue<? extends RegisterModel> ov, RegisterModel vOld, RegisterModel vNew) {
-				    cell.editableProperty().unbind();
-				    if (vNew != null)
-				      cell.editableProperty().bind(vNew.usedProperty());
-				  }
-			});
-			  return cell;
-			}
+			return cell;
 		});
-	    
+
+		amtCol.setCellFactory(tableColumn -> {
+			final DynamicEditableTextTableCell<RegisterModel, Number> cell = new DynamicEditableTextTableCell<>(//
+					new CurrencyStringConverter());
+
+			cell.recordProperty().addListener((ChangeListener<RegisterModel>) (ov, vOld, vNew) -> {
+				cell.editableProperty().unbind();
+				if (vNew != null)
+					cell.editableProperty().bind(vNew.usedProperty());
+			});
+			return cell;
+		});
+
 		usedCol.setCellFactory(CheckBoxTableCell.forTableColumn(usedCol));
 	}
 
@@ -167,18 +144,14 @@ public class RegisterCloseController implements WizardElement {
 
 	public void setMain(AppEntry main) {
 		this.main = main;
-		
+
 		registerTable.setItems(rcm.getRegModels());
 
-		for ( final RegisterModel rm : registerTable.getItems()) {
+		for (final RegisterModel rm : registerTable.getItems()) {
 
-			rm.usedProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> paramObservableValue, Boolean paramT1, Boolean paramT2) {
-					if (paramT2 != null && !paramT2){
-						rm.amountProperty().set(0);
-					}
+			rm.usedProperty().addListener((ChangeListener<Boolean>) (paramObservableValue, paramT1, paramT2) -> {
+				if (paramT2 != null && !paramT2) {
+					rm.amountProperty().set(0);
 				}
 			});
 		}
@@ -188,44 +161,59 @@ public class RegisterCloseController implements WizardElement {
 
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.main.WizardElement#onNext()
 	 */
 	@Override
 	public void onNext() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.main.WizardElement#onPrevious()
 	 */
 	@Override
 	public void onPrevious() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.main.WizardElement#onCancel()
 	 */
 	@Override
 	public void onCancel() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.main.WizardElement#onSend()
 	 */
 	@Override
 	public void onSend() {
 		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see hun.restoffice.client.controller.WizardElement#onLoad()
+	 */
+	@Override
+	public void onLoad() {
 		
+		RemoteServiceFactory.lookup().getRegistersToClose(Calendar.getInstance());
 	}
 
 }

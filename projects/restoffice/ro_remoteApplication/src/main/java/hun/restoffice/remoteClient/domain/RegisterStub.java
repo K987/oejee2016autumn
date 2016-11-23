@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author kalmankostenszky
  */
-public class RegisterCloseStub implements Serializable {
+public class RegisterStub implements Serializable {
 
 	private final String id;
 	private final RegisterType type;
@@ -21,7 +21,16 @@ public class RegisterCloseStub implements Serializable {
 	private Calendar date;
 	private int closeNo;
 	
-	public RegisterCloseStub(BigDecimal closeAmt, Date closeDate, String id, int closeNo, RegisterType type){
+	/**
+	 * register constructor
+	 * 
+	 * @param closeAmt total money
+	 * @param closeDate colse date
+	 * @param id register id
+	 * @param closeNo register closing Nr
+	 * @param type register type
+	 */
+	public RegisterStub(BigDecimal closeAmt, Date closeDate, String id, Integer closeNo, RegisterType type){
 		this.id = id;
 		this.type = type;
 		this.amt = closeAmt == null ? new BigDecimal(0) : closeAmt;
@@ -30,6 +39,9 @@ public class RegisterCloseStub implements Serializable {
 			date = Calendar.getInstance();
 			date.setTime(closeDate);
 	}
+
+
+
 
 
 	/**

@@ -1,13 +1,13 @@
 /**
  * 
  */
-package hun.restoffice.client.register;
+package hun.restoffice.client.model;
 
 import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.remoteClient.domain.RegisterCloseStub;
+import hun.restoffice.remoteClient.domain.RegisterStub;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -39,7 +39,7 @@ public class RegisterModel {
 
 	}
 
-	public RegisterModel(RegisterCloseStub regClose) {
+	public RegisterModel(RegisterStub regClose) {
 
 		this.id = new SimpleStringProperty(regClose.getId());
 		this.type = new SimpleStringProperty(regClose.getType().toString());

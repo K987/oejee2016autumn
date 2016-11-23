@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.client.register;
+package hun.restoffice.client.model;
 
 import java.util.Calendar;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.remoteClient.domain.RegisterCloseStub;
+import hun.restoffice.remoteClient.domain.RegisterStub;
 import hun.restoffice.remoteClient.domain.RegisterType;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -35,7 +35,7 @@ public class RegisterCloseModel {
 	private DoubleBinding cash;
 	private DoubleBinding sum;
 
-	public RegisterCloseModel(List<RegisterCloseStub> registerCloses) {
+	public RegisterCloseModel(List<RegisterStub> registerCloses) {
 
 		Callback<RegisterModel, Observable[]> extractor = new Callback<RegisterModel, Observable[]>() {
 
@@ -48,7 +48,7 @@ public class RegisterCloseModel {
 
 		regModels = FXCollections.observableArrayList(extractor);
 
-		for (RegisterCloseStub regClose : registerCloses) {
+		for (RegisterStub regClose : registerCloses) {
 			RegisterModel tmp = new RegisterModel(regClose);
 			regModels.add(new RegisterModel(regClose));
 		}

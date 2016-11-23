@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.client.main;
+package hun.restoffice.client.controller;
 
 import java.util.ArrayList;
 import java.util.List;

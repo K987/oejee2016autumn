@@ -1,22 +1,25 @@
 /**
  * 
  */
-package hun.restoffice.ejbservice.exception;
+package hun.restoffice.remoteClient.service;
 
 /**
- * Exception for local clients
  * 
- * @author kalmankostenszky
  *
+ * @author kalmankostenszky
  */
 public class FacadeException extends Exception {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @param localizedMessage
+	 */
 	public FacadeException(String localizedMessage) {
 		super(localizedMessage);
 	}
 
-
-	
 }

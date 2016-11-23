@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.client.main;
+package hun.restoffice.client.controller;
 
 /**
  *  
@@ -17,4 +17,6 @@ public interface WizardElement {
 	void onCancel();
 	
 	void onSend();
+	
+	void onLoad();
 }
