@@ -9,7 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import hun.restoffice.remoteClient.service.RegisterFacadeRemote;
+import hun.restoffice.remoteClient.service.ShiftFacadeRemote;
 
 /**
  *  
@@ -26,7 +26,7 @@ public class RemoteServiceFactory {
 	private static final String JBOSS_NAMING_CLIENT_EJB_CONTEXT_VALUE = "true";
 	
 	
-	public static RegisterFacadeRemote lookup() throws NamingException {
+	public static ShiftFacadeRemote lookup() throws NamingException {
 		final Hashtable<String, String> jndiProperties = new Hashtable<String, String>();
 		jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, JBOSS_INITIAL_CONTEXT_FACTORY);
 		jndiProperties.put(Context.PROVIDER_URL, JBOSS_PROVIDER_URL);

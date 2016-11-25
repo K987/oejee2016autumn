@@ -11,7 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import org.testng.log4testng.Logger;
+import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.RegisterConverterLocal;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
@@ -24,7 +24,7 @@ import hun.restoffice.remoteClient.service.RegisterFacadeRemote;
  *
  * @author kalmankostenszky
  */
-@Stateless
+@Stateless(mappedName="ejb/registerFacade")
 public class RegisterFacade implements RegisterFacadeRemote {
 
 	private static final Logger LOG = Logger.getLogger(RegisterFacade.class);

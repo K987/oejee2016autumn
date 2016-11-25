@@ -1,16 +1,13 @@
 /**
  * 
  */
-package hun.restoffice.ejbservice.domain;
+package hun.restoffice.remoteClient.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import hun.restoffice.persistence.entity.employee.EmployeeShift;
-import hun.restoffice.persistence.entity.employee.JobPosition;
 
 /**
  * DTO for calendar schedule
@@ -22,14 +19,14 @@ public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
 	private final Calendar start;
 	private final List<Assignee> assignees;
 
-	public CalendarScheduleStub(Date startDate, Date startTime, Set<EmployeeShift> employeeShifts) {
+	public CalendarScheduleStub(Date startDate, Date startTime, List<EmployeeShiftStub> employeeShifts) {
 		start = Calendar.getInstance();
 		start.setTime(startDate);
 		start.set(Calendar.HOUR_OF_DAY, startTime.getHours());
 		start.set(Calendar.MINUTE, startTime.getMinutes());
 
 		assignees = new ArrayList<>();
-		for (EmployeeShift es : employeeShifts) {
+		for (EmployeeShiftStub es : employeeShifts) {
 			assignees.add(new Assignee(es));
 		}
 	}
@@ -68,17 +65,17 @@ public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
 		return assignees;
 	}
 
-	private class Assignee implements Comparable<Assignee> {
+	public class Assignee implements Comparable<Assignee> {
 
 		private final String name;
-		private final JobPosition defaultPosition;
+		private final String defaultPosition;
 		private final Calendar acutalStart;
 		private final Calendar actualEnd;
-		private final JobPosition actualPosition;
+		private final String actualPosition;
 
-		public Assignee(EmployeeShift employeeShift) {
-			this.name = employeeShift.getEmployee().getEmployeeName();
-			this.defaultPosition = employeeShift.getEmployee().getDefaultPosition();
+		public Assignee(EmployeeShiftStub employeeShift) {
+			this.name = employeeShift.getName();
+			this.defaultPosition = employeeShift.getDefaultPosition();
 			if (employeeShift.getActualStart() != null) {
 				this.acutalStart = (Calendar) start.clone();
 				this.acutalStart.set(Calendar.HOUR_OF_DAY, employeeShift.getActualStart().getHours());
@@ -106,7 +103,7 @@ public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
 		/**
 		 * @return the defaultPosition
 		 */
-		public JobPosition getDefaultPosition() {
+		public String getDefaultPosition() {
 			return defaultPosition;
 		}
 
@@ -127,7 +124,7 @@ public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
 		/**
 		 * @return the actualPosition
 		 */
-		public JobPosition getActualPosition() {
+		public String getActualPosition() {
 			return actualPosition;
 		}
 

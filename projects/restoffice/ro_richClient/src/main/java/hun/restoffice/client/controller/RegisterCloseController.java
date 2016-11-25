@@ -213,7 +213,7 @@ public class RegisterCloseController implements WizardElement {
 	@Override
 	public void onLoad() {
 		
-		RemoteServiceFactory.lookup().getRegistersToClose(Calendar.getInstance());
+		//RemoteServiceFactory.lookup().getRegistersToClose(Calendar.getInstance());
 	}
 
 }

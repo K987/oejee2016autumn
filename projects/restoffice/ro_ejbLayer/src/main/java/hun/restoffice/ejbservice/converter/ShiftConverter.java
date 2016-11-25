@@ -8,9 +8,11 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.domain.ShiftStub;
+import hun.restoffice.persistence.entity.employee.EmployeeShift;
 import hun.restoffice.persistence.entity.employee.Shift;
+import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
+import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
 
 /**
  * Convert shift entity and stub back and forth
@@ -20,13 +22,18 @@ import hun.restoffice.persistence.entity.employee.Shift;
 @Stateless
 public class ShiftConverter implements ShiftConverterLocal {
 
-	
 	/**
 	 * @param shift
 	 * @return
 	 */
 	private CalendarScheduleStub to(Shift shift) {
-		return new CalendarScheduleStub(shift.getStartDate(), shift.getStartTime(), shift.getEmployeeShifts());
+		List<EmployeeShiftStub> empShfits = new ArrayList<>();
+		for (EmployeeShift item : shift.getEmployeeShifts()) {
+			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getActualEnd(), /*item.getActualPosition().toString()*/ "alma",
+					item.getEmployee().getEmployeeName(), item.getEmployee().getDefaultPosition().toString()));
+		}
+
+		return new CalendarScheduleStub(shift.getStartDate(), shift.getStartTime(), empShfits);
 	}
 
 	/*
@@ -43,7 +50,9 @@ public class ShiftConverter implements ShiftConverterLocal {
 		return rtrn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.ejbservice.converter.ShiftConverterLocal#to(java.util.List)
 	 */
 	@Override

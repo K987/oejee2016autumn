@@ -1,6 +1,9 @@
 package hun.restoffice.client;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -17,17 +20,17 @@ public class AppEntry extends Application {
 	private Stage stage;
 	private Parent root;
 
-	private static final String[] uris = { //
+	private static final String[] URI_END = { //
 			"view/DateView.fxml", //
 			"view/RegisterCloseView.fxml", //
 			"view/ShiftView.fxml", //
 			"view/DailyTransactionView.fxml" //
-			};
+	};
 
 	@Override
 	public void start(Stage primaryStage) {
 		this.stage = primaryStage;
-		this.stage.setTitle("Napi z√°r√°s");
+		this.stage.setTitle("Napi z·r·s");
 
 		initLayout();
 	}
@@ -38,28 +41,28 @@ public class AppEntry extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(AppEntry.class.getResource("view/MainView.fxml"));
+			initMaincontroller(loader);
 
 			root = loader.load();
-			MainController controller = loader.getController();
-
 			Scene scene = new Scene(root);
+			
 			stage.setScene(scene);
-
-			for (String uri : uris) {
-				FXMLLoader tmp = new FXMLLoader();
-				tmp.setLocation(AppEntry.class.getResource(uri));
-				tmp.load();
-				controller.addChild(tmp);
-			}
-
 			stage.show();
 		} catch (IOException e) {
 			LOG.error(e);
 		}
 	}
 
+	private void initMaincontroller(FXMLLoader loader) {
+		List<URL> tmp = new ArrayList<>();
+		for (String uriEnd : URI_END) {
+			tmp.add(AppEntry.class.getResource(uriEnd));
+		}
+		loader.setControllerFactory(arg0 -> new MainController(tmp));
+	}
+
 	public static void main(String[] args) {
-		
+
 		launch(args);
 	}
 

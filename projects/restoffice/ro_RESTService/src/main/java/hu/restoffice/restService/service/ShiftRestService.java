@@ -12,8 +12,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
+import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
 
 /**
  *  REST services for shift management
