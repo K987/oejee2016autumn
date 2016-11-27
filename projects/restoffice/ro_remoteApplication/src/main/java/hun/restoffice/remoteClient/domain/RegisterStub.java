@@ -16,8 +16,8 @@ import java.util.Date;
 public class RegisterStub implements Serializable {
 
 	private final String id;
-	private final RegisterType type;
-	private BigDecimal amt;
+	private final int type;
+	private double amt;
 	private Calendar date;
 	private int closeNo;
 	
@@ -30,10 +30,10 @@ public class RegisterStub implements Serializable {
 	 * @param closeNo register closing Nr
 	 * @param type register type
 	 */
-	public RegisterStub(BigDecimal closeAmt, Date closeDate, String id, Integer closeNo, RegisterType type){
+	public RegisterStub(BigDecimal closeAmt, Date closeDate, String id, Integer closeNo, int type){
 		this.id = id;
 		this.type = type;
-		this.amt = closeAmt == null ? new BigDecimal(0) : closeAmt;
+		this.amt = closeAmt.doubleValue();
 		this.closeNo = closeNo;
 		if (closeDate != null)
 			date = Calendar.getInstance();
@@ -47,14 +47,14 @@ public class RegisterStub implements Serializable {
 	/**
 	 * @return the amt
 	 */
-	public BigDecimal getAmt() {
+	public double getAmt() {
 		return amt;
 	}
 
 	/**
 	 * @param amt the amt to set
 	 */
-	public void setAmt(BigDecimal amt) {
+	public void setAmt(double amt) {
 		this.amt = amt;
 	}
 
@@ -82,7 +82,7 @@ public class RegisterStub implements Serializable {
 	/**
 	 * @return the type
 	 */
-	public RegisterType getType() {
+	public int getType() {
 		return type;
 	}
 

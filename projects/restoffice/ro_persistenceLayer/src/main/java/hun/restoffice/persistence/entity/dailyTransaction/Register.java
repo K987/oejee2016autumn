@@ -1,8 +1,17 @@
 package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the registers database table.
@@ -11,9 +20,16 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "registers")
-@NamedQuery(name = "Register.findAll", query = "SELECT r FROM Register r")
+@NamedQueries(value = {
+		@NamedQuery(name = "Register.findAll", query = "SELECT r FROM Register r"), 
+		@NamedQuery(name = Register.READ_BY_ID, query = "SELECT r FROM Register r WHERE LOWER(r.registerId)=:"+Register.ID)
+})
 public class Register implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String READ_BY_ID = "Register.readById";
+
+	public static final String ID = "id";
 
 	@Id
 	@Column(name = "register_id", unique = true, nullable = false, length = 50)

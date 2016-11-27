@@ -30,4 +30,5 @@ public interface RegisterConverterLocal {
 	 * @return
 	 */
 	RegisterStub to(RegisterClose register);
+
 }

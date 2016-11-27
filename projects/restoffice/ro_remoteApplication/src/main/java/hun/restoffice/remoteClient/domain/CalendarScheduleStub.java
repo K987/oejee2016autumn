@@ -3,18 +3,18 @@
  */
 package hun.restoffice.remoteClient.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * DTO for calendar schedule
  *
  * @author kalmankostenszky
  */
-public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
+public class CalendarScheduleStub implements Comparable<CalendarScheduleStub>, Serializable {
 
 	private final Calendar start;
 	private final List<Assignee> assignees;
@@ -65,7 +65,7 @@ public class CalendarScheduleStub implements Comparable<CalendarScheduleStub> {
 		return assignees;
 	}
 
-	public class Assignee implements Comparable<Assignee> {
+	public class Assignee implements Comparable<Assignee>, Serializable {
 
 		private final String name;
 		private final String defaultPosition;

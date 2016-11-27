@@ -24,4 +24,11 @@ public interface RegisterFacadeRemote {
 	 */
 	List<RegisterStub> getRegistersToClose(Calendar day) throws FacadeException;
 
+
+	/**
+	 * @param toClose
+	 * @throws FacadeException
+	 */
+	void batchRegisterClose(List<RegisterStub> toClose) throws FacadeException;
+
 }

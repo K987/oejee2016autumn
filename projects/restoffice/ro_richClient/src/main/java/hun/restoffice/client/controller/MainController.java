@@ -4,16 +4,24 @@
 package hun.restoffice.client.controller;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import hun.restoffice.client.model.DailyTransactionModel;
+import hun.restoffice.client.model.EmployeeShiftModel;
+import hun.restoffice.client.model.PositonType;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -27,13 +35,13 @@ import javafx.scene.layout.VBox;
  *
  * @author kalmankostenszky
  */
-public class MainController {
+public class MainController implements WizardElement {
 
 	private static final Logger LOG = Logger.getLogger(MainController.class);
 
-	private List<FXMLLoader> elements;
-
+	private List<WizardStep> steps;
 	private int selectedItem = -1;
+
 	private WizardElement selectedController;
 
 	@FXML
@@ -54,12 +62,18 @@ public class MainController {
 	@FXML
 	private BorderPane pane;
 
+	private SimpleObjectProperty<LocalDate> closingDate;
+	private SimpleListProperty<EmployeeShiftModel> employees;
+
 	public MainController(List<URL> urls) {
-		elements = new ArrayList<>();
+		steps = new ArrayList<>();
+		closingDate = new SimpleObjectProperty<>();
+		employees = new SimpleListProperty<>();
+
 		for (URL location : urls) {
-			elements.add(new FXMLLoader(location));
+			steps.add(new WizardStep(location, null));
 		}
-		if (!elements.isEmpty())
+		if (!steps.isEmpty())
 			selectedItem = 0;
 	}
 
@@ -72,59 +86,124 @@ public class MainController {
 	 * @param actualElement2
 	 */
 	private void setPane(int actualElement2) {
-		if (selectedItem < 0 || selectedItem >= elements.size()){
+		if (selectedItem < 0 || selectedItem >= steps.size()) {
 			LOG.error("No wizard elements set");
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Nap z·r·s nem elÈrhetzı");
+			alert.setContentText("Nap z√°r√°s nem el√©rhet≈ë");
 			alert.showAndWait();
 			System.exit(-1);
 		}
-			
 
-		FXMLLoader tmp = elements.get(actualElement2);
+		WizardStep tmp = steps.get(actualElement2);
 
-		if (tmp.getRoot() == null) {
+		if (tmp.loader == null) {
+			LOG.debug("loader is null");
 			try {
-				tmp.load();
+				tmp.loader = createStepLoader(tmp.path, this);
 			} catch (IOException e) {
 				LOG.error(e);
 			}
 		}
-
-		pane.setCenter(tmp.getRoot());
-		selectedController = tmp.getController();
-		pane.requestLayout();
+		Node node = tmp.loader.getRoot();
+		BorderPane.setAlignment(node, Pos.CENTER);
+		BorderPane.setMargin(node, new Insets(5, 5, 5, 5));
+		node.setStyle("-fx-border-color: lightgray;");
+		pane.setCenter(node);
+		selectedController = tmp.loader.getController();
 	}
 
+	/**
+	 * @param path
+	 * @param mainController
+	 * @return
+	 * @throws IOException
+	 */
+	private FXMLLoader createStepLoader(URL path, MainController mainController) throws IOException {
+		FXMLLoader rtrn = new FXMLLoader(path);
+		switch (path.toString().substring(path.toString().lastIndexOf('/') + 1)) {
+
+			case ("DateView.fxml"): {
+				DateController controller = new DateController();
+				rtrn.setController(controller);
+				rtrn.load();
+				closingDate.bind(controller.datePickerProperty().valueProperty());
+				employees.bind(controller.employeesProperty().itemsProperty());
+				break;
+			}
+			case ("RegisterCloseView.fxml"): {
+				rtrn.setController(new RegisterCloseController(closingDate.getValue()));
+				rtrn.load();
+				break;
+			}
+			case ("ShiftView.fxml"):
+				rtrn.setController(new ShiftController(employees.getValue()));
+				rtrn.load();
+				break;
+			case ("DailyTransactionView.fxml"):
+				ObservableList<DailyTransactionModel> tmp = FXCollections.observableArrayList();
+				for (EmployeeShiftModel esm : employees) {
+					if (esm.actualPositionProperty().get().equals(PositonType.BARTENDER) || esm.actualPositionProperty().get().equals(PositonType.WAITER))
+						tmp.add(new DailyTransactionModel(esm));
+				}
+				rtrn.setController(new DailyTransactionController(tmp));
+				rtrn.load();
+				break;
+		}
+		LOG.debug(rtrn.getRoot());
+		return rtrn;
+	}
+
+	@Override
 	@FXML
-	private void onCancel() {
+	public void onCancel() {
 		LOG.debug("cancel pressed");
+		for (int i = steps.size() - 1; i >= 0; i--) {
+			if (steps.get(i).loader != null) {
+				((WizardElement) steps.get(i).loader.getController()).onCancel();
+				steps.get(i).loader = null;
+			}
+		}
 		selectedItem = 0;
 		setPane(selectedItem);
 		setAdvanceIndicator(selectedItem);
 	}
 
+	@Override
 	@FXML
-	private void onPrevoius() {
+	public boolean onPrevious() {
 		LOG.debug("previous pressed");
-		if (selectedItem > 1) {
+		// boolean rtrn = selectedController.onPrevious();
+		boolean rtrn = true;
+		if (rtrn && (selectedItem > 1)) {
 			setPane(--selectedItem);
 			setAdvanceIndicator(selectedItem);
 		}
+		return rtrn;
 	}
 
+	@Override
 	@FXML
-	private void onNext() {
+	public boolean onNext() {
 		LOG.debug("next pressed");
-		if (selectedItem < elements.size() - 1) {
+		boolean rtrn = true;
+		// boolean rtrn = selectedController.onNext();
+		if (rtrn && (selectedItem < steps.size() - 1)) {
 			setPane(++selectedItem);
 			setAdvanceIndicator(selectedItem);
 		}
+		return rtrn;
 	}
 
+	@Override
 	@FXML
-	private void onSend() {
+	public void onSend() {
+
 		LOG.debug("send pressed");
+		for (WizardStep step : steps) {
+			if (step.loader != null) {
+				((WizardElement) step.loader.getController()).onSend();
+			}
+		}
 	}
 
 	/**
@@ -142,4 +221,36 @@ public class MainController {
 			}
 		}
 	}
+
+	/**
+	 * @return the closingDate
+	 */
+	public SimpleObjectProperty<LocalDate> getClosingDate() {
+		return closingDate;
+	}
+
+	private class WizardStep {
+
+		private URL path;
+		private FXMLLoader loader;
+
+		/**
+		 * @param path
+		 * @param object
+		 */
+		public WizardStep(URL path, FXMLLoader loader) {
+			this.path = path;
+			this.loader = loader;
+		}
+
+	}
+
+	/**
+	 * @param employeeModels
+	 */
+	public void setEmployees(ObservableList<EmployeeShiftModel> employeeModels) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

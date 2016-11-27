@@ -47,7 +47,6 @@ dependencies{
 
 task copyTask(type: Copy){
 	from 'build/libs'
-	
-
-	into 'c:\\EAP-6.4.0\\standalone\\deployments\\'
+	into '/Volumes/MacHDD1/EAP-6.4.0/standalone/deployments/'
+	//into 'c:\\EAP-6.4.0\\standalone\\deployments\\'
 }

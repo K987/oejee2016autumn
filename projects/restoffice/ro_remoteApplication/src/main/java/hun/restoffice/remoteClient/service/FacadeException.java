@@ -8,7 +8,7 @@ package hun.restoffice.remoteClient.service;
  *
  * @author kalmankostenszky
  */
-public class FacadeException extends Exception {
+public class FacadeException extends Exception{
 
 	/**
 	 * 

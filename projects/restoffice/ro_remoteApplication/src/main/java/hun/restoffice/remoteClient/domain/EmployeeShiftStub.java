@@ -1,8 +1,9 @@
 package hun.restoffice.remoteClient.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class EmployeeShiftStub {
+public class EmployeeShiftStub implements Serializable{
 
 	private final String name;
 	private final String defaultPosition;

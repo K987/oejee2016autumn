@@ -29,7 +29,7 @@ public class ShiftConverter implements ShiftConverterLocal {
 	private CalendarScheduleStub to(Shift shift) {
 		List<EmployeeShiftStub> empShfits = new ArrayList<>();
 		for (EmployeeShift item : shift.getEmployeeShifts()) {
-			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getActualEnd(), /*item.getActualPosition().toString()*/ "alma",
+			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getActualEnd(), (item.getActualPosition() == null ? "" : item.getActualPosition().toString()),
 					item.getEmployee().getEmployeeName(), item.getEmployee().getDefaultPosition().toString()));
 		}
 

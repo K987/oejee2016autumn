@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 
 import hun.restoffice.persistence.entity.dailyTransaction.RegisterClose;
 import hun.restoffice.remoteClient.domain.RegisterStub;
-import hun.restoffice.remoteClient.domain.RegisterType;
 
 /**
  * 
@@ -43,8 +42,10 @@ public class RegisterConverter implements RegisterConverterLocal {
 	@Override
 	public RegisterStub to(RegisterClose register) {
 		RegisterStub rtrn = new RegisterStub(register.getRegisterCloseAmt(), register.getRegisterCloseDate(), register.getRegister().getRegisterId(),
-				register.getId().getRegisterCloseNo(), RegisterType.valueOf(register.getRegister().getRegisterType().toString()));
+				register.getId().getRegisterCloseNo(), register.getRegister().getRegisterType().ordinal());
 		return rtrn;
 	}
+
+
 
 }

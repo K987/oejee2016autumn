@@ -1,43 +1,48 @@
 package hun.restoffice.client.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableStringValue;
+import javafx.beans.value.ObservableValue;
 
 public class EmployeeShiftModel {
 
 	
 	private ObservableStringValue name;
-	private ObservableStringValue defaultPosition;
-	private SimpleStringProperty actualPosition;
+	private ObservableValue<PositonType> defaultPosition;
+	private ObservableValue<LocalTime> defaultStart;
+	private SimpleObjectProperty<PositonType> actualPosition;
 	private SimpleObjectProperty<LocalDateTime> actualStart;
 	private SimpleObjectProperty<LocalDateTime> actualEnd;
-	private LocalDate start;
+	private Calendar start;
 	
 	public EmployeeShiftModel(String name, String defaultPosition, String actualPosition, Calendar actualStart, Calendar actualEnd, Calendar start) {
 		
 		this.name = new ReadOnlyStringWrapper(name);
-		this.defaultPosition = new ReadOnlyStringWrapper(defaultPosition);
-		this.actualPosition = new SimpleStringProperty();
+		this.defaultPosition = new ReadOnlyObjectWrapper<>(PositonType.valueOf(defaultPosition));
+		this.actualPosition = new SimpleObjectProperty<>();
+		this.start = start;
 		
 		if (actualPosition == null || actualPosition.equals(""))
-			this.actualPosition.set(defaultPosition);
+			this.actualPosition.set(PositonType.valueOf(defaultPosition));
 		else
-			this.actualPosition.set(actualPosition);
+			this.actualPosition.set(PositonType.valueOf(actualPosition));
 		
-		this.actualStart = new SimpleObjectProperty<LocalDateTime>();
+		this.actualStart = new SimpleObjectProperty<>();
+		this.actualEnd = new SimpleObjectProperty<>();
 		
 		if (actualStart == null || actualStart.getTime() == null)
 			this.actualStart.set(LocalDateTime.ofInstant(start.toInstant(), ZoneId.systemDefault()));
 		else
 			this.actualStart.set(LocalDateTime.ofInstant(actualStart.toInstant(), ZoneId.systemDefault()));
+		
+		this.defaultStart = new ReadOnlyObjectWrapper<>(this.actualStart.get().toLocalTime());
 		
 		if (actualEnd == null || actualEnd.getTime() == null)
 			this.actualEnd.set(this.actualStart.getValue());
@@ -49,11 +54,15 @@ public class EmployeeShiftModel {
 		return name;
 	}
 
-	public ObservableStringValue defaultPositionProperty() {
+	public  ObservableValue<PositonType> defaultPositionProperty() {
 		return defaultPosition;
 	}
+	
+	public  ObservableValue<LocalTime> defaultStartProperty() {
+		return defaultStart;
+	}
 
-	public SimpleStringProperty actualPositionProperty() {
+	public SimpleObjectProperty<PositonType> actualPositionProperty() {
 		return actualPosition;
 	}
 
@@ -67,7 +76,7 @@ public class EmployeeShiftModel {
 
 	@Override
 	public String toString() {
-		return String.format("EmployeeShiftModel [name=%s, defaultPosition=%s, actualPosition=%s, actualStart=%s, actualEnd=%s]", name.get(), defaultPosition.get(),
+		return String.format("EmployeeShiftModel [name=%s, defaultPosition=%s, actualPosition=%s, actualStart=%s, actualEnd=%s]", name.get(), defaultPosition.getValue(),
 				actualPosition.get(), actualStart.get(), actualEnd.get());
 	}
 	

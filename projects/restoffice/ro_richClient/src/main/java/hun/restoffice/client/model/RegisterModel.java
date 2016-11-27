@@ -7,15 +7,15 @@ import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.remoteClient.domain.RegisterStub;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 
 /**
  * 
@@ -27,29 +27,41 @@ public class RegisterModel {
 	private static final Logger LOG = Logger.getLogger(RegisterModel.class);
 
 	private StringProperty id;
-	private StringProperty type;
-	private Calendar date;
+	private StringProperty typeName;
 
+	private Calendar date;
+	private RegisterType type;
 	private IntegerProperty closeNo;
 	private DoubleProperty amount;
 
 	private BooleanProperty used;
-	
+
 	public RegisterModel() {
 
 	}
 
-	public RegisterModel(RegisterStub regClose) {
+	public RegisterModel(String id, int type, Calendar date, int closeNo, double amount) {
 
-		this.id = new SimpleStringProperty(regClose.getId());
-		this.type = new SimpleStringProperty(regClose.getType().toString());
+		this.id = new ReadOnlyStringWrapper(id);
+		if (type == 0) {
+			this.typeName = new ReadOnlyStringWrapper(RegisterType.CASH.toString());
+			this.type = RegisterType.CASH;
+		} else {
+			this.typeName = new ReadOnlyStringWrapper(RegisterType.CARD.toString());
+			this.type = RegisterType.CARD;
+		}
 
-		this.date = regClose.getDate();
-		this.closeNo = new SimpleIntegerProperty(regClose.getCloseNo());
-		this.amount = new SimpleDoubleProperty(regClose.getAmt().doubleValue());
+		this.date = date;
+		this.closeNo = new SimpleIntegerProperty(closeNo);
+		this.amount = new SimpleDoubleProperty(amount);
 		this.used = new SimpleBooleanProperty(false);
+
+		used.addListener((ChangeListener<Boolean>) (paramObservableValue, paramT1, newValue) -> {
+			if (newValue != null && !newValue) {
+				this.amount.set(0);
+			}
+		});
 	}
-	
 
 	/**
 	 * @return the id
@@ -62,7 +74,7 @@ public class RegisterModel {
 	 * @return the type
 	 */
 	public StringProperty typeProperty() {
-		return type;
+		return typeName;
 	}
 
 	/**
@@ -86,12 +98,18 @@ public class RegisterModel {
 		return amount;
 	}
 
-	
 	/**
 	 * @return the used
 	 */
 	public BooleanProperty usedProperty() {
 		return used;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public RegisterType getType() {
+		return type;
 	}
 
 	/*
@@ -101,8 +119,8 @@ public class RegisterModel {
 	 */
 	@Override
 	public String toString() {
-		return String.format("RegisterModel [id=%s, type=%s, date=%s, closeNo=%s, amount=%s, isUsed=%s]", id.get(), type.get(), date.get(Calendar.HOUR_OF_DAY),
-				closeNo.get(), amount.get(), used.get());
+		return String.format("RegisterModel [id=%s, type=%s, date=%s, closeNo=%s, amount=%s, isUsed=%s]", id.get(), typeName.get(),
+				date.get(Calendar.HOUR_OF_DAY), closeNo.get(), amount.get(), used.get());
 	}
 
 }

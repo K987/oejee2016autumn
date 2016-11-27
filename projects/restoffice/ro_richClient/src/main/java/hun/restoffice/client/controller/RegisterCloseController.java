@@ -4,17 +4,28 @@
 package hun.restoffice.client.controller;
 
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.client.AppEntry;
+import hun.restoffice.client.converter.Converter;
 import hun.restoffice.client.model.RegisterCloseModel;
 import hun.restoffice.client.model.RegisterModel;
 import hun.restoffice.client.service.RemoteServiceFactory;
+import hun.restoffice.remoteClient.domain.RegisterStub;
+import hun.restoffice.remoteClient.service.FacadeException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -63,10 +74,19 @@ public class RegisterCloseController implements WizardElement {
 	@FXML
 	private Label sumLabel;
 
-	private AppEntry main;
+	private RegisterCloseModel model;
+
+	private LocalDate closingDate;
 
 	public RegisterCloseController() {
 
+	}
+
+	/**
+	 * @param mainController
+	 */
+	public RegisterCloseController(LocalDate date) {
+		this.closingDate = date;
 	}
 
 	@FXML
@@ -115,8 +135,37 @@ public class RegisterCloseController implements WizardElement {
 			});
 			return cell;
 		});
-
 		usedCol.setCellFactory(CheckBoxTableCell.forTableColumn(usedCol));
+		onLoad();
+	}
+
+	/**
+	 * 
+	 */
+	private void onLoad() {
+		if (model != null || closingDate == null)
+			return;
+
+		Calendar cal;
+		(cal = Calendar.getInstance()).setTime(Date.from(closingDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		try {
+			model = Converter.toRegisterCloseModel(RemoteServiceFactory.lookupRegister().getRegistersToClose(cal));
+		} catch (FacadeException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Hiba történt a pénztárgépek ellenőrzése közben");
+			alert.showAndWait();
+		} catch (NamingException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("A szolgáltatás nem elérhető");
+			alert.showAndWait();
+		}
+
+		registerTable.setItems(model.getRegModels());
+		cardLbl.textProperty().bind(Bindings.format("%.1f Ft", model.getCard()));
+		cashLbl.textProperty().bind(Bindings.format("%.1f Ft", model.getCash()));
+		sumLabel.textProperty().bind(Bindings.format("%.1f Ft", model.getSum()));
 	}
 
 	@FXML
@@ -136,40 +185,33 @@ public class RegisterCloseController implements WizardElement {
 		}
 	}
 
-	/**
-	 * @param main
-	 *            the main to set
-	 */
-	RegisterCloseModel rcm;
-
-	public void setMain(AppEntry main) {
-		this.main = main;
-
-		registerTable.setItems(rcm.getRegModels());
-
-		for (final RegisterModel rm : registerTable.getItems()) {
-
-			rm.usedProperty().addListener((ChangeListener<Boolean>) (paramObservableValue, paramT1, paramT2) -> {
-				if (paramT2 != null && !paramT2) {
-					rm.amountProperty().set(0);
-				}
-			});
-		}
-		cardLbl.textProperty().bind(Bindings.format("%.1f Ft", rcm.getCard()));
-		cashLbl.textProperty().bind(Bindings.format("%.1f Ft", rcm.getCash()));
-		sumLabel.textProperty().bind(Bindings.format("%.1f Ft", rcm.getSum()));
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see hun.restoffice.client.main.WizardElement#onNext()
 	 */
 	@Override
-	public void onNext() {
-		// TODO Auto-generated method stub
-
+	public boolean onNext() {
+		boolean rtrn = true;
+		StringBuilder sb = new StringBuilder();
+		for (RegisterModel model : model.getRegModels()) {
+			if (model.usedProperty().get()) {
+				if (model.amountProperty().get() < 0) {
+					sb.append(model.idProperty().get() + " számu gép záró összege negatív.\n");
+					rtrn = false;
+				}
+				if (model.closeNoProperty().get() <= 0) {
+					sb.append(model.idProperty().get() + " számu gép záró száma nem megfelelő.\n");
+					rtrn = false;
+				}
+			}
+		}
+		if (!rtrn) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText(sb.toString());
+			alert.showAndWait();
+		}
+		return rtrn;
 	}
 
 	/*
@@ -178,9 +220,8 @@ public class RegisterCloseController implements WizardElement {
 	 * @see hun.restoffice.client.main.WizardElement#onPrevious()
 	 */
 	@Override
-	public void onPrevious() {
-		// TODO Auto-generated method stub
-
+	public boolean onPrevious() {
+		return true;
 	}
 
 	/*
@@ -190,8 +231,9 @@ public class RegisterCloseController implements WizardElement {
 	 */
 	@Override
 	public void onCancel() {
-		// TODO Auto-generated method stub
-
+		registerTable.getItems().clear();
+		;
+		model = null;
 	}
 
 	/*
@@ -201,19 +243,24 @@ public class RegisterCloseController implements WizardElement {
 	 */
 	@Override
 	public void onSend() {
-		// TODO Auto-generated method stub
+		List<RegisterStub> toClose = new ArrayList<>();
+		for (RegisterModel rm : model.getRegModels()) {
+			if (rm.usedProperty().get())
+				toClose.add(Converter.fromRegModel(rm));
+		}
+		try {
+			RemoteServiceFactory.lookupRegister().batchRegisterClose(toClose);
+		} catch (FacadeException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Hiba történt a végrehajtás közben");
+			alert.showAndWait();
+		} catch (NamingException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Szolgáltatás nem elérhető");
+			alert.showAndWait();
+		}
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see hun.restoffice.client.controller.WizardElement#onLoad()
-	 */
-	@Override
-	public void onLoad() {
-		
-		//RemoteServiceFactory.lookup().getRegistersToClose(Calendar.getInstance());
-	}
-
 }

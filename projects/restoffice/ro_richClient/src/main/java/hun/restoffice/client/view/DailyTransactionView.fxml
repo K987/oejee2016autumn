@@ -9,13 +9,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="transactions" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="Név" />
-          <TableColumn prefWidth="75.0" text="Beosztás" />
+          <TableColumn fx:id="nameCol" prefWidth="75.0" text="Név" />
+          <TableColumn fx:id="actualPosCol" prefWidth="75.0" text="Beosztás" />
         </columns>
       </TableView>
    </left>
@@ -29,20 +28,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="POS forgalom:" />
             <Label text="Készpénzes értékesítés:" wrapText="true" GridPane.rowIndex="1" />
             <Label text="Bankkártyás értékesítés:" wrapText="true" GridPane.rowIndex="2" />
-            <Label text="ÖSSZESEN" underline="true" GridPane.rowIndex="3" />
-            <Label text="Borravaló" GridPane.rowIndex="4" />
-            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" />
+            <TextField fx:id="amtCardField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="amtCashField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="amtPOSField" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </center>

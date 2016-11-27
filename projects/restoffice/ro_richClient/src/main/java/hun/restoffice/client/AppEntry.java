@@ -17,20 +17,23 @@ import javafx.stage.Stage;
 public class AppEntry extends Application {
 
 	private static final Logger LOG = Logger.getLogger(AppEntry.class);
-	private Stage stage;
-	private Parent root;
 
-	private static final String[] URI_END = { //
+
+	public static final String[] URI_END = { //
 			"view/DateView.fxml", //
 			"view/RegisterCloseView.fxml", //
 			"view/ShiftView.fxml", //
 			"view/DailyTransactionView.fxml" //
 	};
 
+	
+	private Stage stage;
+	private Parent root;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		this.stage = primaryStage;
-		this.stage.setTitle("Napi z·r·s");
+		this.stage.setTitle("Napi z√°r√°s");		
 
 		initLayout();
 	}
@@ -50,6 +53,7 @@ public class AppEntry extends Application {
 			stage.show();
 		} catch (IOException e) {
 			LOG.error(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -62,7 +66,6 @@ public class AppEntry extends Application {
 	}
 
 	public static void main(String[] args) {
-
 		launch(args);
 	}
 

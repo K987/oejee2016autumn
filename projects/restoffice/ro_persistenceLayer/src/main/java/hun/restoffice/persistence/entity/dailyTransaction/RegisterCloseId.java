@@ -1,7 +1,9 @@
 package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * The primary key class for the register_closes database table.
@@ -22,6 +24,15 @@ public class RegisterCloseId implements Serializable {
 	public RegisterCloseId() {
 	}
 
+	/**
+	 * @param registerId
+	 * @param closeNo
+	 */
+	public RegisterCloseId(String registerId, int closeNo) {
+		this.registerCloseRegisterId = registerId;
+		this.registerCloseNo = closeNo;
+	}
+
 	public String getRegisterCloseRegisterId() {
 		return this.registerCloseRegisterId;
 	}
@@ -38,6 +49,7 @@ public class RegisterCloseId implements Serializable {
 		this.registerCloseNo = registerCloseNo;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
@@ -49,6 +61,7 @@ public class RegisterCloseId implements Serializable {
 		return this.registerCloseRegisterId.equals(castOther.registerCloseRegisterId) && this.registerCloseNo.equals(castOther.registerCloseNo);
 	}
 
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;

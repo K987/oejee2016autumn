@@ -8,7 +8,7 @@ import javax.ejb.Remote;
 import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
 
 @Remote
-public interface ShiftFacadeRemote {
+public interface ShiftFacadeRemote{
 
 	List<CalendarScheduleStub> getCalendarschedule(Calendar day) throws FacadeException;
 

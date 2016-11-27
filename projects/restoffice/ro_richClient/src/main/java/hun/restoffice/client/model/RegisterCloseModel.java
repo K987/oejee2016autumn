@@ -9,8 +9,6 @@ import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.remoteClient.domain.RegisterStub;
-import hun.restoffice.remoteClient.domain.RegisterType;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -35,7 +33,7 @@ public class RegisterCloseModel {
 	private DoubleBinding cash;
 	private DoubleBinding sum;
 
-	public RegisterCloseModel(List<RegisterStub> registerCloses) {
+	public RegisterCloseModel(List<RegisterModel> registerCloses) {
 
 		Callback<RegisterModel, Observable[]> extractor = new Callback<RegisterModel, Observable[]>() {
 
@@ -48,10 +46,7 @@ public class RegisterCloseModel {
 
 		regModels = FXCollections.observableArrayList(extractor);
 
-		for (RegisterStub regClose : registerCloses) {
-			RegisterModel tmp = new RegisterModel(regClose);
-			regModels.add(new RegisterModel(regClose));
-		}
+		regModels.setAll(registerCloses);
 
 		sum = Bindings.createDoubleBinding(new Callable<Double>() {
 
@@ -59,8 +54,8 @@ public class RegisterCloseModel {
 			public Double call() throws Exception {
 				double rtrn = 0;
 				for (RegisterModel rm : regModels) {
-					if (rm.typeProperty().get().equals(RegisterType.CASH.toString())) {
-						rtrn += rm.amountProperty().doubleValue();
+					if (rm.getType().equals(RegisterType.CASH)) {
+						rtrn += rm.amountProperty().get();
 					}
 				}
 				return rtrn;
@@ -73,8 +68,8 @@ public class RegisterCloseModel {
 			public Double call() throws Exception {
 				double rtrn = 0;
 				for (RegisterModel rm : regModels) {
-					if (rm.typeProperty().get().equals(RegisterType.CARD.toString())) {
-						rtrn += rm.amountProperty().doubleValue();
+					if (rm.getType().equals(RegisterType.CARD)) {
+						rtrn += rm.amountProperty().get();
 					}
 				}
 				return rtrn;
@@ -82,6 +77,7 @@ public class RegisterCloseModel {
 		}, regModels);
 
 		cash = sum.subtract(card);
+		
 	}
 
 	/**
