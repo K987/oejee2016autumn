@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import hun.restoffice.client.converter.Converter;
 import hun.restoffice.client.model.EmployeeShiftModel;
 import hun.restoffice.client.service.RemoteServiceFactory;
-import hun.restoffice.remoteClient.service.FacadeException;
+import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;

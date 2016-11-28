@@ -20,7 +20,7 @@ import hun.restoffice.client.model.RegisterCloseModel;
 import hun.restoffice.client.model.RegisterModel;
 import hun.restoffice.client.service.RemoteServiceFactory;
 import hun.restoffice.remoteClient.domain.RegisterStub;
-import hun.restoffice.remoteClient.service.FacadeException;
+import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;

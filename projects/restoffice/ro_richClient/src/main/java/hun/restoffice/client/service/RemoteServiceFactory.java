@@ -9,8 +9,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import hun.restoffice.remoteClient.service.RegisterFacadeRemote;
-import hun.restoffice.remoteClient.service.ShiftFacadeRemote;
+import hun.restoffice.remoteClient.facade.RegisterFacadeRemote;
+import hun.restoffice.remoteClient.facade.ShiftFacadeRemote;
 
 /**
  *  Class for remote EJB calls
