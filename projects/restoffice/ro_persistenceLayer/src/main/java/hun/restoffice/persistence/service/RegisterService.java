@@ -27,8 +27,9 @@ import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
+ * Register persistence service
+ * 
  * @author hunkak
- *
  */
 @Stateless(mappedName="ejb/registerService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -98,7 +99,8 @@ public class RegisterService implements RegisterServiceLocal {
 		RegisterClose toAdd = new RegisterClose(register, closeNo, time, new BigDecimal(amt));
 		toAdd.setRegister(register);
 		try{
-		this.entityManager.persist(toAdd);
+			this.entityManager.persist(toAdd);
+			this.entityManager.flush();
 		} catch(EntityExistsException e){
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.EXISTS_ALREADY, "Register close exists w id ["+id+", "+closeNo +"]");

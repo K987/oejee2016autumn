@@ -13,7 +13,7 @@ import hun.restoffice.persistence.entity.employee.Shift;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- *  Shift service facade
+ *  Shift persistence interface
  *
  * @author kalmankostenszky
  */

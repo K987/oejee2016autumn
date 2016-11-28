@@ -14,7 +14,7 @@ import hun.restoffice.persistence.entity.dailyTransaction.RegisterClose;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- * 
+ * Register persistence interface
  *
  * @author kalmankostenszky
  */
@@ -22,23 +22,29 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 public interface RegisterServiceLocal {
 
 	/**
+	 * Read RegisterCloses on a given day
 	 * @param day
 	 * @return
 	 */
 	List<RegisterClose> readRegisterClose(Calendar day) throws PersistenceServiceException;
 
 	/**
+	 * read RegisterCloses to all registers with the last close
+	 * 
 	 * @return
 	 */
 	List<RegisterClose> readAllWithLastClose() throws PersistenceServiceException;
 
 	/**
+	 * read Register with Id
 	 * @param id
 	 * @return
 	 */
 	Register readRegisterWithId(String id) throws PersistenceServiceException;
 
 	/**
+	 * Create new register close
+	 * 
 	 * @param id
 	 * @param time
 	 * @param closeNo
