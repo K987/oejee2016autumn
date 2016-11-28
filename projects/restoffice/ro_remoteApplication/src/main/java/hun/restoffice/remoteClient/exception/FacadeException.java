@@ -1,13 +1,11 @@
-/**
- * 
- */
-package hun.restoffice.remoteClient.service;
+
+package hun.restoffice.remoteClient.exception;
 
 /**
- * 
- *
+ * Exception of facade
  * @author kalmankostenszky
  */
+//TODO: make error codes
 public class FacadeException extends Exception{
 
 	/**

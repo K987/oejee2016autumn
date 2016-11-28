@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *  
+ *  DTO of Register
  *
  * @author kalmankostenszky
  */
@@ -21,15 +21,7 @@ public class RegisterStub implements Serializable {
 	private Calendar date;
 	private int closeNo;
 	
-	/**
-	 * register constructor
-	 * 
-	 * @param closeAmt total money
-	 * @param closeDate colse date
-	 * @param id register id
-	 * @param closeNo register closing Nr
-	 * @param type register type
-	 */
+
 	public RegisterStub(BigDecimal closeAmt, Date closeDate, String id, Integer closeNo, int type){
 		this.id = id;
 		this.type = type;
@@ -39,10 +31,6 @@ public class RegisterStub implements Serializable {
 			date = Calendar.getInstance();
 			date.setTime(closeDate);
 	}
-
-
-
-
 
 	/**
 	 * @return the amt
