@@ -18,7 +18,7 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 
 /**
- * 
+ * Register model class 
  *
  * @author kalmankostenszky
  */
@@ -40,6 +40,14 @@ public class RegisterModel {
 
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param type
+	 * @param date
+	 * @param closeNo
+	 * @param amount
+	 */
 	public RegisterModel(String id, int type, Calendar date, int closeNo, double amount) {
 
 		this.id = new ReadOnlyStringWrapper(id);

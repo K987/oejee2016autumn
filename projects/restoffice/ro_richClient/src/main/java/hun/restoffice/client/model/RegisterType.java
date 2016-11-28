@@ -4,7 +4,7 @@
 package hun.restoffice.client.model;
 
 /**
- *  
+ * Types of registers  
  *
  * @author kalmankostenszky
  */

@@ -36,7 +36,7 @@ import javafx.util.converter.CurrencyStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 /**
- * 
+ * Controller class for reigster view
  *
  * @author kalmankostenszky
  */
@@ -78,30 +78,21 @@ public class RegisterCloseController implements WizardElement {
 
 	private LocalDate closingDate;
 
-	public RegisterCloseController() {
-
-	}
-
 	/**
-	 * @param mainController
+	 * @param date date on registers to close
 	 */
 	public RegisterCloseController(LocalDate date) {
 		this.closingDate = date;
 	}
 
+	/**
+	 * called by FXML loader
+	 */
 	@FXML
 	private void initialize() {
-		LOG.debug("initialize called");
 
 		closeNoCol.setText(CLOSE_NO_COL);
 		amtCol.setText(SUM_COL);
-		/*
-		 * idCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RegisterModel, String>,
-		 * ObservableValue<String>>() {
-		 * 
-		 * @Override public ObservableValue<String> call(CellDataFeatures<RegisterModel, String> cellData) { return
-		 * cellData.getValue().idProerty(); } });
-		 */
 
 		idCol.setCellValueFactory(new PropertyValueFactory<RegisterModel, String>("id"));
 		typeCol.setCellValueFactory(new PropertyValueFactory<RegisterModel, String>("type"));
@@ -136,13 +127,15 @@ public class RegisterCloseController implements WizardElement {
 			return cell;
 		});
 		usedCol.setCellFactory(CheckBoxTableCell.forTableColumn(usedCol));
-		onLoad();
+		onLoaded();
 	}
 
+
 	/**
-	 * 
+	 * called when view initialized
+	 * Loads registercloses if not yet loaded
 	 */
-	private void onLoad() {
+	private void onLoaded() {
 		if (model != null || closingDate == null)
 			return;
 
@@ -168,18 +161,20 @@ public class RegisterCloseController implements WizardElement {
 		sumLabel.textProperty().bind(Bindings.format("%.1f Ft", model.getSum()));
 	}
 
+	/**
+	 * Eventhandler called when number in cell changed
+	 * @param event
+	 */
 	@FXML
 	public void handleNumberChange(CellEditEvent<RegisterModel, Number> event) {
 		RegisterModel toChange = event.getTableView().getItems().get(event.getTablePosition().getRow());
 		switch (event.getTableColumn().getText()) {
 			case CLOSE_NO_COL: {
 				toChange.closeNoProperty().setValue(event.getNewValue());
-				LOG.debug(toChange.toString());
 				break;
 			}
 			case SUM_COL: {
 				toChange.amountProperty().setValue(event.getNewValue());
-				LOG.debug(toChange.toString());
 				break;
 			}
 		}

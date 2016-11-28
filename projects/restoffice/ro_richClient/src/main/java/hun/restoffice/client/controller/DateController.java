@@ -27,7 +27,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 /**
- * 
+ * Controller class of DateView
  *
  * @author kalmankostenszky
  */
@@ -46,6 +46,9 @@ public class DateController  implements WizardElement {
 		employees = new ListView<>();
 	}
 
+	/**
+	 * called by FXMLLoader
+	 */
 	@FXML
 	private void initialize() {
 		employees.setCellFactory(param -> {
@@ -119,6 +122,12 @@ public class DateController  implements WizardElement {
 
 	}
 
+	/**
+	 * Evenet handler for date selection
+	 * populates employees list
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void onDateSelected(Event event) {
 		LOG.debug("date selected :" + datePicker.getValue());

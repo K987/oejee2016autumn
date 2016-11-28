@@ -14,10 +14,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main class of rich client
+ * 
+ *
+ * @author kalmankostenszky
+ */
 public class AppEntry extends Application {
 
 	private static final Logger LOG = Logger.getLogger(AppEntry.class);
-
 
 	public static final String[] URI_END = { //
 			"view/DateView.fxml", //
@@ -26,18 +31,31 @@ public class AppEntry extends Application {
 			"view/DailyTransactionView.fxml" //
 	};
 
-	
 	private Stage stage;
 	private Parent root;
-	
+
+	/**
+	 * Main method launches gui
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+
 	@Override
 	public void start(Stage primaryStage) {
 		this.stage = primaryStage;
-		this.stage.setTitle("Napi zárás");		
+		this.stage.setTitle("Napi zárás");
 
 		initLayout();
 	}
 
+	/**
+	 * init main scene
+	 * 
+	 */
 	private void initLayout() {
 		LOG.info("initlayout() invoked");
 
@@ -48,7 +66,7 @@ public class AppEntry extends Application {
 
 			root = loader.load();
 			Scene scene = new Scene(root);
-			
+
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {
@@ -57,16 +75,17 @@ public class AppEntry extends Application {
 		}
 	}
 
+	/**
+	 * init main controller of Mainview
+	 * 
+	 * @param loader
+	 */
 	private void initMaincontroller(FXMLLoader loader) {
 		List<URL> tmp = new ArrayList<>();
 		for (String uriEnd : URI_END) {
 			tmp.add(AppEntry.class.getResource(uriEnd));
 		}
 		loader.setControllerFactory(arg0 -> new MainController(tmp));
-	}
-
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 	/**
