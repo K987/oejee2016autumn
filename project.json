@@ -76,8 +76,12 @@
 					"goal": "Communication interface between back and frontend"
 				},
 				{
-					"type": "soap",
+					"type": "rest",
 					"goal": "Integration point towards other systems"
+				},
+				{
+					"type": "jms",
+					"goal": "Upload playlist data in XML format"
 				}
 			]
 		},
