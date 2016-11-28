@@ -15,13 +15,23 @@ import hun.restoffice.remoteClient.domain.RegisterStub;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * 
+ * Converts stubs to models and back
+ * 
+ * @author kalmankostenszky
+ */
 public class Converter {
 
 	private static final Logger LOG = Logger.getLogger(Converter.class);
-	
+
+	/**
+	 * Creates List of EmployeeShiftModels from List of CalendarScheduleStubs
+	 * 
+	 * @param calendarSchedules
+	 * @return
+	 */
 	public static ObservableList<EmployeeShiftModel> toEmployeeShiftModel(List<CalendarScheduleStub> calendarSchedules) {
-
-
 		ObservableList<EmployeeShiftModel> rtrn = FXCollections.observableArrayList();
 
 		for (CalendarScheduleStub sch : calendarSchedules) {
@@ -35,6 +45,8 @@ public class Converter {
 	}
 
 	/**
+	 * Creates RegisterCloseModel from List of RegisteStubs
+	 * 
 	 * @param registers
 	 * @return
 	 */
@@ -47,11 +59,14 @@ public class Converter {
 	}
 
 	/**
-	 * @param rm
+	 * Creates RegisterStub from RegisterModel
+	 * 
+	 * @param registerModel
 	 * @return
 	 */
-	public static RegisterStub fromRegModel(RegisterModel rm) {
-		return new RegisterStub(new BigDecimal(rm.amountProperty().get()), rm.getDate().getTime(), rm.idProperty().get(), rm.closeNoProperty().get(), rm.getType().ordinal());
+	public static RegisterStub fromRegModel(RegisterModel registerModel) {
+		return new RegisterStub(new BigDecimal(registerModel.amountProperty().get()), registerModel.getDate().getTime(), registerModel.idProperty().get(),
+				registerModel.closeNoProperty().get(), registerModel.getType().ordinal());
 	}
 
 }

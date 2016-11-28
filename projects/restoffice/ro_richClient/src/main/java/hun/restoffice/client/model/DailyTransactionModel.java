@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableStringValue;
 
 /**
- *  
+ *  Model class for daily transactions
  *
  * @author kalmankostenszky
  */
@@ -21,6 +21,10 @@ public class DailyTransactionModel {
 	
 	private EmployeeShiftModel employeeModel;
 
+	/**
+	 * Creates a daily transaction to the related employee
+	 * @param esm
+	 */
 	public DailyTransactionModel(EmployeeShiftModel esm){
 		employeeModel = esm;
 		posAmt = new SimpleDoubleProperty(0);
@@ -56,13 +60,30 @@ public class DailyTransactionModel {
 		return employeeModel;
 	}
 	
+	/**
+	 * 
+	 * @return the name
+	 */
 	public ObservableStringValue employeeNameProperty(){
 		return employeeModel.nameProperty();
 	}
 	
+	/**
+	 * 
+	 * @return the actualPosition
+	 */
 	public SimpleObjectProperty<PositonType> employeeActPosProperty(){
 		return employeeModel.actualPositionProperty();
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("DailyTransactionModel [posAmt=%s, cardAmt=%s, cashAmt=%s, employeeModel=%s]", posAmt, cardAmt, cashAmt, employeeModel);
+	}
+	
 	
 	
 	

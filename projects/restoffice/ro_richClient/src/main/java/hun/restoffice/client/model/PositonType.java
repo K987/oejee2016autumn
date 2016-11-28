@@ -4,8 +4,8 @@
 package hun.restoffice.client.model;
 
 /**
- *  
- *
+ * Employee job positions
+ * 
  * @author kalmankostenszky
  */
 public enum PositonType {
@@ -16,9 +16,6 @@ public enum PositonType {
 	
 	private String displayName;
 
-	/**
-	 * 
-	 */
 	private PositonType(String displayName) {
 		this.displayName = displayName;
 	}

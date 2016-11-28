@@ -27,12 +27,16 @@ public class RegisterCloseModel {
 
 	private Calendar date;
 
-	private ObservableList<RegisterModel> regModels;
+	private ObservableList<RegisterModel> model;
 
 	private DoubleBinding card;
 	private DoubleBinding cash;
 	private DoubleBinding sum;
 
+	/**
+	 * 
+	 * @param registerCloses models to set
+	 */
 	public RegisterCloseModel(List<RegisterModel> registerCloses) {
 
 		Callback<RegisterModel, Observable[]> extractor = new Callback<RegisterModel, Observable[]>() {
@@ -44,37 +48,37 @@ public class RegisterCloseModel {
 			}
 		};
 
-		regModels = FXCollections.observableArrayList(extractor);
+		model = FXCollections.observableArrayList(extractor);
 
-		regModels.setAll(registerCloses);
+		model.setAll(registerCloses);
 
 		sum = Bindings.createDoubleBinding(new Callable<Double>() {
 
 			@Override
 			public Double call() throws Exception {
 				double rtrn = 0;
-				for (RegisterModel rm : regModels) {
+				for (RegisterModel rm : model) {
 					if (rm.getType().equals(RegisterType.CASH)) {
 						rtrn += rm.amountProperty().get();
 					}
 				}
 				return rtrn;
 			}
-		}, regModels);
+		}, model);
 
 		card = Bindings.createDoubleBinding(new Callable<Double>() {
 
 			@Override
 			public Double call() throws Exception {
 				double rtrn = 0;
-				for (RegisterModel rm : regModels) {
+				for (RegisterModel rm : model) {
 					if (rm.getType().equals(RegisterType.CARD)) {
 						rtrn += rm.amountProperty().get();
 					}
 				}
 				return rtrn;
 			}
-		}, regModels);
+		}, model);
 
 		cash = sum.subtract(card);
 		
@@ -96,10 +100,10 @@ public class RegisterCloseModel {
 	}
 
 	/**
-	 * edit
+	 * @return the models
 	 */
 	public ObservableList<RegisterModel> getRegModels() {
-		return regModels;
+		return model;
 	}
 
 	/**

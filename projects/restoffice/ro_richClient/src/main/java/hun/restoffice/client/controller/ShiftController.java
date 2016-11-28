@@ -25,8 +25,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 /**
+ * Controller class for ShiftView
  * 
- *
  * @author kalmankostenszky
  */
 public class ShiftController implements WizardElement {
@@ -41,10 +41,10 @@ public class ShiftController implements WizardElement {
 
 	@FXML
 	private TableColumn<EmployeeShiftModel, String> defaultPositionCol;
-	
+
 	@FXML
-	private TableColumn<EmployeeShiftModel, String> defaultStartCol;	
-	
+	private TableColumn<EmployeeShiftModel, String> defaultStartCol;
+
 	@FXML
 	private TextField actualStartField;
 
@@ -57,12 +57,17 @@ public class ShiftController implements WizardElement {
 	private ObservableList<EmployeeShiftModel> model;
 
 	/**
-	 * @param value
+	 * @param employees
+	 *            model to set
+	 * 
 	 */
 	public ShiftController(ObservableList<EmployeeShiftModel> employees) {
 		model = employees;
 	}
 
+	/**
+	 * called by FXML loader
+	 */
 	@FXML
 	private void initialize() {
 
@@ -71,7 +76,7 @@ public class ShiftController implements WizardElement {
 		nameCol.setCellValueFactory(new PropertyValueFactory<EmployeeShiftModel, String>("name"));
 		defaultPositionCol.setCellValueFactory(new PropertyValueFactory<EmployeeShiftModel, String>("defaultPosition"));
 		defaultStartCol.setCellValueFactory(new PropertyValueFactory<EmployeeShiftModel, String>("defaultStart"));
-		
+
 		actualPosCombo.setItems(FXCollections.observableArrayList(PositonType.values()));
 
 		employees.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
@@ -115,13 +120,13 @@ public class ShiftController implements WizardElement {
 			newValue.actualPositionProperty().bind(actualPosCombo.valueProperty());
 
 		});
-		onLoad();
+		onLoaded();
 	}
 
 	/**
-	 * 
+	 * called when view initiallized correctly
 	 */
-	private void onLoad() {
+	private void onLoaded() {
 		if (model == null)
 			return;
 
@@ -138,12 +143,12 @@ public class ShiftController implements WizardElement {
 		StringBuilder sb = new StringBuilder();
 		boolean rtrn = true;
 		for (EmployeeShiftModel es : model) {
-			if (es.actualEndProperty().get().equals(es.actualStartProperty().get())){
-				sb.append("Munkaidő nem megfelelő: "+ es.nameProperty().get()+"\n");
+			if (es.actualEndProperty().get().equals(es.actualStartProperty().get())) {
+				sb.append("Munkaidő nem megfelelő: " + es.nameProperty().get() + "\n");
 				rtrn = false;
 			}
 		}
-		if (!rtrn){
+		if (!rtrn) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText(sb.toString());
 			alert.showAndWait();

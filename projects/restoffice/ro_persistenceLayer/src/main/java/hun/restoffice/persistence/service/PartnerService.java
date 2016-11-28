@@ -22,7 +22,7 @@ import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- * Partner persistence facade
+ * Partner persistence service
  *
  * @author kalmankostenszky
  */

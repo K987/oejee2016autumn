@@ -31,7 +31,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**
- * 
+ * Controller class of MainView
  *
  * @author kalmankostenszky
  */
@@ -65,6 +65,11 @@ public class MainController implements WizardElement {
 	private SimpleObjectProperty<LocalDate> closingDate;
 	private SimpleListProperty<EmployeeShiftModel> employees;
 
+	/**
+	 * 
+	 * @param urls
+	 *            urls of sub elements
+	 */
 	public MainController(List<URL> urls) {
 		steps = new ArrayList<>();
 		closingDate = new SimpleObjectProperty<>();
@@ -77,15 +82,21 @@ public class MainController implements WizardElement {
 			selectedItem = 0;
 	}
 
+	/**
+	 * called by FXML loader
+	 */
 	@FXML
 	public void initialize() {
 		setPane(selectedItem);
 	}
 
 	/**
-	 * @param actualElement2
+	 * Sets the new wizard pane active
+	 * 
+	 * @param nextElement
+	 *            number of next pane
 	 */
-	private void setPane(int actualElement2) {
+	private void setPane(int nextElement) {
 		if (selectedItem < 0 || selectedItem >= steps.size()) {
 			LOG.error("No wizard elements set");
 			Alert alert = new Alert(AlertType.ERROR);
@@ -94,12 +105,12 @@ public class MainController implements WizardElement {
 			System.exit(-1);
 		}
 
-		WizardStep tmp = steps.get(actualElement2);
+		WizardStep tmp = steps.get(nextElement);
 
 		if (tmp.loader == null) {
 			LOG.debug("loader is null");
 			try {
-				tmp.loader = createStepLoader(tmp.path, this);
+				tmp.loader = createStepLoader(tmp.path);
 			} catch (IOException e) {
 				LOG.error(e);
 			}
@@ -113,12 +124,14 @@ public class MainController implements WizardElement {
 	}
 
 	/**
+	 * Creates FXML loader from url with the tight controller
+	 * 
 	 * @param path
-	 * @param mainController
+	 *            URL of view
 	 * @return
 	 * @throws IOException
 	 */
-	private FXMLLoader createStepLoader(URL path, MainController mainController) throws IOException {
+	private FXMLLoader createStepLoader(URL path) throws IOException {
 		FXMLLoader rtrn = new FXMLLoader(path);
 		switch (path.toString().substring(path.toString().lastIndexOf('/') + 1)) {
 
@@ -153,6 +166,9 @@ public class MainController implements WizardElement {
 		return rtrn;
 	}
 
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.controller.WizardElement#onCancel()
+	 */
 	@Override
 	@FXML
 	public void onCancel() {
@@ -168,6 +184,9 @@ public class MainController implements WizardElement {
 		setAdvanceIndicator(selectedItem);
 	}
 
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.controller.WizardElement#onPrevious()
+	 */
 	@Override
 	@FXML
 	public boolean onPrevious() {
@@ -181,6 +200,9 @@ public class MainController implements WizardElement {
 		return rtrn;
 	}
 
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.controller.WizardElement#onNext()
+	 */
 	@Override
 	@FXML
 	public boolean onNext() {
@@ -194,6 +216,9 @@ public class MainController implements WizardElement {
 		return rtrn;
 	}
 
+	/* (non-Javadoc)
+	 * @see hun.restoffice.client.controller.WizardElement#onSend()
+	 */
 	@Override
 	@FXML
 	public void onSend() {
@@ -207,14 +232,15 @@ public class MainController implements WizardElement {
 	}
 
 	/**
-	 * @param selectedItem2
+	 * Set the view advance indicator
+	 * @param nextItem
 	 */
-	private void setAdvanceIndicator(int selectedItem2) {
+	private void setAdvanceIndicator(int nextItem) {
 		ObservableList<Node> labels = advanceIndicator.getChildren();
 		for (int i = 0; i < labels.size(); i++) {
-			if (i == selectedItem2) {
+			if (i == nextItem) {
 				((Label) labels.get(i)).setStyle("-fx-background-color: greenyellow;");
-			} else if (i < selectedItem2) {
+			} else if (i < nextItem) {
 				((Label) labels.get(i)).setStyle("-fx-background-color: limegreen;");
 			} else {
 				((Label) labels.get(i)).setStyle("-fx-background-color: salmon;");

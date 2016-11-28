@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.remoteClient.service;
+package hun.restoffice.remoteClient.facade;
 
 import java.util.Calendar;
 import java.util.List;
@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import hun.restoffice.remoteClient.domain.RegisterStub;
+import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
  *  

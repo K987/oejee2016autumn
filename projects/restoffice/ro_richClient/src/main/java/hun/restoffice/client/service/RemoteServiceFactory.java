@@ -9,11 +9,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import hun.restoffice.remoteClient.service.RegisterFacadeRemote;
-import hun.restoffice.remoteClient.service.ShiftFacadeRemote;
+import hun.restoffice.remoteClient.facade.RegisterFacadeRemote;
+import hun.restoffice.remoteClient.facade.ShiftFacadeRemote;
 
 /**
- *  
+ *  Class for remote EJB calls
  *
  * @author kalmankostenszky
  */
@@ -28,7 +28,10 @@ public class RemoteServiceFactory {
 	
 	private static Context context;
 	
-	
+	/**
+	 * initializes remote connections
+	 * @throws NamingException
+	 */
 	private static void initContext() throws NamingException{
 		final Hashtable<String, String> jndiProperties = new Hashtable<String, String>();
 		jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, JBOSS_INITIAL_CONTEXT_FACTORY);
@@ -38,6 +41,11 @@ public class RemoteServiceFactory {
 		context = new InitialContext(jndiProperties);
 	}
 	
+	/**
+	 * looks up Shift service
+	 * @return
+	 * @throws NamingException
+	 */
 	public static ShiftFacadeRemote lookupShift() throws NamingException {
 		if (context == null)
 			initContext();
@@ -45,6 +53,11 @@ public class RemoteServiceFactory {
 		// return (...) context.lookup("diskstore/ds-ejbservice/DiskFacadeImpl!hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote");
 	}
 
+	/**
+	 * looks up Register service
+	 * @return
+	 * @throws NamingException
+	 */
 	public static RegisterFacadeRemote lookupRegister() throws NamingException{
 		if (context == null)
 			initContext();
