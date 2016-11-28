@@ -1,7 +1,9 @@
 package hu.musicorganizer.weblayer.servlet;
 
+import hu.musicorganizer.ejbservice.facade.CustomerFacade;
+import hu.musicorganizer.weblayer.servlet.common.Page;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -10,10 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import hu.musicorganizer.ejbservice.domain.CustomerStub;
-import hu.musicorganizer.ejbservice.facade.CustomerFacade;
-import hu.musicorganizer.weblayer.servlet.common.Page;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
