@@ -9,8 +9,9 @@ import org.apache.log4j.Logger;
 import hun.restoffice.client.model.EmployeeShiftModel;
 import hun.restoffice.client.model.RegisterCloseModel;
 import hun.restoffice.client.model.RegisterModel;
-import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
-import hun.restoffice.remoteClient.domain.CalendarScheduleStub.Assignee;
+import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
+import hun.restoffice.ejbservice.domain.CalendarScheduleStub.Assignee;
+import hun.restoffice.remoteClient.domain.RegisterCloseStub;
 import hun.restoffice.remoteClient.domain.RegisterStub;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,10 +51,11 @@ public class Converter {
 	 * @param registers
 	 * @return
 	 */
-	public static RegisterCloseModel toRegisterCloseModel(List<RegisterStub> registers) {
+	public static RegisterCloseModel toRegisterCloseModel(List<RegisterCloseStub> registers) {
 		List<RegisterModel> tmp = new ArrayList<>();
-		for (RegisterStub register : registers) {
-			tmp.add(new RegisterModel(register.getId(), register.getType(), register.getDate(), register.getCloseNo(), register.getAmt()));
+		for (RegisterCloseStub register : registers) {
+			tmp.add(new RegisterModel(register.getRegisterStub().getRegisterId(), register.getRegisterStub().getRegisterType(), register.getCloseDate(),
+					register.getCloseNo(), register.getCloseAmt().doubleValue()));
 		}
 		return new RegisterCloseModel(tmp);
 	}
@@ -64,9 +66,23 @@ public class Converter {
 	 * @param registerModel
 	 * @return
 	 */
-	public static RegisterStub fromRegModel(RegisterModel registerModel) {
-		return new RegisterStub(new BigDecimal(registerModel.amountProperty().get()), registerModel.getDate().getTime(), registerModel.idProperty().get(),
-				registerModel.closeNoProperty().get(), registerModel.getType().ordinal());
+	public static RegisterCloseStub fromRegModel(RegisterModel registerModel) {
+		return new RegisterCloseStub(new RegisterStub(registerModel.idProperty().get(), registerModel.getType().ordinal()),
+				new BigDecimal(registerModel.amountProperty().get()), registerModel.getDate().getTime(), registerModel.closeNoProperty().get());
+	}
+	
+	/**
+	 * Creates list of RegisterCloseStub from List of RegisterModels
+	 * 
+	 * @param models
+	 * @return
+	 */
+	public static List<RegisterCloseStub> fromRegisterCloseModel(List<RegisterModel> models){
+		List<RegisterCloseStub> rtrn = new ArrayList<>();
+		for (RegisterModel model : models) {
+			rtrn.add(fromRegModel(model));
+		}
+		return rtrn;
 	}
 
 }

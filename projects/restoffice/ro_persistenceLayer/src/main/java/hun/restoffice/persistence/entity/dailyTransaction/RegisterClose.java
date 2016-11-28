@@ -55,18 +55,17 @@ public class RegisterClose implements Serializable {
 	public RegisterClose() {
 	}
 
+
 	/**
-	 * @param register
-	 * @param closeNo
+	 * @param registerId
+	 * @param closeAmt
 	 * @param time
-	 * @param amt
+	 * @param closeNo
 	 */
-	public RegisterClose(Register register, int closeNo, Date time, BigDecimal amt) {
-		this.register = register;
+	public RegisterClose(String registerId, BigDecimal closeAmt, Date time, int closeNo) {
+		this.id = new RegisterCloseId(registerId, closeNo);
 		this.registerCloseDate = time;
-		this.registerCloseAmt = amt;
-		this.id = new RegisterCloseId(register.getRegisterId(), closeNo);
-		
+		this.registerCloseAmt = closeAmt;
 	}
 
 	public RegisterCloseId getId() {

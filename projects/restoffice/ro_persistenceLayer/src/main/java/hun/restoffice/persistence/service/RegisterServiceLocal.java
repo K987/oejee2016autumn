@@ -4,7 +4,6 @@
 package hun.restoffice.persistence.service;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -42,15 +41,12 @@ public interface RegisterServiceLocal {
 	 */
 	Register readRegisterWithId(String id) throws PersistenceServiceException;
 
+
 	/**
 	 * Create new register close
-	 * 
-	 * @param id
-	 * @param time
-	 * @param closeNo
-	 * @param amt
-	 * @throws PersistenceServiceException 
+	 * @param closes
+	 * @throws PersistenceServiceException
 	 */
-	void createRegisterClose(String id, Date time, int closeNo, double amt) throws PersistenceServiceException;
+	void createBatchRegisterClose(List<RegisterClose> closes) throws PersistenceServiceException;
 
 }

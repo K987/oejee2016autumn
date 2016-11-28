@@ -18,6 +18,7 @@ public class FacadeException extends Exception{
 	 */
 	public FacadeException(String localizedMessage) {
 		super(localizedMessage);
+		
 	}
 
 }

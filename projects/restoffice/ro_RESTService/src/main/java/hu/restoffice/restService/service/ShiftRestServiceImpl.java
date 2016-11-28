@@ -19,9 +19,9 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
 
 import hu.restoffice.restService.exception.RestError;
+import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.ShiftFacadeLocal;
-import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
 
 /**
  * An implementation for shift services

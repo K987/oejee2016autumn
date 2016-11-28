@@ -49,7 +49,6 @@ public class ShiftService implements ShiftServiceLocal {
 		try {
 			List<Shift> lst = this.entityManager.createNamedQuery(Shift.GET_SCHEDULE, Shift.class).setParameter(Shift.FROM_DATE, from.getTime())
 					.setParameter(Shift.TO_DATE, to.getTime()).getResultList();
-			LOG.info(lst.size());
 			return lst;
 		} catch (Exception e) {
 			LOG.error(e);

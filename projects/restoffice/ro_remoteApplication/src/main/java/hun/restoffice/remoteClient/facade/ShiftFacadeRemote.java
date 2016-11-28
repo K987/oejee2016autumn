@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
+import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**

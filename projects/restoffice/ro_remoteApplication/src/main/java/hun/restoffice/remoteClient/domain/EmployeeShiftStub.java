@@ -1,6 +1,7 @@
 package hun.restoffice.remoteClient.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,18 +14,24 @@ public class EmployeeShiftStub implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private final String name;
-	private final String defaultPosition;
-	private final Date atcualStart;
-	private final Date actualEnd;
-	private final String actualPosition;
+	private final int defaultPosition;
+	private final Calendar atcualStart;
+	private final Calendar actualEnd;
+	private final int actualPosition;
 
-	public EmployeeShiftStub(Date actualStart, Date actualEnd, String actualPosition, String employeeName, String defaultPosition) {
+	public EmployeeShiftStub(Date actualStart, Date actualEnd, int actualPosition, String employeeName, int defaultPosition) {
 
 		this.name = employeeName;
 		this.defaultPosition = defaultPosition;
 		this.actualPosition = actualPosition;
-		this.atcualStart = actualStart;
-		this.actualEnd = actualEnd;
+		if (actualStart != null)
+		(this.atcualStart = Calendar.getInstance()).setTime(actualStart);
+		else
+			this.atcualStart = null;
+		if (actualEnd != null)
+		(this.actualEnd = Calendar.getInstance()).setTime(actualEnd);
+		else
+			this.actualEnd = null;
 	}
 
 	/**
@@ -39,14 +46,14 @@ public class EmployeeShiftStub implements Serializable{
 	 * 
 	 * @return the defaultPosition
 	 */
-	public String getDefaultPosition() {
+	public int getDefaultPosition() {
 		return defaultPosition;
 	}
 	/**
 	 * 
 	 * @return the actualStart
 	 */
-	public Date getActualStart() {
+	public Calendar getActualStart() {
 		return atcualStart;
 	}
 
@@ -54,7 +61,7 @@ public class EmployeeShiftStub implements Serializable{
 	 * 
 	 * @return the actualEnd
 	 */
-	public Date getActualEnd() {
+	public Calendar getActualEnd() {
 		return actualEnd;
 	}
 
@@ -62,7 +69,7 @@ public class EmployeeShiftStub implements Serializable{
 	 * 
 	 * @return the actualPosition
 	 */
-	public String getActualPosition() {
+	public int getActualPosition() {
 		return actualPosition;
 	}
 

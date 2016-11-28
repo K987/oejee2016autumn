@@ -4,88 +4,43 @@
 package hun.restoffice.remoteClient.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
- *  DTO of Register
+ *  DTO for register
  *
  * @author kalmankostenszky
  */
-public class RegisterStub implements Serializable {
+public class RegisterStub implements Serializable{
 
-	private final String id;
-	private final int type;
-	private double amt;
-	private Calendar date;
-	private int closeNo;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
+	private final String registerId;
+	private final int registerType;
 
-	public RegisterStub(BigDecimal closeAmt, Date closeDate, String id, Integer closeNo, int type){
-		this.id = id;
-		this.type = type;
-		this.amt = closeAmt.doubleValue();
-		this.closeNo = closeNo;
-		if (closeDate != null)
-			date = Calendar.getInstance();
-			date.setTime(closeDate);
+	/**
+	 * @param registerType
+	 * @param ordinal
+	 */
+	public RegisterStub(String registerId, int registerType) {
+		this.registerId = registerId;
+		this.registerType = registerType;
 	}
 
 	/**
-	 * @return the amt
+	 * @return the registerId
 	 */
-	public double getAmt() {
-		return amt;
+	public String getRegisterId() {
+		return registerId;
 	}
 
 	/**
-	 * @param amt the amt to set
+	 * @return the registerType
 	 */
-	public void setAmt(double amt) {
-		this.amt = amt;
-	}
-
-	/**
-	 * @return the date
-	 */
-	public Calendar getDate() {
-		return date;
-	}
-
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public int getType() {
-		return type;
-	}
-
-	/**
-	 * @return the closeNo
-	 */
-	public int getCloseNo() {
-		return closeNo;
-	}
-
-	/**
-	 * @param closeNo the closeNo to set
-	 */
-	public void setCloseNo(int closeNo) {
-		this.closeNo = closeNo;
+	public int getRegisterType() {
+		return registerType;
 	}
 
 	/* (non-Javadoc)
@@ -93,9 +48,8 @@ public class RegisterStub implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return String.format("RegisterCloseStub [id=%s, type=%s, amt=%s, date=%s]", id, type, amt, date);
+		return String.format("RegisterStub [registerId=%s, registerType=%s]", registerId, registerType);
 	}
-	
-	
+
 	
 }

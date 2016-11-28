@@ -6,10 +6,9 @@ package hun.restoffice.client.controller;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.naming.NamingException;
 
@@ -19,7 +18,6 @@ import hun.restoffice.client.converter.Converter;
 import hun.restoffice.client.model.RegisterCloseModel;
 import hun.restoffice.client.model.RegisterModel;
 import hun.restoffice.client.service.RemoteServiceFactory;
-import hun.restoffice.remoteClient.domain.RegisterStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -79,7 +77,8 @@ public class RegisterCloseController implements WizardElement {
 	private LocalDate closingDate;
 
 	/**
-	 * @param date date on registers to close
+	 * @param date
+	 *            date on registers to close
 	 */
 	public RegisterCloseController(LocalDate date) {
 		this.closingDate = date;
@@ -130,10 +129,8 @@ public class RegisterCloseController implements WizardElement {
 		onLoaded();
 	}
 
-
 	/**
-	 * called when view initialized
-	 * Loads registercloses if not yet loaded
+	 * called when view initialized Loads registercloses if not yet loaded
 	 */
 	private void onLoaded() {
 		if (model != null || closingDate == null)
@@ -163,6 +160,7 @@ public class RegisterCloseController implements WizardElement {
 
 	/**
 	 * Eventhandler called when number in cell changed
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -238,17 +236,14 @@ public class RegisterCloseController implements WizardElement {
 	 */
 	@Override
 	public void onSend() {
-		List<RegisterStub> toClose = new ArrayList<>();
-		for (RegisterModel rm : model.getRegModels()) {
-			if (rm.usedProperty().get())
-				toClose.add(Converter.fromRegModel(rm));
-		}
 		try {
-			RemoteServiceFactory.lookupRegister().batchRegisterClose(toClose);
+			RemoteServiceFactory.lookupRegister().batchRegisterClose(
+					Converter.fromRegisterCloseModel(model.getRegModels().stream().filter(rm -> rm.usedProperty().get()).collect(Collectors.toList())));
 		} catch (FacadeException e) {
 			LOG.error(e);
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Hiba történt a végrehajtás közben");
+			alert.setHeaderText("Hiba történt a végrehajtás közben");
+			alert.setContentText(e.getLocalizedMessage());
 			alert.showAndWait();
 		} catch (NamingException e) {
 			LOG.error(e);

@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.persistence.entity.employee.EmployeeShift;
 import hun.restoffice.persistence.entity.employee.Shift;
-import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
 import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
 
 /**
@@ -29,11 +29,11 @@ public class ShiftConverter implements ShiftConverterLocal {
 	private CalendarScheduleStub to(Shift shift) {
 		List<EmployeeShiftStub> empShfits = new ArrayList<>();
 		for (EmployeeShift item : shift.getEmployeeShifts()) {
-			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getActualEnd(), (item.getActualPosition() == null ? "" : item.getActualPosition().toString()),
-					item.getEmployee().getEmployeeName(), item.getEmployee().getDefaultPosition().toString()));
+			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getActualEnd(), (item.getActualPosition() == null ? -1 : item.getActualPosition().ordinal()),
+					item.getEmployee().getEmployeeName(), item.getEmployee().getDefaultPosition().ordinal()));
 		}
 
-		return new CalendarScheduleStub(shift.getStartDate(), shift.getStartTime(), empShfits);
+		return new CalendarScheduleStub(shift.getStartDate(), shift.getStartTime(), shift.getId(), empShfits);
 	}
 
 	/*

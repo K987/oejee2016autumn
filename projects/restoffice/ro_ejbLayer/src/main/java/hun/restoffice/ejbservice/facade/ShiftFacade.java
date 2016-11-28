@@ -13,13 +13,13 @@ import javax.ejb.Stateless;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.ShiftConverterLocal;
+import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.exception.ApplicationError;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.ShiftServiceLocal;
-import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
-import hun.restoffice.remoteClient.service.FacadeException;
-import hun.restoffice.remoteClient.service.ShiftFacadeRemote;
+import hun.restoffice.remoteClient.exception.FacadeException;
+import hun.restoffice.remoteClient.facade.ShiftFacadeRemote;
 
 /**
  *  Shift business faacade
@@ -54,7 +54,7 @@ public class ShiftFacade implements ShiftFacadeLocal, ShiftFacadeRemote{
 	@Override
 	public List<CalendarScheduleStub> getCalendarschedule(Calendar day) throws FacadeException {
 		try {
-			return getCalendarSchedule(day, day);
+			return (this.getCalendarSchedule(day,day));
 		} catch (AdaptorException e) {
 			// TODO Auto-generated catch block
 			throw new FacadeException(e.getLocalizedMessage());

@@ -49,7 +49,7 @@ public class RemoteServiceFactory {
 	public static ShiftFacadeRemote lookupShift() throws NamingException {
 		if (context == null)
 			initContext();
-		return (ShiftFacadeRemote) context.lookup("restoffice/ro_ejbLayer/ShiftFacade!hun.restoffice.remoteClient.service.ShiftFacadeRemote");
+		return (ShiftFacadeRemote) context.lookup("restoffice/ro_ejbLayer/ShiftFacade!hun.restoffice.remoteClient.facade.ShiftFacadeRemote");
 		// return (...) context.lookup("diskstore/ds-ejbservice/DiskFacadeImpl!hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote");
 	}
 
@@ -61,7 +61,7 @@ public class RemoteServiceFactory {
 	public static RegisterFacadeRemote lookupRegister() throws NamingException{
 		if (context == null)
 			initContext();
-		return (RegisterFacadeRemote) context.lookup("restoffice/ro_ejbLayer/RegisterFacade!hun.restoffice.remoteClient.service.RegisterFacadeRemote");
+		return (RegisterFacadeRemote) context.lookup("restoffice/ro_ejbLayer/RegisterFacade!hun.restoffice.remoteClient.facade.RegisterFacadeRemote");
 	}
 
 		

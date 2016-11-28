@@ -3,9 +3,7 @@
  */
 package hun.restoffice.persistence.service;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -31,32 +29,36 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
  * 
  * @author hunkak
  */
-@Stateless(mappedName="ejb/registerService")
+@Stateless(mappedName = "ejb/registerService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class RegisterService implements RegisterServiceLocal {
 
-	
 	private static final Logger LOG = Logger.getLogger(RegisterService.class);
 
 	@PersistenceContext(unitName = "ro-persistence-unit")
 	private EntityManager entityManager;
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.persistence.service.RegisterServiceLocal#readRegisterClose(java.util.Calendar)
 	 */
 	@Override
 	public List<RegisterClose> readRegisterClose(Calendar day) throws PersistenceServiceException {
-		try{
-			List<RegisterClose> rtrn = this.entityManager.createNamedQuery(RegisterClose.FIND_REGISTER_CLOSE, RegisterClose.class).setParameter(RegisterClose.DAY, day.getTime()).getResultList();
+		try {
+			List<RegisterClose> rtrn = this.entityManager.createNamedQuery(RegisterClose.FIND_REGISTER_CLOSE, RegisterClose.class)
+					.setParameter(RegisterClose.DAY, day.getTime()).getResultList();
 			return rtrn;
-		} catch (Exception e){
+		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.persistence.service.RegisterServiceLocal#readAllWithLastClose()
 	 */
 	@Override
@@ -70,14 +72,17 @@ public class RegisterService implements RegisterServiceLocal {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.persistence.service.RegisterServiceLocal#getRegisterWithId(java.lang.String)
 	 */
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Register readRegisterWithId(String id) throws PersistenceServiceException{
+	public Register readRegisterWithId(String id) throws PersistenceServiceException {
 		try {
-			return this.entityManager.createNamedQuery(Register.READ_BY_ID, Register.class).setParameter(Register.ID, id.trim().toLowerCase()).getSingleResult();
+			return this.entityManager.createNamedQuery(Register.READ_BY_ID, Register.class).setParameter(Register.ID, id.trim().toLowerCase())
+					.getSingleResult();
 		} catch (AmbiguousResolutionException e) {
 			LOG.error(e.getMessage());
 			throw new PersistenceServiceException(PersistenceExceptionType.AMBIGOUS_RESULT, "multiple matching for id: " + id);
@@ -90,25 +95,33 @@ public class RegisterService implements RegisterServiceLocal {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see hun.restoffice.persistence.service.RegisterServiceLocal#createRegisterClose(java.lang.String, java.util.Date, int, double)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see hun.restoffice.persistence.service.RegisterServiceLocal#createRegisterClose(java.lang.String,
+	 * java.util.Date, int, double)
 	 */
 	@Override
-	public void createRegisterClose(String id, Date time, int closeNo, double amt) throws PersistenceServiceException {
-		Register register = readRegisterWithId(id);
-		RegisterClose toAdd = new RegisterClose(register, closeNo, time, new BigDecimal(amt));
-		toAdd.setRegister(register);
-		try{
-			this.entityManager.persist(toAdd);
-			this.entityManager.flush();
-		} catch(EntityExistsException e){
-			LOG.error(e);
-			throw new PersistenceServiceException(PersistenceExceptionType.EXISTS_ALREADY, "Register close exists w id ["+id+", "+closeNo +"]");
-		} catch(Exception e){
-			LOG.error(e);
-			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Unexpected error during register closing");
+	public void createBatchRegisterClose(List<RegisterClose> closes) throws PersistenceServiceException {
+		for (RegisterClose registerClose : closes) {
+			Register register = readRegisterWithId(registerClose.getId().getRegisterCloseRegisterId());
+			registerClose.setRegister(register);
+			try {
+				this.entityManager.persist(registerClose);
+				this.entityManager.flush();
+
+			} catch (EntityExistsException e) {
+				LOG.error(e);
+				this.entityManager.clear();
+				throw new PersistenceServiceException(PersistenceExceptionType.EXISTS_ALREADY, "Register close exists w id ["
+						+ registerClose.getId().getRegisterCloseRegisterId() + ", " + registerClose.getId().getRegisterCloseNo() + "]");
+			} catch (Exception e) {
+				LOG.error(e);
+				this.entityManager.clear();
+				throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Unexpected error during register closing");
+			}
 		}
-		
+
 	}
 
 }
