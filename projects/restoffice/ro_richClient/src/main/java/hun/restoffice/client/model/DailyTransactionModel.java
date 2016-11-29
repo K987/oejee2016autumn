@@ -72,7 +72,7 @@ public class DailyTransactionModel {
 	 * 
 	 * @return the actualPosition
 	 */
-	public SimpleObjectProperty<PositonType> employeeActPosProperty(){
+	public SimpleObjectProperty<JobPosition> employeeActPosProperty(){
 		return employeeModel.actualPositionProperty();
 	}
 

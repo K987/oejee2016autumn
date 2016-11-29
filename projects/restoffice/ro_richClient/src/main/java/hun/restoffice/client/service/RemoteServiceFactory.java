@@ -9,6 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote;
 import hun.restoffice.remoteClient.facade.RegisterFacadeRemote;
 import hun.restoffice.remoteClient.facade.ShiftFacadeRemote;
 
@@ -62,6 +63,15 @@ public class RemoteServiceFactory {
 		if (context == null)
 			initContext();
 		return (RegisterFacadeRemote) context.lookup("restoffice/ro_ejbLayer/RegisterFacade!hun.restoffice.remoteClient.facade.RegisterFacadeRemote");
+	}
+
+	/**
+	 * @return
+	 */
+	public static DailyTransactionFacadeRemote lookupDailyTransaction() throws NamingException{
+		if (context == null)
+			initContext();
+		return (DailyTransactionFacadeRemote) context.lookup("restoffice/ro_ejbLayer/DailyTransactionFacade!hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote");
 	}
 
 		

@@ -7,10 +7,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.naming.NamingException;
+
 import org.apache.log4j.Logger;
 
+import hun.restoffice.client.converter.Converter;
 import hun.restoffice.client.model.EmployeeShiftModel;
-import hun.restoffice.client.model.PositonType;
+import hun.restoffice.client.model.JobPosition;
+import hun.restoffice.client.service.RemoteServiceFactory;
+import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,7 +57,7 @@ public class ShiftController implements WizardElement {
 	private TextField actualEndField;
 
 	@FXML
-	private ComboBox<PositonType> actualPosCombo;
+	private ComboBox<JobPosition> actualPosCombo;
 
 	private ObservableList<EmployeeShiftModel> model;
 
@@ -77,41 +82,41 @@ public class ShiftController implements WizardElement {
 		defaultPositionCol.setCellValueFactory(new PropertyValueFactory<EmployeeShiftModel, String>("defaultPosition"));
 		defaultStartCol.setCellValueFactory(new PropertyValueFactory<EmployeeShiftModel, String>("defaultStart"));
 
-		actualPosCombo.setItems(FXCollections.observableArrayList(PositonType.values()));
+		actualPosCombo.setItems(FXCollections.observableArrayList(JobPosition.values()));
 
 		employees.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
 			actualStartField.textProperty().unbindBidirectional(oldValue == null ? "" : oldValue.actualStartProperty());
-			Bindings.bindBidirectional(actualStartField.textProperty(), newValue.actualStartProperty(), new StringConverter<LocalDateTime>() {
+			Bindings.bindBidirectional(actualStartField.textProperty(), newValue.actualStartProperty(), new StringConverter<LocalTime>() {
 
-				LocalDateTime ldt;
+				
 
 				@Override
-				public String toString(LocalDateTime object) {
-					ldt = object;
-					return object.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+				public String toString(LocalTime object) {
+					
+					return object.format(DateTimeFormatter.ofPattern("HH:mm"));
 				}
 
 				@Override
-				public LocalDateTime fromString(String string) {
+				public LocalTime fromString(String string) {
 
-					return LocalDateTime.of(ldt.toLocalDate(), LocalTime.parse(string, DateTimeFormatter.ofPattern("HH:mm")));
+					return LocalTime.parse(string, DateTimeFormatter.ofPattern("HH:mm"));
 				}
 			});
 			actualEndField.textProperty().unbindBidirectional(oldValue == null ? "" : oldValue.actualEndProperty());
-			Bindings.bindBidirectional(actualEndField.textProperty(), newValue.actualEndProperty(), new StringConverter<LocalDateTime>() {
+			Bindings.bindBidirectional(actualEndField.textProperty(), newValue.actualEndProperty(), new StringConverter<LocalTime>() {
 
 				LocalDateTime ldt;
 
 				@Override
-				public String toString(LocalDateTime object) {
-					ldt = object;
-					return object.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+				public String toString(LocalTime object) {
+					
+					return object.format(DateTimeFormatter.ofPattern("HH:mm"));
 				}
 
 				@Override
-				public LocalDateTime fromString(String string) {
+				public LocalTime fromString(String string) {
 
-					return LocalDateTime.of(ldt.toLocalDate(), LocalTime.parse(string, DateTimeFormatter.ofPattern("HH:mm")));
+					return LocalTime.parse(string, DateTimeFormatter.ofPattern("HH:mm"));
 				}
 			});
 			if (oldValue != null)
@@ -143,7 +148,7 @@ public class ShiftController implements WizardElement {
 		StringBuilder sb = new StringBuilder();
 		boolean rtrn = true;
 		for (EmployeeShiftModel es : model) {
-			if (es.actualEndProperty().get().equals(es.actualStartProperty().get())) {
+			if (es.actualEndProperty().get().compareTo(es.actualEndProperty().get()) <= 0) {
 				sb.append("Munkaidő nem megfelelő: " + es.nameProperty().get() + "\n");
 				rtrn = false;
 			}
@@ -184,8 +189,21 @@ public class ShiftController implements WizardElement {
 	 */
 	@Override
 	public void onSend() {
-		// TODO Auto-generated method stub
-
+		onNext();
+		try {
+			RemoteServiceFactory.lookupShift().batchShiftClose(Converter.fromEmployeeShiftModel(model));
+		} catch (FacadeException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Hiba történt a végrehajtás közben");
+			alert.setContentText(e.getLocalizedMessage());
+			alert.showAndWait();
+		} catch (NamingException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Szolgáltatás nem elérhető");
+			alert.showAndWait();
+		}
 	}
 
 }

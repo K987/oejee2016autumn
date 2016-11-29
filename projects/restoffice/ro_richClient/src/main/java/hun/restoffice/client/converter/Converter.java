@@ -1,16 +1,22 @@
 package hun.restoffice.client.converter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import hun.restoffice.client.model.DailyTransactionModel;
 import hun.restoffice.client.model.EmployeeShiftModel;
 import hun.restoffice.client.model.RegisterCloseModel;
 import hun.restoffice.client.model.RegisterModel;
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub.Assignee;
+import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
+import hun.restoffice.remoteClient.domain.DailyTransactionStub;
+import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
 import hun.restoffice.remoteClient.domain.RegisterCloseStub;
 import hun.restoffice.remoteClient.domain.RegisterStub;
 import javafx.collections.FXCollections;
@@ -36,10 +42,9 @@ public class Converter {
 		ObservableList<EmployeeShiftModel> rtrn = FXCollections.observableArrayList();
 
 		for (CalendarScheduleStub sch : calendarSchedules) {
-			for (Assignee asg : sch.getAssignees()) {
-				LOG.debug(asg);
-				rtrn.add(new EmployeeShiftModel(asg.getName(), asg.getDefaultPosition(), asg.getActualPosition(), asg.getAcutalStart(), asg.getActualEnd(),
-						sch.getStart()));
+			for (EmployeeShiftStub asg : sch.getAssignees()) {
+				rtrn.add(new EmployeeShiftModel(sch.getId(), asg.getRowId(), sch.getStart(), asg.getName(), asg.getDefaultPosition(), asg.getActualPosition(),
+						asg.getActualStart(), asg.getActualEnd()));
 			}
 		}
 		return rtrn;
@@ -66,23 +71,72 @@ public class Converter {
 	 * @param registerModel
 	 * @return
 	 */
-	public static RegisterCloseStub fromRegModel(RegisterModel registerModel) {
+	public static RegisterCloseStub fromRegisterModel(RegisterModel registerModel) {
 		return new RegisterCloseStub(new RegisterStub(registerModel.idProperty().get(), registerModel.getType().ordinal()),
 				new BigDecimal(registerModel.amountProperty().get()), registerModel.getDate().getTime(), registerModel.closeNoProperty().get());
 	}
-	
+
 	/**
 	 * Creates list of RegisterCloseStub from List of RegisterModels
 	 * 
 	 * @param models
 	 * @return
 	 */
-	public static List<RegisterCloseStub> fromRegisterCloseModel(List<RegisterModel> models){
+	public static List<RegisterCloseStub> fromRegisterModel(List<RegisterModel> models) {
 		List<RegisterCloseStub> rtrn = new ArrayList<>();
 		for (RegisterModel model : models) {
-			rtrn.add(fromRegModel(model));
+			rtrn.add(fromRegisterModel(model));
 		}
 		return rtrn;
+	}
+
+	/**
+	 * @param models
+	 * @return
+	 */
+	public static List<EmployeeShiftStub> fromEmployeeShiftModel(ObservableList<EmployeeShiftModel> models) {
+		List<EmployeeShiftStub> rtrn = new ArrayList<>();
+		for (EmployeeShiftModel model : models) {
+			rtrn.add(fromEmployyeShiftModel(model));
+		}
+		return rtrn;
+	}
+
+	/**
+	 * @param model
+	 * @return
+	 */
+	public static EmployeeShiftStub fromEmployyeShiftModel(EmployeeShiftModel model) {
+		Instant instant = model.actualStartProperty().get().atDate(LocalDate.of(2000, 1, 1)).atZone(ZoneId.systemDefault()).toInstant();
+		Date actualStart = Date.from(instant);
+
+		instant = model.actualEndProperty().get().atDate(LocalDate.of(2000, 1, 1)).atZone(ZoneId.systemDefault()).toInstant();
+		Date actualEnd = Date.from(instant);
+
+		return new EmployeeShiftStub(model.nameProperty().get(), model.getShiftId(), model.getRowId(), actualStart, actualEnd,
+				model.actualPositionProperty().get().ordinal());
+	}
+
+	/**
+	 * @param models
+	 * @return
+	 */
+	public static List<DailyTransactionStub> fromDailyTransactionModel(ObservableList<DailyTransactionModel> models) {
+		List<DailyTransactionStub> rtrn = new ArrayList<>();
+		for (DailyTransactionModel model : models) {
+			rtrn.add(fromDailyTransactionModel(model));
+		}
+		return rtrn;
+	}
+	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
+	public static DailyTransactionStub fromDailyTransactionModel(DailyTransactionModel model){
+		return new DailyTransactionStub(new BigDecimal(model.cashAmtProperty().get()), new BigDecimal(model.cardAmtProperty().get()),
+				new BigDecimal(model.posAmtProperty().get()), model.employeeModelProperty().getRowId());
 	}
 
 }

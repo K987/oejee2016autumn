@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import hun.restoffice.client.model.DailyTransactionModel;
 import hun.restoffice.client.model.EmployeeShiftModel;
-import hun.restoffice.client.model.PositonType;
+import hun.restoffice.client.model.JobPosition;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -64,6 +64,8 @@ public class MainController implements WizardElement {
 
 	private SimpleObjectProperty<LocalDate> closingDate;
 	private SimpleListProperty<EmployeeShiftModel> employees;
+
+	private boolean canSend;
 
 	/**
 	 * 
@@ -155,18 +157,21 @@ public class MainController implements WizardElement {
 			case ("DailyTransactionView.fxml"):
 				ObservableList<DailyTransactionModel> tmp = FXCollections.observableArrayList();
 				for (EmployeeShiftModel esm : employees) {
-					if (esm.actualPositionProperty().get().equals(PositonType.BARTENDER) || esm.actualPositionProperty().get().equals(PositonType.WAITER))
+					if (esm.actualPositionProperty().get().equals(JobPosition.BARTENDER) || esm.actualPositionProperty().get().equals(JobPosition.WAITER))
 						tmp.add(new DailyTransactionModel(esm));
 				}
 				rtrn.setController(new DailyTransactionController(tmp));
 				rtrn.load();
+				canSend = true;
 				break;
 		}
 		LOG.debug(rtrn.getRoot());
 		return rtrn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.controller.WizardElement#onCancel()
 	 */
 	@Override
@@ -184,15 +189,17 @@ public class MainController implements WizardElement {
 		setAdvanceIndicator(selectedItem);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.controller.WizardElement#onPrevious()
 	 */
 	@Override
 	@FXML
 	public boolean onPrevious() {
 		LOG.debug("previous pressed");
-		// boolean rtrn = selectedController.onPrevious();
-		boolean rtrn = true;
+		boolean rtrn = selectedController.onPrevious();
+		//boolean rtrn = true;
 		if (rtrn && (selectedItem > 1)) {
 			setPane(--selectedItem);
 			setAdvanceIndicator(selectedItem);
@@ -200,15 +207,17 @@ public class MainController implements WizardElement {
 		return rtrn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.controller.WizardElement#onNext()
 	 */
 	@Override
 	@FXML
 	public boolean onNext() {
 		LOG.debug("next pressed");
-		boolean rtrn = true;
-		// boolean rtrn = selectedController.onNext();
+		//boolean rtrn = true;
+		boolean rtrn = selectedController.onNext();
 		if (rtrn && (selectedItem < steps.size() - 1)) {
 			setPane(++selectedItem);
 			setAdvanceIndicator(selectedItem);
@@ -216,13 +225,16 @@ public class MainController implements WizardElement {
 		return rtrn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.client.controller.WizardElement#onSend()
 	 */
 	@Override
 	@FXML
 	public void onSend() {
-
+		if (!canSend)
+			return;
 		LOG.debug("send pressed");
 		for (WizardStep step : steps) {
 			if (step.loader != null) {
@@ -233,6 +245,7 @@ public class MainController implements WizardElement {
 
 	/**
 	 * Set the view advance indicator
+	 * 
 	 * @param nextItem
 	 */
 	private void setAdvanceIndicator(int nextItem) {

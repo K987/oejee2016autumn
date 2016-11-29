@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
+import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
+import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
@@ -24,5 +25,12 @@ public interface ShiftFacadeRemote{
 	 * @throws FacadeException
 	 */
 	List<CalendarScheduleStub> getCalendarschedule(Calendar day) throws FacadeException;
+
+	/**
+	 * Closes existing shifts
+	 * @param models
+	 * @throws FacadeException
+	 */
+	void batchShiftClose(List<EmployeeShiftStub> models) throws FacadeException;
 
 }

@@ -30,15 +30,20 @@ import javax.persistence.TemporalType;
 @Table(name = "shifts")
 @NamedQueries( value = { 
 		@NamedQuery(name = "Shift.findAll", query = "SELECT s FROM Shift s"),
-		@NamedQuery(name = Shift.GET_SCHEDULE, query = "SELECT DISTINCT s FROM Shift s LEFT JOIN FETCH s.employeeShifts es JOIN FETCH es.employee WHERE s.startDate BETWEEN :"+Shift.FROM_DATE+" AND :"+Shift.TO_DATE)
-		})
+		@NamedQuery(name = Shift.GET_SCHEDULE, query = "SELECT DISTINCT s FROM Shift s LEFT JOIN FETCH s.employeeShifts es JOIN FETCH es.employee WHERE s.startDate BETWEEN :"+Shift.FROM_DATE+" AND :"+Shift.TO_DATE),
+		@NamedQuery(name = Shift.GET_BY_ID, query = "SELECT s FROM Shift s WHERE s.id =:"+Shift.ID)
+})
 public class Shift implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String GET_SCHEDULE = "Shift.getSchedule";
+	public static final String GET_BY_ID = "Shift.getById";
 
 	public static final String TO_DATE = "toDate";
 	public static final String FROM_DATE = "fromDate";
+	public static final String ID = "id";
+
+
 
 
 	// fields

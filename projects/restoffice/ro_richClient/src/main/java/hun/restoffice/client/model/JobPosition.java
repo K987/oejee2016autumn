@@ -8,7 +8,7 @@ package hun.restoffice.client.model;
  * 
  * @author kalmankostenszky
  */
-public enum PositonType {
+public enum JobPosition {
 
 	WAITER("felszolgáló"),
 	BARTENDER("báros"),
@@ -16,7 +16,7 @@ public enum PositonType {
 	
 	private String displayName;
 
-	private PositonType(String displayName) {
+	private JobPosition(String displayName) {
 		this.displayName = displayName;
 	}
 	

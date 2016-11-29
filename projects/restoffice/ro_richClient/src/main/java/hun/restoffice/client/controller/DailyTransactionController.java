@@ -3,10 +3,19 @@
  */
 package hun.restoffice.client.controller;
 
+import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
+
+import hun.restoffice.client.converter.Converter;
 import hun.restoffice.client.model.DailyTransactionModel;
+import hun.restoffice.client.service.RemoteServiceFactory;
+import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,6 +29,7 @@ import javafx.util.converter.CurrencyStringConverter;
  */
 public class DailyTransactionController implements WizardElement {
 
+	private static final Logger LOG = Logger.getLogger(DailyTransactionController.class);
 	@FXML
 	private TableView<DailyTransactionModel> transactions;
 
@@ -90,7 +100,9 @@ public class DailyTransactionController implements WizardElement {
 	 */
 	@Override
 	public boolean onPrevious() {
-		// TODO Auto-generated method stub
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setContentText("Innen nem lehet visszalépni");
+		alert.showAndWait();
 		return false;
 	}
 
@@ -101,8 +113,8 @@ public class DailyTransactionController implements WizardElement {
 	 */
 	@Override
 	public void onCancel() {
-		// TODO Auto-generated method stub
-
+		transactions.getItems().clear();
+		model = null;
 	}
 
 	/*
@@ -112,7 +124,20 @@ public class DailyTransactionController implements WizardElement {
 	 */
 	@Override
 	public void onSend() {
-		// TODO Auto-generated method stub
+		try {
+			RemoteServiceFactory.lookupDailyTransaction().batchTransactionClose(Converter.fromDailyTransactionModel(model));
+		} catch (FacadeException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Hiba történt a végrehajtás közben");
+			alert.setContentText(e.getLocalizedMessage());
+			alert.showAndWait();
+		} catch (NamingException e) {
+			LOG.error(e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Szolgáltatás nem elérhető");
+			alert.showAndWait();
+		}
 
 	}
 

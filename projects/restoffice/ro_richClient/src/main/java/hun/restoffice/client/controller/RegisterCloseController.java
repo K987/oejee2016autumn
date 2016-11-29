@@ -225,7 +225,6 @@ public class RegisterCloseController implements WizardElement {
 	@Override
 	public void onCancel() {
 		registerTable.getItems().clear();
-		;
 		model = null;
 	}
 
@@ -238,7 +237,7 @@ public class RegisterCloseController implements WizardElement {
 	public void onSend() {
 		try {
 			RemoteServiceFactory.lookupRegister().batchRegisterClose(
-					Converter.fromRegisterCloseModel(model.getRegModels().stream().filter(rm -> rm.usedProperty().get()).collect(Collectors.toList())));
+					Converter.fromRegisterModel(model.getRegModels().stream().filter(rm -> rm.usedProperty().get()).collect(Collectors.toList())));
 		} catch (FacadeException e) {
 			LOG.error(e);
 			Alert alert = new Alert(AlertType.ERROR);

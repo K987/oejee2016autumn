@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import hun.restoffice.ejbservice.domain.CalendarScheduleStub;
 import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.persistence.entity.employee.EmployeeShift;
 import hun.restoffice.persistence.entity.employee.Shift;
+import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
 import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
 
 /**
@@ -29,8 +29,9 @@ public class ShiftConverter implements ShiftConverterLocal {
 	private CalendarScheduleStub to(Shift shift) {
 		List<EmployeeShiftStub> empShfits = new ArrayList<>();
 		for (EmployeeShift item : shift.getEmployeeShifts()) {
-			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getActualEnd(), (item.getActualPosition() == null ? -1 : item.getActualPosition().ordinal()),
-					item.getEmployee().getEmployeeName(), item.getEmployee().getDefaultPosition().ordinal()));
+			empShfits.add(new EmployeeShiftStub(item.getActualStart(), item.getRowId(), item.getActualEnd(),
+					(item.getActualPosition() == null ? -1 : item.getActualPosition().ordinal()), item.getEmployee().getEmployeeName(),
+					item.getEmployee().getDefaultPosition().ordinal()));
 		}
 
 		return new CalendarScheduleStub(shift.getStartDate(), shift.getStartTime(), shift.getId(), empShfits);
@@ -62,6 +63,24 @@ public class ShiftConverter implements ShiftConverterLocal {
 			rtrn.add(new ShiftStub(s));
 		}
 		return rtrn;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see hun.restoffice.ejbservice.converter.ShiftConverterLocal#from(java.util.List)
+	 */
+	@Override
+	public List<EmployeeShift> from(List<EmployeeShiftStub> models) {
+		List<EmployeeShift> rtrn = new ArrayList<>();
+		for (EmployeeShiftStub stub : models) {
+			rtrn.add(from(stub));
+		}
+		return rtrn;
+	}
+
+	private EmployeeShift from(EmployeeShiftStub stub) {
+		return new EmployeeShift(stub.getName(), stub.getShiftid(), stub.getActualStart().getTime(), stub.getActualEnd().getTime(), stub.getActualPosition());
 	}
 
 }

@@ -1,11 +1,22 @@
 package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import hun.restoffice.persistence.entity.employee.EmployeeShift;
-
-import java.math.BigDecimal;
 
 /**
  * The persistent class for the daily_incomes database table.
@@ -39,7 +50,23 @@ public class DailyIncome implements Serializable {
 	@Column(name = "daily_pos_sum", nullable = false)
 	private BigDecimal posSum;
 
+	@Transient
+	private int rowId;
+
 	public DailyIncome() {
+	}
+
+	/**
+	 * @param pos
+	 * @param cash
+	 * @param card
+	 * @param rowId
+	 */
+	public DailyIncome(BigDecimal pos, BigDecimal cash, BigDecimal card, int rowId) {
+		this.posSum = pos;
+		this.cashSum = cash;
+		this.cardSum = card;
+		this.rowId = rowId;
 	}
 
 	public Integer getId() {
@@ -78,5 +105,13 @@ public class DailyIncome implements Serializable {
 	public void setPosSum(BigDecimal dailyPosSum) {
 		this.posSum = dailyPosSum;
 	}
+
+	/**
+	 * @return the rowId
+	 */
+	public int getRowId() {
+		return rowId;
+	}
+	
 
 }
