@@ -26,7 +26,7 @@ import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
- * Employee persistence facade
+ * Employee persistence service
  *
  * @author kalmankostenszky
  */

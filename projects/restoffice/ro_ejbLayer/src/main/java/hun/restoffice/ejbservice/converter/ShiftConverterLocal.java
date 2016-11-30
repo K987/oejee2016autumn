@@ -8,8 +8,10 @@ import java.util.List;
 import javax.ejb.Local;
 
 import hun.restoffice.ejbservice.domain.ShiftStub;
+import hun.restoffice.persistence.entity.employee.EmployeeShift;
 import hun.restoffice.persistence.entity.employee.Shift;
 import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
+import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
 
 /**
  * Convert shift entity and stub back and forth
@@ -34,6 +36,12 @@ public interface ShiftConverterLocal {
 	 * @return
 	 */
 	List<ShiftStub> to(List<Shift> shifts);
+
+	/**
+	 * @param models
+	 * @return
+	 */
+	List<EmployeeShift> from(List<EmployeeShiftStub> models);
 
 
 }

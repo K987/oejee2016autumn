@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the employee_shift database table.
@@ -30,14 +31,25 @@ import javax.persistence.TemporalType;
 @IdClass(EmployeeShiftId.class)
 @NamedQueries(value = { @NamedQuery(name = "EmployeeShift.findAll", query = "SELECT es FROM EmployeeShift es"),
 		@NamedQuery(name = EmployeeShift.GET_ENTITES, query = "SELECT es FROM EmployeeShift es  WHERE employee=:" + EmployeeShift.EMPLOYEE
-				+ " AND shift.startDate >:" + EmployeeShift.FROM_DATE) })
+				+ " AND shift.startDate >:" + EmployeeShift.FROM_DATE),
+		@NamedQuery(name = EmployeeShift.FIND_BY_ID, query = "SELECT es FROM EmployeeShift es WHERE LOWER(employee.name)=:"+EmployeeShift.EMPLOYEE_NAME//
+		+" AND shift.id=:"+EmployeeShift.SHIFT_ID),
+		@NamedQuery(name = EmployeeShift.GET_BY_ROWID, query = "SELECT es FROM EmployeeShift es WHERE rowId =:"+EmployeeShift.ROWID)
+})
 public class EmployeeShift implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String GET_ENTITES = "EmployeeShift.getEntites";
+	public static final String FIND_BY_ID = "EmployeeShift.findById";
+	public static final String GET_BY_ROWID = "EmployeeShift.getByRowId";
 
 	public static final String EMPLOYEE = "employee";
 	public static final String FROM_DATE = "fromDate";
+	public static final String EMPLOYEE_NAME = "employeeName";
+	public static final String SHIFT_ID = "shiftId";
+	public static final String ROWID = "rowId";
+
+
 
 	// bi-directional many-to-one association to Shift
 	@Id
@@ -69,6 +81,49 @@ public class EmployeeShift implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_shift_employee_shift_id_generator")
 	@Column(name = "employee_shift_id", updatable = false)
 	private Integer rowId;
+
+	@Transient
+	private int shiftId;
+	
+	@Transient
+	private String employeeName;
+	/**
+	 * @param name
+	 * @param shiftid
+	 * @param rowId 
+	 * @param start
+	 * @param end
+	 * @param position
+	 */
+	public EmployeeShift(String name, int shiftid, Date start, Date end, int position) {
+		this.employeeName = name;
+		this.shiftId = shiftid;
+		this.actualStart = start;
+		this.actualEnd = end;
+		this.actualPosition = JobPosition.values()[position];
+	}
+	
+	
+
+	/**
+	 * Use only for Shift lookup
+	 * @return the shiftId
+	 */
+	public int getShiftId() {
+		return shiftId;
+	}
+
+
+
+	/**
+	 * Use only for Employee lookup
+	 * @return the employeeName
+	 */
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+
 
 	public Date getActualEnd() {
 		return this.actualEnd;

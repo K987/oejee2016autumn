@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hun.restoffice.ejbservice.domain;
+package hun.restoffice.ejbservice.exception;
 
 /**
  * DTO for error messages

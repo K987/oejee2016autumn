@@ -1,9 +1,20 @@
 package hun.restoffice.persistence.entity.dailyTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the register_closes database table.
@@ -12,9 +23,19 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "register_closes")
-@NamedQuery(name = "RegisterClos.findAll", query = "SELECT r FROM RegisterClose r")
+@NamedQueries( value = { 
+		@NamedQuery(name = "RegisterClose.findAll", query = "SELECT r FROM RegisterClose r"),
+		@NamedQuery(name = RegisterClose.FIND_REGISTER_CLOSE, query = "SELECT r FROM RegisterClose r JOIN FETCH r.register WHERE r.registerCloseDate =:"+RegisterClose.DAY),
+		@NamedQuery(name = RegisterClose.FIND_LAST_CLOSE, query = "SELECT r0 FROM RegisterClose r0 JOIN FETCH r0.register WHERE r0.registerCloseDate = "
+				+ "(SELECT MAX(r1.registerCloseDate) FROM RegisterClose r1 WHERE r1.id.registerCloseRegisterId = r0.id.registerCloseRegisterId)")
+		})
 public class RegisterClose implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_REGISTER_CLOSE = "RegisterClose.findRegisterClose";
+	public static final String FIND_LAST_CLOSE = "RegisterClose.findLastClose";
+
+	public static final String DAY = "day";
 
 	@EmbeddedId
 	private RegisterCloseId id;
@@ -32,6 +53,19 @@ public class RegisterClose implements Serializable {
 	private Register register;
 
 	public RegisterClose() {
+	}
+
+
+	/**
+	 * @param registerId
+	 * @param closeAmt
+	 * @param time
+	 * @param closeNo
+	 */
+	public RegisterClose(String registerId, BigDecimal closeAmt, Date time, int closeNo) {
+		this.id = new RegisterCloseId(registerId, closeNo);
+		this.registerCloseDate = time;
+		this.registerCloseAmt = closeAmt;
 	}
 
 	public RegisterCloseId getId() {

@@ -3,8 +3,6 @@
  */
 package hun.restoffice.ejbservice.exception;
 
-import hun.restoffice.ejbservice.domain.ErrorStub;
-
 /**
  * Exception class for REST callers
  * 

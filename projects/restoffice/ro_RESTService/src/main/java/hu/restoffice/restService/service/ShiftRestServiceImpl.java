@@ -61,6 +61,7 @@ public class ShiftRestServiceImpl implements ShiftRestService {
 			throw new WebApplicationException(e, Response.status(400).entity(new RestError(-100, "Allowed date format is yyyy-MM-dd")).build());
 		}
 		LOG.info("invoking get schedule");
+		
 		List<CalendarScheduleStub> rtrn = this.facade.getCalendarSchedule(from, to);
 		Collections.sort(rtrn);
 		return rtrn;
