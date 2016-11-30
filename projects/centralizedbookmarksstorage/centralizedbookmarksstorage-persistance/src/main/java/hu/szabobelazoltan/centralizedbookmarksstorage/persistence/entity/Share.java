@@ -19,8 +19,10 @@ import hu.szabobelazoltan.centralizedbookmarksstorage.persistence.query.Bookmark
 @Entity
 @Table(name = "cbms_share")
 @NamedQueries(value = {
-		@NamedQuery(name = BookmarkQuery.SHARE_BY_DATE, query = "SELECT s FROM cbms_share s WHERE s.share_date=:" + BookmarkParameter.SHARE_DATE),
-		@NamedQuery(name = BookmarkQuery.BOOKMARK_BY_ID, query = "SELECT s FROM cbms_share s WHERE s.share_bookmark=:" + BookmarkParameter.BOOKMARK_ID), })
+		@NamedQuery(name = BookmarkQuery.SHARE_BY_DATE, query = "SELECT s FROM cbms_share st WHERE s.share_date=:" + BookmarkParameter.SHARE_DATE),
+		@NamedQuery(name = BookmarkQuery.BOOKMARK_BY_ID, query = "SELECT s FROM cbms_share st WHERE s.share_bookmark=:" + BookmarkParameter.BOOKMARK_ID),
+		@NamedQuery(name = BookmarkQuery.SHARE_BY_KEYWORD, query = "SELECT s FROM cbms_share st, (Select cbms_share_kw_connecton.share sh FROM cbms_share_kw_connecton RIGHT JOIN cbms_keyword ON cbms_share_kw_connection.keyword = cbms_keyword.keywor_id WHERE cbms_keyword.keyword=:'"
+				+ BookmarkParameter.KEYWORD + "') AS KWFIND WHERE cbms_share.share_id = KWFIND.sh") })
 public class Share implements Serializable {
 
 	/**
