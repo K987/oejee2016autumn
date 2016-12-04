@@ -1,14 +1,28 @@
 package hu.musicorganizer.ejbservice.domain;
 
-public class TrackListStub {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TracklistStub {
 	
 	private CustomerStub customer;
 	private String name;
+	private List<StreamingUrlStub> streamingUrls;
 
-	public TrackListStub(CustomerStub customer, String name) {
+	public TracklistStub(CustomerStub customer, String name) {
 		super();
 		this.customer = customer;
 		this.name = name;
+		this.streamingUrls = new ArrayList<StreamingUrlStub>();
+	}
+	
+
+	public List<StreamingUrlStub> getStreamingUrls() {
+		return streamingUrls;
+	}
+
+	public void setStreamingUrls(List<StreamingUrlStub> streamingUrls) {
+		this.streamingUrls = streamingUrls;
 	}
 
 	public CustomerStub getCustomer() {

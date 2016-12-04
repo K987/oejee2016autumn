@@ -32,6 +32,10 @@ public class Album {
 	@Column(name = "album_label", nullable = false)
 	private String recordLabel;
 
+	public Album() {
+		super();
+	}
+	
 	public Album(String title, Date releaseDate, String genre, String recordLabel) {
 		super();
 		this.title = title;

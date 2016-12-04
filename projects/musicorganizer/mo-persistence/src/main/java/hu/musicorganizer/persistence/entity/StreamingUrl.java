@@ -32,6 +32,10 @@ public class StreamingUrl {
 	@Column(name = "streamingurl_url", nullable = false)
 	private String url;
 
+	public StreamingUrl() {
+		super();
+	}
+	
 	public StreamingUrl(Song song, String type, String url) {
 		super();
 		this.song = song;

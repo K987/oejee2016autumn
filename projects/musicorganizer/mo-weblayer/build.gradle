@@ -5,4 +5,5 @@ war { archiveName 'mo-weblayer.war' }
 dependencies {
 	providedCompile project(':mo-ejbservice')
 	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+	providedCompile group: 'jstl', name: 'jstl', version: jstlVersion	
 }

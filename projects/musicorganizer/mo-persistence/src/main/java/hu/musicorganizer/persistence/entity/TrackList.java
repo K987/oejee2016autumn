@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tracklist")
-public class TrackList {
+public class Tracklist {
 
 	@Id
 	@SequenceGenerator(name = "generatorTracklist", sequenceName = "tracklist_tracklist_id_seq", allocationSize = 1)
@@ -19,7 +19,11 @@ public class TrackList {
 	@Column(name = "tracklist_name", nullable = false)
 	private String name;
 
-	public TrackList(Customer customer, String name) {
+	public Tracklist() {
+		super();
+	}
+	
+	public Tracklist(Customer customer, String name) {
 		super();
 		this.customer = customer;
 		this.name = name;

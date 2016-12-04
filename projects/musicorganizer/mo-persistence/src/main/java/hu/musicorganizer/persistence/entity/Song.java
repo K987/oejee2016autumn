@@ -18,6 +18,10 @@ public class Song {
 	@Column(name = "song_category", nullable = true)
 	private String category;
 
+	public Song() {
+		super();
+	}
+	
 	public Song(String title, String category) {
 		super();
 		this.title = title;

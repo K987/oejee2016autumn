@@ -1,9 +1,24 @@
 package hu.musicorganizer.persistence.entity;
 
-import javax.persistence.*;
+import hu.musicorganizer.persistence.parameter.CustomerParameter;
+import hu.musicorganizer.persistence.query.CustomerQuery;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
+@NamedQueries(value = { //
+		@NamedQuery(name = CustomerQuery.COUNT_BY_EMAILADDRESS, query = "SELECT COUNT(c) FROM Customer c WHERE c.emailAddress=:" + CustomerParameter.EMAILADDRESS),
+		@NamedQuery(name = CustomerQuery.GET_BY_EMAILADDRESS, query = "SELECT c FROM Customer c WHERE c.emailAddress=:" + CustomerParameter.EMAILADDRESS)
+})
 public class Customer {
 
 	@Id
@@ -21,6 +36,10 @@ public class Customer {
 	@Column(name = "customer_emailAddress", nullable = false)
 	private String emailAddress;
 
+	public Customer() {
+		super();
+	}
+	
 	public Customer(String nickname, String password, String emailAddress) {
 		super();
 		this.nickname = nickname;

@@ -15,6 +15,10 @@ public class Artist {
 	@Column(name = "artist_name", nullable = false)
 	private String name;
 
+	public Artist() {
+		super();
+	}
+	
 	public Artist(String name) {
 		super();
 		this.name = name;

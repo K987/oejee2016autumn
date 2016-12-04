@@ -4,18 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Music Organizer - Welcome!</title>
+<title>Music Organizer - Registration</title>
 </head>
 <body>
 	<h1>Welcome to Music Organizer!</h1>
-	<form method="post" action="Login">
-			e-mail <input type="text" name="email" value="levai@4dsoft.hu"/><br/>
-			password <input type="password" name="password" value="12345" />
+	<form method="post" action="Registration">
+			e-mail <input type="text" name="email" /><br/>
+			nickname <input type="text" name="nickname" /><br/>
+			password <input type="password" name="password" />
 			<br/><br/>
 
-			<input type="submit" value="Login" />&nbsp;
+			<input type="submit" value="Register" />&nbsp;
 	</form>
-	<br/>
-	<a href="Registration">I don't have an account yet</a>
 </body>
 </html>
