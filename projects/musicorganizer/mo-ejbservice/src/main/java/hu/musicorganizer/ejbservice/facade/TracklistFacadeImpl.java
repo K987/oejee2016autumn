@@ -1,6 +1,6 @@
 package hu.musicorganizer.ejbservice.facade;
 
-import hu.musicorganizer.ejbservice.converter.TracklistConverterImpl;
+import hu.musicorganizer.ejbservice.converter.TracklistConverter;
 import hu.musicorganizer.ejbservice.domain.TracklistStub;
 import hu.musicorganizer.ejbservice.exception.FacadeException;
 import hu.musicorganizer.persistence.exception.PersistenceServiceException;
@@ -19,13 +19,13 @@ public class TracklistFacadeImpl implements TracklistFacade {
 	private static final Logger LOGGER = Logger.getLogger(TracklistFacadeImpl.class); 
 	
 	@EJB
-	TracklistConverterImpl converter;
+	TracklistConverter converter;
 	
 	@EJB
 	TracklistService service;
 	
 	@Override
-	public List<TracklistStub> getTracklists(String customerEmailAddress) {
+	public List<TracklistStub> getTracklists(String customerEmailAddress) throws FacadeException {
 		try {
 			return this.converter.to(this.service.readAll(customerEmailAddress));
 		} catch (final PersistenceServiceException e) {

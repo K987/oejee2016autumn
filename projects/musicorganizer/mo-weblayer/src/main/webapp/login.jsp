@@ -9,7 +9,7 @@
 <body>
 	<h1>Welcome to Music Organizer!</h1>
 	<form method="post" action="Login">
-			e-mail <input type="text" name="email" value="levai@4dsoft.hu"/><br/>
+			e-mail <input type="text" name="email" value="levai@musicorganizer.com"/><br/>
 			password <input type="password" name="password" value="12345" />
 			<br/><br/>
 

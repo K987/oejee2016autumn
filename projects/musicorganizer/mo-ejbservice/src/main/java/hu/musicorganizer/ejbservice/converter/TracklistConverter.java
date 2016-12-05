@@ -10,5 +10,7 @@ import javax.ejb.Local;
 @Local
 public interface TracklistConverter {
 
+	TracklistStub to (Tracklist tracklist);
+	
 	List<TracklistStub> to (List<Tracklist> tracklists);
 }

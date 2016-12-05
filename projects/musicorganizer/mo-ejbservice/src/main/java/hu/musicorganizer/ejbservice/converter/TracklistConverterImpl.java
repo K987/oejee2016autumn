@@ -1,18 +1,32 @@
 package hu.musicorganizer.ejbservice.converter;
 
-import java.util.List;
-
-import javax.ejb.Stateless;
-
 import hu.musicorganizer.ejbservice.domain.TracklistStub;
 import hu.musicorganizer.persistence.entity.Tracklist;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
 @Stateless
 public class TracklistConverterImpl implements TracklistConverter {
 
+	@EJB
+	CustomerConverter customerConverter;
+	
 	@Override
 	public List<TracklistStub> to(List<Tracklist> tracklists) {
-		return null;
+		final List<TracklistStub> result = new ArrayList<>();
+		for (final Tracklist tracklist : tracklists) {
+			result.add(this.to(tracklist));
+		}
+		return result;
+ 	}
+
+	@Override
+	public TracklistStub to(Tracklist tracklist) {
+		return new TracklistStub(customerConverter.to(tracklist.getCustomer()), tracklist.getName());
 	}
 
 }

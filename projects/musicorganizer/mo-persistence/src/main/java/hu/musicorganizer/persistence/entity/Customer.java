@@ -3,13 +3,18 @@ package hu.musicorganizer.persistence.entity;
 import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.query.CustomerQuery;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -35,6 +40,9 @@ public class Customer {
 	
 	@Column(name = "customer_emailAddress", nullable = false)
 	private String emailAddress;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+	private Set<Tracklist> trackLists;
 
 	public Customer() {
 		super();
