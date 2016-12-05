@@ -58,6 +58,4 @@ public class RegisterConverter implements RegisterConverterLocal {
 		return new RegisterStub(register.getRegisterId(), register.getRegisterType().ordinal());
 	}
 
-
-
 }

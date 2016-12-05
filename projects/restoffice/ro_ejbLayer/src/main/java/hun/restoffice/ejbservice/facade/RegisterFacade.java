@@ -54,7 +54,8 @@ public class RegisterFacade implements RegisterFacadeRemote {
 				LOG.info("we have results");
 				for (RegisterCloseStub registerCloseStub : tmp) {
 					LOG.info(registerCloseStub);
-					rtrn.add(new RegisterCloseStub(registerCloseStub.getRegisterStub(), new BigDecimal(0), day.getTime(), (registerCloseStub.getCloseNo()+1)));
+					rtrn.add(
+							new RegisterCloseStub(registerCloseStub.getRegisterStub(), new BigDecimal(0), day.getTime(), (registerCloseStub.getCloseNo() + 1)));
 				}
 			}
 			return rtrn;
@@ -72,15 +73,13 @@ public class RegisterFacade implements RegisterFacadeRemote {
 	@Override
 	public void batchRegisterClose(List<RegisterCloseStub> toClose) throws FacadeException {
 		LOG.info("createRegisterClose invoked");
-		
+
 		List<RegisterClose> closes = new ArrayList<>();
 		for (RegisterCloseStub close : toClose) {
 			closes.add(new RegisterClose(close.getRegisterStub().getRegisterId(), close.getCloseAmt(), close.getCloseDate().getTime(), close.getCloseNo()));
 		}
 		try {
-			for (RegisterCloseStub registerStub : toClose) {
-				this.rService.createBatchRegisterClose(closes);
-			}
+			this.rService.createBatchRegisterClose(closes);
 		} catch (PersistenceServiceException e) {
 			LOG.error(e);
 			throw new FacadeException(e.getLocalizedMessage());

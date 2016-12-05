@@ -49,4 +49,5 @@ public interface RegisterServiceLocal {
 	 */
 	void createBatchRegisterClose(List<RegisterClose> closes) throws PersistenceServiceException;
 
+
 }

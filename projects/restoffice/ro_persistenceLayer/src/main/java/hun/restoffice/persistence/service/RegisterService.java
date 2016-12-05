@@ -95,6 +95,7 @@ public class RegisterService implements RegisterServiceLocal {
 		}
 	}
 
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -107,6 +108,7 @@ public class RegisterService implements RegisterServiceLocal {
 			Register register = readRegisterWithId(registerClose.getId().getRegisterCloseRegisterId());
 			registerClose.setRegister(register);
 			try {
+				LOG.info(registerClose);
 				this.entityManager.persist(registerClose);
 				this.entityManager.flush();
 

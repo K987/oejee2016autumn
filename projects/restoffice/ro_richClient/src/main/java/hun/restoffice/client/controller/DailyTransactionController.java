@@ -3,6 +3,8 @@
  */
 package hun.restoffice.client.controller;
 
+import java.util.List;
+
 import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
@@ -10,6 +12,7 @@ import org.apache.log4j.Logger;
 import hun.restoffice.client.converter.Converter;
 import hun.restoffice.client.model.DailyTransactionModel;
 import hun.restoffice.client.service.RemoteServiceFactory;
+import hun.restoffice.remoteClient.domain.DailyTransactionStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -125,7 +128,11 @@ public class DailyTransactionController implements WizardElement {
 	@Override
 	public void onSend() {
 		try {
-			RemoteServiceFactory.lookupDailyTransaction().batchTransactionClose(Converter.fromDailyTransactionModel(model));
+			List<DailyTransactionStub> tmp = Converter.fromDailyTransactionModel(model);
+			for (DailyTransactionStub dailyTransactionStub : tmp) {
+				LOG.debug(dailyTransactionStub);
+			}
+			RemoteServiceFactory.lookupDailyTransaction().batchTransactionClose(tmp);
 		} catch (FacadeException e) {
 			LOG.error(e);
 			Alert alert = new Alert(AlertType.ERROR);

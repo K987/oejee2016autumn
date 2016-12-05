@@ -20,6 +20,7 @@ public class DailyTransactionStub implements Serializable {
 	private final BigDecimal pos;
 	private final int rowId;
 
+
 	/**
 	 * @param cash
 	 * @param card
@@ -33,6 +34,8 @@ public class DailyTransactionStub implements Serializable {
 		this.pos = pos;
 		this.rowId = rowId;
 	}
+
+
 
 	/**
 	 * @return the cash
@@ -61,15 +64,15 @@ public class DailyTransactionStub implements Serializable {
 	public int getRowId() {
 		return rowId;
 	}
+	
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return String.format("DailyTransactionStub [cash=%s, sum=%s, pos=%s, rowId=%s]", cash, card, pos, rowId);
+		return String.format("DailyTransactionStub [cash=%s, card=%s, pos=%s, rowId=%s]", cash, card, pos, rowId);
 	}
 
+	
 }

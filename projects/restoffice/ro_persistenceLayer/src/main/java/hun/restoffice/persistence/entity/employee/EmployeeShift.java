@@ -30,17 +30,17 @@ import javax.persistence.Transient;
 @Table(name = "employee_shift")
 @IdClass(EmployeeShiftId.class)
 @NamedQueries(value = { @NamedQuery(name = "EmployeeShift.findAll", query = "SELECT es FROM EmployeeShift es"),
-		@NamedQuery(name = EmployeeShift.GET_ENTITES, query = "SELECT es FROM EmployeeShift es  WHERE employee=:" + EmployeeShift.EMPLOYEE
+		@NamedQuery(name = EmployeeShift.GET_ENTITY_AFTER, query = "SELECT es FROM EmployeeShift es  WHERE employee=:" + EmployeeShift.EMPLOYEE
 				+ " AND shift.startDate >:" + EmployeeShift.FROM_DATE),
-		@NamedQuery(name = EmployeeShift.FIND_BY_ID, query = "SELECT es FROM EmployeeShift es WHERE LOWER(employee.name)=:"+EmployeeShift.EMPLOYEE_NAME//
+		@NamedQuery(name = EmployeeShift.FIND_BY_NAME_AND_SHIFT, query = "SELECT es FROM EmployeeShift es WHERE LOWER(employee.name)=:"+EmployeeShift.EMPLOYEE_NAME//
 		+" AND shift.id=:"+EmployeeShift.SHIFT_ID),
 		@NamedQuery(name = EmployeeShift.GET_BY_ROWID, query = "SELECT es FROM EmployeeShift es WHERE rowId =:"+EmployeeShift.ROWID)
 })
 public class EmployeeShift implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String GET_ENTITES = "EmployeeShift.getEntites";
-	public static final String FIND_BY_ID = "EmployeeShift.findById";
+	public static final String GET_ENTITY_AFTER = "EmployeeShift.getEntites";
+	public static final String FIND_BY_NAME_AND_SHIFT = "EmployeeShift.findById";
 	public static final String GET_BY_ROWID = "EmployeeShift.getByRowId";
 
 	public static final String EMPLOYEE = "employee";
@@ -87,6 +87,10 @@ public class EmployeeShift implements Serializable {
 	
 	@Transient
 	private String employeeName;
+	
+	public EmployeeShift(){
+		
+	}
 	/**
 	 * @param name
 	 * @param shiftid
@@ -170,5 +174,15 @@ public class EmployeeShift implements Serializable {
 		this.shift = shift;
 		shift.addEmployeeShift(this);
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("EmployeeShift [employee=%s, shift=%s, actualStart=%s, actualEnd=%s, actualPosition=%s, rowId=%s]",
+				employee.getEmployeeName(), shift.getId(), actualStart, actualEnd, actualPosition, rowId);
+	}
+	
+	
 
 }

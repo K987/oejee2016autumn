@@ -32,12 +32,13 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 public class DailyTransactionService implements DailyTransactionServiceLocal {
 
 	private static final Logger LOG = Logger.getLogger(DailyTransactionService.class);
-	
+
 	@PersistenceContext(unitName = "ro-persistence-unit")
 	private EntityManager entityManager;
 
 	@EJB
 	private ShiftServiceLocal sService;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -45,14 +46,17 @@ public class DailyTransactionService implements DailyTransactionServiceLocal {
 	 */
 	@Override
 	public void createDailyTransactionBatch(List<DailyIncome> incomes) throws PersistenceServiceException {
+		LOG.info("size: " + incomes.size());
 		for (DailyIncome dailyIncome : incomes) {
 			EmployeeShift employeeShift = sService.readByRowId(dailyIncome.getRowId());
 			dailyIncome.setEmployeeShift(employeeShift);
-			try{
+			try {
+				LOG.info("pre-persist: " + dailyIncome);
 				this.entityManager.persist(dailyIncome);
-			} catch (Exception e){
+			} catch (Exception e) {
 				LOG.error(e);
-				throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Unknown exception occured during persisting dailyIncome: "+dailyIncome.getRowId());
+				throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN,
+						"Unknown exception occured during persisting dailyIncome: " + dailyIncome);
 			}
 		}
 	}

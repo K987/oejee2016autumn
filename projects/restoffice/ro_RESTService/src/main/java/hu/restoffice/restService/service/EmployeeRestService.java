@@ -92,4 +92,5 @@ public interface EmployeeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	EmployeeScheduleStub getEmployeeSchedule(@PathParam("employeeName") String name,@QueryParam("from") DateParam from, @QueryParam("to") DateParam to)
 			throws AdaptorException, WebApplicationException;
+
 }

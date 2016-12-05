@@ -68,7 +68,7 @@ public class ShiftService implements ShiftServiceLocal {
 	public List<Shift> removeEmployeeFromShift(Employee Employee) throws PersistenceServiceException {
 		List<Shift> rtrn = new ArrayList<>();
 		try {
-			List<EmployeeShift> lstEmpShifts = this.entityManager.createNamedQuery(EmployeeShift.GET_ENTITES, EmployeeShift.class)
+			List<EmployeeShift> lstEmpShifts = this.entityManager.createNamedQuery(EmployeeShift.GET_ENTITY_AFTER, EmployeeShift.class)
 					.setParameter(EmployeeShift.EMPLOYEE, Employee).setParameter(EmployeeShift.FROM_DATE, Calendar.getInstance().getTime()).getResultList();
 			for (EmployeeShift es : lstEmpShifts) {
 				rtrn.add(es.getShift());
@@ -84,14 +84,14 @@ public class ShiftService implements ShiftServiceLocal {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private EmployeeShift readByShiftAndName(String name, int shiftId) throws PersistenceServiceException {
 		try {
-			return this.entityManager.createNamedQuery(EmployeeShift.FIND_BY_ID, EmployeeShift.class)
+			return this.entityManager.createNamedQuery(EmployeeShift.FIND_BY_NAME_AND_SHIFT, EmployeeShift.class)
 					.setParameter(EmployeeShift.EMPLOYEE_NAME, name.toLowerCase().trim()).setParameter(EmployeeShift.SHIFT_ID, shiftId).getSingleResult();
 		} catch (AmbiguousResolutionException e) {
 			LOG.error(e.getMessage());
 			throw new PersistenceServiceException(PersistenceExceptionType.AMBIGOUS_RESULT, "multiple matching for [" + name + ", " + shiftId + "]");
 		} catch (NoResultException e) {
 			LOG.error(e);
-			throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "no matching for [" + name + ", " + shiftId + "]");
+			throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "no matching for [" + name.toLowerCase().trim() + ", " + shiftId + "]");
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
@@ -106,21 +106,24 @@ public class ShiftService implements ShiftServiceLocal {
 	@Override
 	public void updateShifts(List<EmployeeShift> toClose) throws PersistenceServiceException {
 		for (EmployeeShift es : toClose) {
+			LOG.info(es.getEmployeeName() +" "+es.getShiftId());
 			EmployeeShift employessShift = this.readByShiftAndName(es.getEmployeeName(), es.getShiftId());
 			employessShift.setActualStart(es.getActualStart());
 			employessShift.setActualEnd(es.getActualEnd());
 			employessShift.setActualPosition(es.getActualPosition());
 			try {
+				LOG.info(employessShift);
 				this.entityManager.merge(employessShift);
 			} catch (Exception e) {
 				LOG.error(e);
 				throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN,
-						"unknown error happend while merging employeeShift: [" + es.getEmployeeName() + ", " + es.getShiftId() + "]");
+						"unknown error happend while merging employeeShift: [" + es.getEmployeeName().toLowerCase().trim() + ", " + es.getShiftId() + "]");
 			}
 		}
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public EmployeeShift readByRowId(int rowId) throws PersistenceServiceException {
 		try {
 			return this.entityManager.createNamedQuery(EmployeeShift.GET_BY_ROWID, EmployeeShift.class).setParameter(EmployeeShift.ROWID, rowId)

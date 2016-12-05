@@ -26,12 +26,14 @@ import hun.restoffice.persistence.entity.employee.EmployeeShift;
 @Entity
 @Table(name = "daily_incomes")
 // TODO: add static final fields for qry name and params
-@NamedQueries({ @NamedQuery(name = "DailyIncome.findAll", query = "SELECT d FROM DailyIncome d") })
+@NamedQueries({ @NamedQuery(name = DailyIncome.FIND_ALL, query = "SELECT d FROM DailyIncome d JOIN FETCH d.dailyIncomeEmployeeShift di")})
 public class DailyIncome implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "DailyIncome.findAll";
+
 	@Id
-	@SequenceGenerator(name = "DAILY_INCOMES_DAILYINCOMEID_GENERATOR", sequenceName = "DAILY_INCOMES_DAILY_INCOME_ID_SEQ")
+	@SequenceGenerator(name = "DAILY_INCOMES_DAILYINCOMEID_GENERATOR", sequenceName = "DAILY_INCOMES_DAILY_INCOME_ID_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DAILY_INCOMES_DAILYINCOMEID_GENERATOR")
 	@Column(name = "daily_income_id")
 	private Integer id;
@@ -43,8 +45,8 @@ public class DailyIncome implements Serializable {
 	private BigDecimal cashSum;
 
 	// TODO: add not nullable in DB
-	@OneToOne
-	@JoinColumn(name = "daily_income_employee_shift", referencedColumnName = "employee_shift_id", nullable = false)
+	@OneToOne()
+	@JoinColumn(name = "daily_income_employee_shift", referencedColumnName = "employee_shift_id", nullable = false, unique = true)
 	private EmployeeShift dailyIncomeEmployeeShift;
 
 	@Column(name = "daily_pos_sum", nullable = false)
@@ -69,8 +71,20 @@ public class DailyIncome implements Serializable {
 		this.rowId = rowId;
 	}
 
-	public Integer getId() {
-		return this.id;
+//	public Integer getId() {
+//		return this.id;
+//	}
+
+	/**
+	 * @param posSum2
+	 * @param cashSum2
+	 * @param cardSum2
+	 * @param employeeShift
+	 */
+	public DailyIncome(BigDecimal posSum2, BigDecimal cashSum2, BigDecimal cardSum2, EmployeeShift employeeShift) {
+		this(posSum2,cashSum2,cardSum2, 0);
+		this.dailyIncomeEmployeeShift = employeeShift;
+		
 	}
 
 	public BigDecimal getCardSum() {
@@ -112,6 +126,16 @@ public class DailyIncome implements Serializable {
 	public int getRowId() {
 		return rowId;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("DailyIncome [ cardSum=%s, cashSum=%s, dailyIncomeEmployeeShift=%s, posSum=%s]", cardSum, cashSum,
+				dailyIncomeEmployeeShift, posSum);
+	}
 
 }

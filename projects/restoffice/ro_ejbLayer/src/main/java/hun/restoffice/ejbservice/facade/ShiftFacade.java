@@ -70,6 +70,7 @@ public class ShiftFacade implements ShiftFacadeLocal, ShiftFacadeRemote{
 				this.sService.updateShifts(sConverter.from(models));
 			} catch (PersistenceServiceException e) {
 				LOG.error(e);
+				throw new FacadeException(e.getLocalizedMessage());
 			}
 	}
 

@@ -151,7 +151,7 @@ ALTER TABLE employee_shift OWNER TO postgres;
 
 CREATE TABLE daily_incomes(
   daily_income_ID SERIAL PRIMARY KEY,
-  daily_income_employee_shift INTEGER NOT NULL,
+  daily_income_employee_shift INTEGER NOT NULL UNIQUE,
   daily_pos_sum NUMERIC NOT NULL,
   daily_income_card NUMERIC,
   daily_income_cash NUMERIC,

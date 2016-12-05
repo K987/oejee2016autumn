@@ -148,7 +148,11 @@ public class ShiftController implements WizardElement {
 		StringBuilder sb = new StringBuilder();
 		boolean rtrn = true;
 		for (EmployeeShiftModel es : model) {
-			if (es.actualEndProperty().get().compareTo(es.actualEndProperty().get()) <= 0) {
+			LOG.debug("end is: "+es.actualEndProperty());
+			LOG.debug("start is: "+es.actualStartProperty());
+			LOG.debug(es.isShiftLengthOk());
+			
+			if (!es.isShiftLengthOk()) {
 				sb.append("Munkaidő nem megfelelő: " + es.nameProperty().get() + "\n");
 				rtrn = false;
 			}

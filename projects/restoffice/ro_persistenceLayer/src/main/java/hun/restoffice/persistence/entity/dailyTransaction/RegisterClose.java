@@ -26,8 +26,11 @@ import javax.persistence.TemporalType;
 @NamedQueries( value = { 
 		@NamedQuery(name = "RegisterClose.findAll", query = "SELECT r FROM RegisterClose r"),
 		@NamedQuery(name = RegisterClose.FIND_REGISTER_CLOSE, query = "SELECT r FROM RegisterClose r JOIN FETCH r.register WHERE r.registerCloseDate =:"+RegisterClose.DAY),
-		@NamedQuery(name = RegisterClose.FIND_LAST_CLOSE, query = "SELECT r0 FROM RegisterClose r0 JOIN FETCH r0.register WHERE r0.registerCloseDate = "
-				+ "(SELECT MAX(r1.registerCloseDate) FROM RegisterClose r1 WHERE r1.id.registerCloseRegisterId = r0.id.registerCloseRegisterId)")
+		@NamedQuery(name = RegisterClose.FIND_LAST_CLOSE, query = "SELECT r0 FROM RegisterClose r0 JOIN FETCH r0.register WHERE "
+				+ "r0.registerCloseDate = "
+				+ "(SELECT MAX(r1.registerCloseDate) FROM RegisterClose r1 WHERE r1.id.registerCloseRegisterId = r0.id.registerCloseRegisterId) "
+				+ "AND r0.id.registerCloseNo = "
+				+ "(SELECT MAX(r2.id.registerCloseNo) FROM RegisterClose r2 WHERE r2.id.registerCloseRegisterId = r0.id.registerCloseRegisterId)")
 		})
 public class RegisterClose implements Serializable {
 	private static final long serialVersionUID = 1L;

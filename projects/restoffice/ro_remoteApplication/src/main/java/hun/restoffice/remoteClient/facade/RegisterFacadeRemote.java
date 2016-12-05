@@ -31,5 +31,6 @@ public interface RegisterFacadeRemote {
 	 * @throws FacadeException
 	 */
 	void batchRegisterClose(List<RegisterCloseStub> toClose) throws FacadeException;
+	
 
 }

@@ -60,6 +60,13 @@ public class EmployeeShiftModel {
 		this.shiftId = id;
 		this.rowId = rowId;
 	}
+	
+	public boolean isShiftLengthOk(){
+		LocalTime start = this.actualStart.get();
+		LocalTime end = this.actualEnd.get();
+		
+		return start.isBefore(end);
+	}
 
 	/**
 	 * @return the name
@@ -130,5 +137,4 @@ public class EmployeeShiftModel {
 		return String.format("EmployeeShiftModel [name=%s, defaultPosition=%s, actualPosition=%s, actualStart=%s, actualEnd=%s]", name.get(),
 				defaultPosition.getValue(), actualPosition.get(), actualStart.get(), actualEnd.get());
 	}
-
 }

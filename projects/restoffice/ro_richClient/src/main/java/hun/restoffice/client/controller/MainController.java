@@ -233,14 +233,16 @@ public class MainController implements WizardElement {
 	@Override
 	@FXML
 	public void onSend() {
-		if (!canSend)
-			return;
 		LOG.debug("send pressed");
-		for (WizardStep step : steps) {
-			if (step.loader != null) {
-				((WizardElement) step.loader.getController()).onSend();
-			}
-		}
+//		if (!canSend)
+//			return;
+		this.selectedController.onSend();
+//		
+//		for (WizardStep step : steps) {
+//			if (step.loader != null) {
+//				((WizardElement) step.loader.getController()).onSend();
+//			}
+//		}
 	}
 
 	/**

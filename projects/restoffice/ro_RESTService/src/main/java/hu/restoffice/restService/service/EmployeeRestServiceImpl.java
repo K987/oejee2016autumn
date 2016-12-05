@@ -21,6 +21,7 @@ import hun.restoffice.ejbservice.domain.EmployeeStub;
 import hun.restoffice.ejbservice.domain.ShiftStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.EmployeeFacadeLocal;
+import hun.restoffice.remoteClient.facade.RegisterFacadeRemote;
 
 /**
  * An implementation class for EmployeeRestService class
@@ -34,6 +35,9 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 
 	@EJB
 	private EmployeeFacadeLocal facade;
+	
+	@EJB
+	private RegisterFacadeRemote rfacade;
 
 	/*
 	 * (non-Javadoc)
@@ -108,6 +112,4 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 		Collections.sort(rtrn.getWorkdays());
 		return rtrn;
 	}
-
-	
 }

@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.naming.NamingException;
@@ -236,8 +237,12 @@ public class RegisterCloseController implements WizardElement {
 	@Override
 	public void onSend() {
 		try {
+			List<RegisterModel> tmp = model.getRegModels().stream().filter(rm -> rm.usedProperty().get()).collect(Collectors.toList());
+			for (RegisterModel registerModel : tmp) {
+				LOG.debug(registerModel.toString());
+			}
 			RemoteServiceFactory.lookupRegister().batchRegisterClose(
-					Converter.fromRegisterModel(model.getRegModels().stream().filter(rm -> rm.usedProperty().get()).collect(Collectors.toList())));
+					Converter.fromRegisterModel(tmp));
 		} catch (FacadeException e) {
 			LOG.error(e);
 			Alert alert = new Alert(AlertType.ERROR);
