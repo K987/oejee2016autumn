@@ -1,4 +1,3 @@
-DROP TABLE artistsong;
 DROP TABLE albumsong;
 DROP TABLE trackliststreamingurl;
 DROP TABLE streamingurl;

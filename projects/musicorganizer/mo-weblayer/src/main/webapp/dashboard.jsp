@@ -25,17 +25,31 @@
          <table>
 	         <thead>
 	             <tr>
+	                 <th>artist</th>
+	                 <th>title</th>
 	                 <th>url</th>
-	                 <th>song title</th>
+	                 <th>category</th>
+	                 <th></th>
 	             </tr>
 	         </thead>
 	         <tbody>
 	             <c:forEach items="${tracklist.streamingUrls}" var="streamingUrl">
 	                 <tr>
-	                     <td><a href="<c:out value="${streamingUrl.url}" />"><c:out value="${streamingUrl.url}" /></a></td>
 	                     <td><c:out value="${streamingUrl.song.title}" /></td>
+	                     <td><a href="<c:out value="${streamingUrl.url}" />"><c:out value="${streamingUrl.url}" /></a></td>
 	                 </tr>
 	             </c:forEach>
+	             
+	             <form method="post" action="AddTrack">
+		            <tr>
+   						<td><input type="text" name="artistName" value=""/></td>
+   						<td><input type="text" name="songTitle" value=""/></td>
+						<td><input type="text" name="streamingUrl" value=""/></td>
+						<td><input type="text" name="songCategory" value="" /></td>
+						<td><input type="submit" value="Add" />&nbsp;</tr>
+					<tr>
+				</form>
+	             
 	         </tbody>
      	</table>
          

@@ -1,7 +1,7 @@
 GRANT SELECT, INSERT, UPDATE, DELETE ON 
 customer, tracklist, song, streamingurl,
 trackliststreamingurl, album, albumsong,
-artist, artistsong
+artist
 TO musicorganizer_role;
 
 

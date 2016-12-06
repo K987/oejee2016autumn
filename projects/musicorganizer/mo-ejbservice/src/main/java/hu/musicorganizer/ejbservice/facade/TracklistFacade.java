@@ -12,4 +12,6 @@ public interface TracklistFacade {
 
 	List<TracklistStub> getTracklists(String customerEmailAddress) throws FacadeException;
 	
+	void addTrack(String customerEmailAddress, String tracklistName, String songTitle, String songCategory, String streamingUrl, String artistName) throws FacadeException;
+	
 }

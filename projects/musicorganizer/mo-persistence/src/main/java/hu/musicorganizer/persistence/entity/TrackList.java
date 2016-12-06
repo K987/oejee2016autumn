@@ -3,6 +3,8 @@ package hu.musicorganizer.persistence.entity;
 import hu.musicorganizer.persistence.parameter.TracklistParameter;
 import hu.musicorganizer.persistence.query.TracklistQuery;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,6 +40,13 @@ public class Tracklist {
 	
 	@Column(name = "tracklist_name", nullable = false)
 	private String name;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "trackliststreamingurl", joinColumns = {
+			@JoinColumn(name = "tracklist_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "streamingurl_id",
+					nullable = false, updatable = false) })
+	private Set<StreamingUrl> streamingUrls;
 
 	public Tracklist() {
 		super();
@@ -69,6 +80,14 @@ public class Tracklist {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<StreamingUrl> getStreamingUrls() {
+		return streamingUrls;
+	}
+
+	public void setStreamingUrls(Set<StreamingUrl> streamingUrls) {
+		this.streamingUrls = streamingUrls;
 	}
 	
 	

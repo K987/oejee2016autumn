@@ -18,12 +18,21 @@ CREATE TABLE tracklist (
 );
 ALTER TABLE tracklist OWNER TO postgres;
 
+CREATE TABLE artist (
+	artist_id SERIAL NOT NULL,
+	artist_name CHARACTER VARYING(100) NOT NULL,
+	CONSTRAINT PK_ARTIST_ID PRIMARY KEY (artist_id)
+);
+ALTER TABLE artist OWNER TO postgres;
 
 CREATE TABLE song (
 	song_id SERIAL NOT NULL,
 	song_title CHARACTER VARYING(100) NOT NULL,
 	song_category CHARACTER VARYING(40) NULL,
-	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id)
+	song_artist_id INTEGER NOT NULL,
+	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id),
+	CONSTRAINT FK_song_artist_id FOREIGN KEY (song_artist_id)
+	  REFERENCES artist (artist_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 ALTER TABLE song OWNER TO postgres;
 
@@ -72,19 +81,3 @@ CREATE UNIQUE INDEX UI_albumsong_pk ON albumsong USING btree (album_id, song_id)
 ALTER TABLE albumsong OWNER TO postgres;
 
 
-CREATE TABLE artist (
-	artist_id SERIAL NOT NULL,
-	artist_name CHARACTER VARYING(100) NOT NULL,
-	CONSTRAINT PK_ARTIST_ID PRIMARY KEY (artist_id)
-);
-ALTER TABLE artist OWNER TO postgres;
-
-
--- requirements were wrong, a song can have an artist without the song being on an album
-CREATE TABLE artistsong (
-	song_id INTEGER NOT NULL,
-	artist_id INTEGER NOT NULL,
-	CONSTRAINT PK_ARTISTSONG_ID PRIMARY KEY (song_id, artist_id)
-);
-CREATE UNIQUE INDEX UI_artistsong_pk ON artistsong USING btree (artist_id, song_id);
-ALTER TABLE albumsong OWNER TO postgres;

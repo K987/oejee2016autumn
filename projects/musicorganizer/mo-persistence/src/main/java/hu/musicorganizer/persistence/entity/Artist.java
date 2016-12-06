@@ -1,9 +1,23 @@
 package hu.musicorganizer.persistence.entity;
 
-import javax.persistence.*;
+import hu.musicorganizer.persistence.parameter.ArtistParameter;
+import hu.musicorganizer.persistence.query.ArtistQuery;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "artist")
+@NamedQueries(value = { //
+		@NamedQuery(name = ArtistQuery.COUNT_BY_NAME, query = "SELECT COUNT(a) FROM Artist a WHERE a.name=:" + ArtistParameter.NAME)
+})
 public class Artist {
 
 	@Id
