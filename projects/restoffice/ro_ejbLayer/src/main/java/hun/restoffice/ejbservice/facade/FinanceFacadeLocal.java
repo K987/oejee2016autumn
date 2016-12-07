@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import hun.restoffice.ejbservice.domain.CostCenterStub;
 import hun.restoffice.ejbservice.domain.ExpenseStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
@@ -18,7 +19,7 @@ import hun.restoffice.remoteClient.exception.FacadeException;
  * @author kalmankostenszky
  */
 @Local
-public interface ExpenseFacadeLocal {
+public interface FinanceFacadeLocal {
 
 	/**
 	 * @return
@@ -29,5 +30,10 @@ public interface ExpenseFacadeLocal {
 	 * @param docId
 	 */
 	void deleteExpense(String docId) throws FacadeException;
+
+	/**
+	 * @return
+	 */
+	List<CostCenterStub> getAllCostCenters() throws FacadeException;
 
 }

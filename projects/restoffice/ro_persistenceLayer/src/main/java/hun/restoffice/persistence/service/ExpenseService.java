@@ -70,6 +70,7 @@ public class ExpenseService implements ExpenseServiceLocal {
 		
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private Expense readById(String docId) throws PersistenceServiceException {
 		try {
 			return this.entityManager.createNamedQuery(Expense.READ_BY_DOC_ID, Expense.class).setParameter(Expense.DOC_ID, docId.trim().toLowerCase()).getSingleResult();

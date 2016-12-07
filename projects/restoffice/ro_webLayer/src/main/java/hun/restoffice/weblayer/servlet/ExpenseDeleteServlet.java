@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.ejbservice.facade.ExpenseFacadeLocal;
+import hun.restoffice.ejbservice.facade.FinanceFacadeLocal;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
@@ -33,7 +33,7 @@ public class ExpenseDeleteServlet extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(ExpenseDeleteServlet.class);
 
 	@EJB
-	private ExpenseFacadeLocal eFacade;
+	private FinanceFacadeLocal eFacade;
 
 	/*
 	 * (non-Javadoc)

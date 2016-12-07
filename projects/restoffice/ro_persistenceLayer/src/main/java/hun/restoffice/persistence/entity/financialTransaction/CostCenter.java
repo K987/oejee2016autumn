@@ -1,8 +1,19 @@
 package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the cost_centers database table.
@@ -12,9 +23,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "cost_centers")
-@NamedQueries({ @NamedQuery(name = "CostCenter.findAll", query = "SELECT c FROM CostCenter c") })
+@NamedQueries({ @NamedQuery(name = CostCenter.FIND_ALL, query = "SELECT c FROM CostCenter c") })
 public class CostCenter implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL = "CostCenter.findAll";
 
 	// fields
 	@Id
