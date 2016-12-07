@@ -3,7 +3,19 @@ package hun.restoffice.persistence.entity.financialTransaction;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.*;
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 
 /**
  * The persistent class for the expenses database table.
@@ -15,7 +27,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "expenses")
-@NamedQuery(name = "Expens.findAll", query = "SELECT e FROM Expense e")
+@NamedQueries(value = {
+		@NamedQuery(name = Expense.FIND_ALL, query = "SELECT e FROM Expense e JOIN FETCH  e.party"),
+		@NamedQuery(name = Expense.READ_BY_DOC_ID, query = "SELECT e FROM Expense e WHERE LOWER(docId)=:"+Expense.DOC_ID)
+})
 
 @AttributeOverrides(value = { @AttributeOverride(name = "docId", column = @Column(name = "expense_doc_id")),
 		@AttributeOverride(name = "docType", column = @Column(name = "expense_doc_type")),
@@ -33,15 +48,21 @@ import javax.persistence.*;
 public class Expense extends FinancialTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "Expense.findAll";
+	public static final String READ_BY_DOC_ID = "Expense.readById";
+
+	public static final String DOC_ID = "docId";
+
+
 	// fields
 
 	// bi-directional many-to-one association to CostCenter
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "expense_costcenter", nullable = false, referencedColumnName = "cost_center_id")
 	private CostCenter costCenter;
 
 	// bi-directional many-to-one association to ExpType
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "expense_type", nullable = false, referencedColumnName = "exp_type_id")
 	private ExpType expType;
 
