@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import hun.restoffice.persistence.entity.financialTransaction.CostCenter;
+import hun.restoffice.persistence.entity.financialTransaction.ExpType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
@@ -22,5 +23,10 @@ public interface FinanceMiscServiceLocal {
 	 * @return
 	 */
 	List<CostCenter> readAllCostCenter() throws PersistenceServiceException;
+
+	/**
+	 * @return
+	 */
+	List<ExpType> readAllExpenseType() throws PersistenceServiceException;
 
 }

@@ -1,8 +1,18 @@
 package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the exp_types database table.
@@ -14,9 +24,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "exp_types")
-@NamedQuery(name = "ExpType.findAll", query = "SELECT e FROM ExpType e")
+@NamedQuery(name = ExpType.FIND_ALL, query = "SELECT e FROM ExpType e")
 public class ExpType implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL = "ExpType.findAll";
 
 	// fields
 	@Id
@@ -65,8 +77,8 @@ public class ExpType implements Serializable {
 	}
 
 	// getters setters
-	public void setId(Integer id) {
-		this.id = id;
+	public Integer getId() {
+		return this.id;
 	}
 
 	public String getName() {

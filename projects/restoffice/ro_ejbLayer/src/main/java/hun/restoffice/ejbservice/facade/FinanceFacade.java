@@ -15,6 +15,8 @@ import hun.restoffice.ejbservice.converter.ExpenseConverterLocal;
 import hun.restoffice.ejbservice.converter.FinanceMiscConverterLocal;
 import hun.restoffice.ejbservice.domain.CostCenterStub;
 import hun.restoffice.ejbservice.domain.ExpenseStub;
+import hun.restoffice.ejbservice.domain.ExpenseTypeStub;
+import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.ExpenseServiceLocal;
 import hun.restoffice.persistence.service.FinanceMiscServiceLocal;
@@ -76,7 +78,37 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	public List<CostCenterStub> getAllCostCenters() throws FacadeException {
 		List<CostCenterStub> rtrn = new ArrayList<>();
 		try{
-			rtrn = this.fmConverter.to(this.fmService.readAllCostCenter());
+			rtrn = this.fmConverter.toCostCenterStub(this.fmService.readAllCostCenter());
+			return rtrn;
+		} catch (PersistenceServiceException e){
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#getAllExpenseType()
+	 */
+	@Override
+	public List<ExpenseTypeStub> getAllExpenseType() throws FacadeException {
+		List<ExpenseTypeStub> rtrn = new ArrayList<>();
+		try{
+			rtrn = this.fmConverter.toExpenseTypeStub(this.fmService.readAllExpenseType());
+			return rtrn;
+		} catch (PersistenceServiceException e){
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#getExpensesMatching(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Boolean)
+	 */
+	@Override
+	public List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed)
+			throws FacadeException {
+		List<ExpenseStub> rtrn = new ArrayList<>();
+		PaymentMethod pm = paymentMethodOrdinal == null ? null : PaymentMethod.values()[paymentMethodOrdinal];
+		try{
+			rtrn = this.eConverter.to(this.eService.readFiltered(partnerId, costCenterId, costTypeId, pm, isPayed));
 			return rtrn;
 		} catch (PersistenceServiceException e){
 			LOG.error(e);

@@ -7,9 +7,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import hun.restoffice.persistence.entity.financialTransaction.DocumentType;
-import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
-
 /**
  *  
  *
@@ -18,9 +15,9 @@ import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
 public class ExpenseStub {
 
 	private final String docId;
-	private final DocumentType docType;
-	private final String issuer;
-	private final PaymentMethod payMethod;
+	private final String docType;
+	private final PartnerStub issuer;
+	private final PaymentMethodStub payMethod;
 	private final double grossTotal;
 	private final String description;
 	private final Calendar registered;
@@ -47,12 +44,12 @@ public class ExpenseStub {
 	 * @param costCenter
 	 * @param costType
 	 */
-	public ExpenseStub(String docId, DocumentType docType, String name, PaymentMethod payMethod, BigDecimal grossTotal,
+	public ExpenseStub(String docId, String docType, PartnerStub name, int payMethod, BigDecimal grossTotal,
 			String description, Date registered, Date expiry, Date payed, Date startDate, Date endDate, String costCenter, String costType) {
 		this.docId = docId;
 		this.docType = docType;
 		this.issuer = name;
-		this.payMethod = payMethod;
+		this.payMethod = PaymentMethodStub.values()[payMethod];
 		this.grossTotal = grossTotal.doubleValue();
 		this.description = description;
 		this.registered = toCalendar(registered);
@@ -86,21 +83,21 @@ public class ExpenseStub {
 	/**
 	 * @return the docType
 	 */
-	public DocumentType getDocType() {
+	public String getDocType() {
 		return docType;
 	}
 
 	/**
 	 * @return the issuer
 	 */
-	public String getIssuer() {
+	public PartnerStub getIssuer() {
 		return issuer;
 	}
 
 	/**
 	 * @return the payMethod
 	 */
-	public PaymentMethod getPayMethod() {
+	public PaymentMethodStub getPayMethod() {
 		return payMethod;
 	}
 

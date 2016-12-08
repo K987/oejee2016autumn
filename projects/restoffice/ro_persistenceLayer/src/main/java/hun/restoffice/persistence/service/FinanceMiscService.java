@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import hun.restoffice.persistence.entity.financialTransaction.CostCenter;
+import hun.restoffice.persistence.entity.financialTransaction.ExpType;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
@@ -47,5 +48,19 @@ public class FinanceMiscService implements FinanceMiscServiceLocal {
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unknown error while retrieving cost centers");
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.FinanceMiscServiceLocal#readAllExpenseType()
+	 */
+	@Override
+	public List<ExpType> readAllExpenseType() throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(ExpType.FIND_ALL).getResultList();
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unknown error while retrieving expense types");
+		}
+	}
+	
 
 }

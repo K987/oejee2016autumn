@@ -16,7 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
 /**
  * The persistent class for the expenses database table.
  * 
@@ -27,9 +26,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "expenses")
-@NamedQueries(value = {
+@NamedQueries(value = { 
 		@NamedQuery(name = Expense.FIND_ALL, query = "SELECT e FROM Expense e JOIN FETCH  e.party"),
-		@NamedQuery(name = Expense.READ_BY_DOC_ID, query = "SELECT e FROM Expense e WHERE LOWER(docId)=:"+Expense.DOC_ID)
+		@NamedQuery(name = Expense.READ_BY_DOC_ID, query = "SELECT e FROM Expense e WHERE LOWER(docId)=:" + Expense.DOC_ID),
+		@NamedQuery(name = Expense.READ_FILTERED, query = "SELECT e FROM Expense e JOIN FETCH e.party WHERE "
+				+ "1=1 "
+				+ "AND (COALESCE(null, :"+Expense.PARTNER_ID+") is null OR e.party.id=:"+Expense.PARTNER_ID+") "
+				+ "AND (COALESCE(null, :"+Expense.COSTCENTER_ID+") is null OR e.costCenter.id=:"+Expense.COSTCENTER_ID+") "
+				+ "AND (COALESCE(null, :"+Expense.COSTTYPE_ID+") is null OR e.expType.id=:"+Expense.COSTTYPE_ID+") "
+				+ "AND (COALESCE(null, :"+Expense.PAYMENT_METHOD+") is null OR e.payMethod=:"+Expense.PAYMENT_METHOD+") "
+				+ "AND (COALESCE(null, :"+Expense.IS_PAYED+") is null OR e.payed is :"+Expense.IS_PAYED+")"
+				)
 })
 
 @AttributeOverrides(value = { @AttributeOverride(name = "docId", column = @Column(name = "expense_doc_id")),
@@ -50,9 +57,14 @@ public class Expense extends FinancialTransaction implements Serializable {
 
 	public static final String FIND_ALL = "Expense.findAll";
 	public static final String READ_BY_DOC_ID = "Expense.readById";
+	public static final String READ_FILTERED = "Expense.readFiltered";
 
 	public static final String DOC_ID = "docId";
-
+	public static final String PARTNER_ID = "partnerId";
+	public static final String COSTCENTER_ID = "costCenterId";
+	public static final String COSTTYPE_ID = "costTypeId";
+	public static final String PAYMENT_METHOD = "paymentMethod";
+	public static final String IS_PAYED = "isPayed";
 
 	// fields
 

@@ -10,6 +10,7 @@ import javax.ejb.Local;
 import hun.restoffice.ejbservice.domain.PartnerContactStub;
 import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
+import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
  * Partner business facade
@@ -63,5 +64,10 @@ public interface PartnerFacadeLocal {
 	 * @throws AdaptorException
 	 */
 	PartnerStub updatePartner(PartnerStub partner) throws AdaptorException;
+
+	/**
+	 * @return
+	 */
+	List<PartnerStub> gatAllPartner() throws FacadeException;
 
 }

@@ -9,6 +9,7 @@ import javax.ejb.Local;
 
 import hun.restoffice.ejbservice.domain.CostCenterStub;
 import hun.restoffice.ejbservice.domain.ExpenseStub;
+import hun.restoffice.ejbservice.domain.ExpenseTypeStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 
@@ -35,5 +36,20 @@ public interface FinanceFacadeLocal {
 	 * @return
 	 */
 	List<CostCenterStub> getAllCostCenters() throws FacadeException;
+
+	/**
+	 * @return
+	 */
+	List<ExpenseTypeStub> getAllExpenseType() throws FacadeException;
+
+	/**
+	 * @param partnerId
+	 * @param costCenterId
+	 * @param costTypeId
+	 * @param paymentMethodOrdinal
+	 * @param isPayed
+	 * @return
+	 */
+	List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed) throws FacadeException;
 
 }

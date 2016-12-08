@@ -17,8 +17,10 @@ public class PartnerStub {
 	private String name;
 	private String account;
 	private PartnerContactStub contact;
+	private final Integer id;
 
 	public PartnerStub(final Partner partner, final boolean account) {
+		this.id = partner.getId();
 		this.name = partner.getName();
 		if (account)
 			this.account = (partner.getAccount() == null || partner.getAccount() == "") ? "No account number available" : partner.getAccount();
@@ -35,15 +37,13 @@ public class PartnerStub {
 		this.name = name;
 		this.account = account;
 		this.contact = contact;
+		this.id = -1;
 	}
 
 	public PartnerStub(String name, String account, String pName, String pPhone, String pEmail) {
 		this(name, account, new PartnerContactStub(pName, pPhone, pEmail));
 	}
 
-	public PartnerStub() {
-		super();
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -100,4 +100,12 @@ public class PartnerStub {
 		this.contact = contact;
 	}
 
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	
 }

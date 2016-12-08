@@ -39,3 +39,11 @@ label {
 .frame {
 	padding: 5px;
 }
+
+td.expiredDate {
+	color: red;
+}
+
+td.valid{
+	color: green;
+}

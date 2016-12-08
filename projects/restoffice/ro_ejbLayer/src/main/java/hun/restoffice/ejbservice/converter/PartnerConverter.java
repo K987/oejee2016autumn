@@ -59,7 +59,7 @@ public class PartnerConverter implements PartnerConverterLocal {
 		for (Partner p : partners) {
 			rtrn.add(new PartnerStub(p, true));
 		}
-		return null;
+		return rtrn;
 	}
 
 	/*

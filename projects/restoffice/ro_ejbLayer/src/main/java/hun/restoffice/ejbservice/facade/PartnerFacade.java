@@ -3,6 +3,7 @@
  */
 package hun.restoffice.ejbservice.facade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -18,6 +19,7 @@ import hun.restoffice.ejbservice.exception.ApplicationError;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.PartnerServiceLocal;
+import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
  * Partner business facade
@@ -139,6 +141,21 @@ public class PartnerFacade implements PartnerFacadeLocal {
 			} else {
 				throw new AdaptorException(ApplicationError.UNEXPECTED, "Unexpeted error occured during execution. Param: " + partner);
 			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#gatAllPartner()
+	 */
+	@Override
+	public List<PartnerStub> gatAllPartner() throws FacadeException {
+		List<PartnerStub> rtrn = new ArrayList<>();
+		try{
+			rtrn =  this.pConverter.toPartner(this.pService.readAll(null));
+			return rtrn;
+		} catch(PersistenceServiceException e){
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
 		}
 	}
 

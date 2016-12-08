@@ -6,9 +6,11 @@ package hun.restoffice.ejbservice.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import hun.restoffice.ejbservice.domain.ExpenseStub;
+import hun.restoffice.ejbservice.domain.PartnerStub;
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
 
 /**
@@ -19,6 +21,8 @@ import hun.restoffice.persistence.entity.financialTransaction.Expense;
 @Stateless
 public class ExpenseConverter implements ExpenseConverterLocal {
 
+	@EJB
+	private PartnerConverterLocal pConverter;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -38,10 +42,12 @@ public class ExpenseConverter implements ExpenseConverterLocal {
 	 * @return
 	 */
 	private ExpenseStub to(Expense expense) {
+		
+		PartnerStub partner = this.pConverter.toPartner(expense.getParty());
 		return new ExpenseStub(expense.getDocId(),
-				expense.getDocType(), 
-				expense.getParty().getName(), 
-				expense.getPayMethod(),
+				expense.getDocType().toString(), 
+				partner, 
+				expense.getPayMethod().ordinal(),
 				expense.getGrossTotal(),
 				expense.getDescription(), 
 				expense.getRegistered(), 
