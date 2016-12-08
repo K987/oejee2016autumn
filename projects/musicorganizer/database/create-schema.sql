@@ -29,7 +29,7 @@ CREATE TABLE song (
 	song_id SERIAL NOT NULL,
 	song_title CHARACTER VARYING(100) NOT NULL,
 	song_category CHARACTER VARYING(40) NULL,
-	song_artist_id INTEGER NOT NULL,
+	song_artist_id INTEGER NULL,
 	CONSTRAINT PK_SONG_ID PRIMARY KEY (song_id),
 	CONSTRAINT FK_song_artist_id FOREIGN KEY (song_artist_id)
 	  REFERENCES artist (artist_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT

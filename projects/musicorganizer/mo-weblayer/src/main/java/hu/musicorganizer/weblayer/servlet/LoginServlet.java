@@ -5,6 +5,7 @@ import hu.musicorganizer.ejbservice.exception.FacadeException;
 import hu.musicorganizer.ejbservice.facade.CustomerFacade;
 import hu.musicorganizer.weblayer.servlet.common.LoginParameter;
 import hu.musicorganizer.weblayer.servlet.common.Page;
+import hu.musicorganizer.weblayer.session.MusicOrganizerSession;
 import hu.musicorganizer.weblayer.session.SessionAttribute;
 
 import java.io.IOException;
@@ -58,8 +59,8 @@ public class LoginServlet extends HttpServlet {
 		
 		LOGGER.info("Authentication successful for " + emailAddress);
 		
-		HttpSession session = req.getSession();
-		session.setAttribute(SessionAttribute.AUTHENTICATED_USER, authenticatedCustomer);
+
+		MusicOrganizerSession.setAuthenticatedUser(req, authenticatedCustomer);
 		resp.sendRedirect(Page.DASHBOARD.getUrl());
 	}
 	

@@ -5,6 +5,8 @@ import hu.musicorganizer.persistence.exception.PersistenceServiceException;
 import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.query.CustomerQuery;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -64,4 +66,43 @@ public class CustomerServiceImpl implements CustomerService {
 		return result;
 	}
 
+	@Override
+	public Customer update(String oldEmailAddress, String newEmailAddress, String nickname, String password)
+			throws PersistenceServiceException {
+
+		try {
+			final Customer customer = this.read(oldEmailAddress);
+			if (newEmailAddress != null && !newEmailAddress.equals(oldEmailAddress)) {
+			
+				if (this.exists(newEmailAddress)) {
+					throw new PersistenceServiceException("E-mail address " + newEmailAddress + " is already taken by someone else");
+				}
+				 
+				customer.setEmailAddress(newEmailAddress);
+			}		
+			
+			if (password != null && !password.isEmpty()) {
+				customer.setPassword(password);
+			}
+
+			customer.setNickname(nickname);
+			
+			return this.entityManager.merge(customer);
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when mergning Customer! " + e.getLocalizedMessage(), e);
+		}
+	}
+
+	@Override
+	public List<Customer> readAll() throws PersistenceServiceException {
+		List<Customer> result = null;
+		try {
+			result = this.entityManager.createNamedQuery(CustomerQuery.GET_ALL, Customer.class).getResultList();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when fetching Customers! " + e.getLocalizedMessage(), e);
+		}
+		return result;
+	}
+
 }
+ 

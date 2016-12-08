@@ -11,6 +11,10 @@ public interface SongService {
 
 	Song create(String title, String category, Artist artist) throws PersistenceServiceException;
 	
+	Song read(String title) throws PersistenceServiceException;
+	
 	boolean exists(String title) throws PersistenceServiceException;
+	
+	
 	
 }

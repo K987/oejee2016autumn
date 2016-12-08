@@ -1,8 +1,6 @@
 package hu.musicorganizer.persistence.entity;
 
-import hu.musicorganizer.persistence.parameter.SongParameter;
 import hu.musicorganizer.persistence.parameter.StreamingUrlParameter;
-import hu.musicorganizer.persistence.query.SongQuery;
 import hu.musicorganizer.persistence.query.StreamingUrlQuery;
 
 import javax.persistence.CascadeType;
@@ -21,7 +19,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "streamingurl")
-@NamedQueries(value = { //
+@NamedQueries(value = { 
+		@NamedQuery(name = StreamingUrlQuery.GET_BY_URL, query = "SELECT s FROM StreamingUrl s WHERE s.url=:" + StreamingUrlParameter.URL),
 		@NamedQuery(name = StreamingUrlQuery.COUNT_BY_URL, query = "SELECT COUNT(s) FROM StreamingUrl s WHERE s.url=:" + StreamingUrlParameter.URL)
 })
 public class StreamingUrl {

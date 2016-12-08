@@ -1,5 +1,6 @@
 package hu.musicorganizer.weblayer.servlet;
 
+import hu.musicorganizer.ejbservice.domain.StreamingUrlStub;
 import hu.musicorganizer.ejbservice.domain.TracklistStub;
 import hu.musicorganizer.ejbservice.exception.FacadeException;
 import hu.musicorganizer.ejbservice.facade.TracklistFacade;
@@ -8,6 +9,8 @@ import hu.musicorganizer.weblayer.servlet.common.TracklistAttribute;
 import hu.musicorganizer.weblayer.session.MusicOrganizerSession;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -37,6 +40,7 @@ public class DashboardServlet extends HttpServlet  {
 
 		try {
 			final List<TracklistStub> tracklists = tracklistFacade.getTracklists(MusicOrganizerSession.getAuthenticatedUser(req).getEmailAddress());
+			orderTracklists(tracklists);
 			req.setAttribute(TracklistAttribute.ATTR_TRACKLISTS, tracklists);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
@@ -47,6 +51,32 @@ public class DashboardServlet extends HttpServlet  {
 		
 		final RequestDispatcher view = req.getRequestDispatcher(Page.DASHBOARD.getJspName());
 		view.forward(req, resp);
+	}
+	
+	private void orderTracklists(List<TracklistStub> tracklists) {
+		//FIXME add "addedDate" field to trackliststreamingurl and order by that...
+		
+		Collections.sort(tracklists,new Comparator<TracklistStub>(){
+			@Override
+			public int compare(TracklistStub tl1, TracklistStub tl2) {
+				return tl1.getName().compareTo(tl2.getName());
+			}});
+		
+		for (TracklistStub tracklist : tracklists) {
+			
+			Collections.sort(tracklist.getStreamingUrls(),new Comparator<StreamingUrlStub>(){
+				@Override
+				public int compare(StreamingUrlStub su1, StreamingUrlStub su2) {
+					int artistCompare = su1.getSong().getArtist().getName().compareTo(su2.getSong().getArtist().getName());
+					if (artistCompare != 0) {
+						return artistCompare;						
+					} else {
+						return su1.getSong().getTitle().compareTo(su2.getSong().getTitle());
+					}
+					
+				}});
+			
+		}
 	}
 	
 }

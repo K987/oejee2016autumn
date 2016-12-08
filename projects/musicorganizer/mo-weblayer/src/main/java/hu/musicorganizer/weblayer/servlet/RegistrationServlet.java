@@ -1,9 +1,11 @@
 package hu.musicorganizer.weblayer.servlet;
 
+import hu.musicorganizer.ejbservice.domain.CustomerStub;
 import hu.musicorganizer.ejbservice.exception.FacadeException;
 import hu.musicorganizer.ejbservice.facade.CustomerFacade;
 import hu.musicorganizer.weblayer.servlet.common.Page;
 import hu.musicorganizer.weblayer.servlet.common.RegistrationParameter;
+import hu.musicorganizer.weblayer.session.MusicOrganizerSession;
 
 import java.io.IOException;
 
@@ -45,7 +47,8 @@ public class RegistrationServlet extends HttpServlet {
 
 
 		try {
-			customerFacade.register(nickname, password, emailAddress);
+			CustomerStub customer = customerFacade.register(nickname, password, emailAddress);
+			MusicOrganizerSession.setAuthenticatedUser(req, customer);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
 			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));

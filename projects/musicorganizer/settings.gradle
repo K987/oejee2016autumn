@@ -2,6 +2,7 @@
 include 'mo-ejbservice'
 include 'mo-weblayer'
 include 'mo-persistence'
+include 'mo-webservice'
 
 include 'shared'
 include 'api'

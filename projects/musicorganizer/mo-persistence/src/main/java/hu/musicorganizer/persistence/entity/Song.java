@@ -1,6 +1,5 @@
 package hu.musicorganizer.persistence.entity;
 
-import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.parameter.SongParameter;
 import hu.musicorganizer.persistence.query.SongQuery;
 
@@ -21,6 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "song")
 @NamedQueries(value = { //
+		@NamedQuery(name = SongQuery.GET_BY_TITLE, query = "SELECT s FROM Song s WHERE s.title=:" + SongParameter.TITLE),
 		@NamedQuery(name = SongQuery.COUNT_BY_TITLE, query = "SELECT COUNT(s) FROM Song s WHERE s.title=:" + SongParameter.TITLE)
 })
 public class Song {
@@ -38,7 +38,7 @@ public class Song {
 	private String category;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "song_artist_id", referencedColumnName = "artist_id", nullable = false)
+	@JoinColumn(name = "song_artist_id", referencedColumnName = "artist_id", nullable = true)
 	private Artist artist;
 
 	public Song() {

@@ -70,4 +70,35 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		
 	}
 
+	@Override
+	public CustomerStub update(String oldEmailAddress, String newEmailAddress,
+			String nickname, String password) throws FacadeException {
+		
+		try {
+
+			return converter.to(this.service.update(oldEmailAddress, newEmailAddress, nickname, password));
+			
+		} catch (final PersistenceServiceException e) {
+			LOGGER.error(e, e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+		
+	}
+
+	@Override
+	public CustomerStub getCustomer(String emailAddress) throws FacadeException {
+		try {
+
+			if (!service.exists(emailAddress)) {
+				throw new FacadeException("No customer exists by email address " + emailAddress);
+			} else {				
+				return this.converter.to(this.service.read(emailAddress));
+			}
+			
+		} catch (final PersistenceServiceException e) {
+			LOGGER.error(e, e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+	}
+
 }

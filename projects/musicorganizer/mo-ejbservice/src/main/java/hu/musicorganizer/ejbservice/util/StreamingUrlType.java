@@ -11,9 +11,10 @@ public class StreamingUrlType {
 	public static final String MIXCLOUD = "MIXCLOUD";
 	public static final String GOOGLE_PLAY_MUSIC = "GOOGLE_PLAY_MUSIC";
 	public static final String DEEZER = "DEEZER";
-	public static final String UNKOWN = "UNKOWN";
+	public static final String UNKNOWN = "UNKNOWN";
 	
 	public static final HashMap<String, String> TYPE_URLPATTERN_PAIRS = new HashMap<String, String>();
+	static
 	{
 		TYPE_URLPATTERN_PAIRS.put(YOUTUBE, "youtube.com");
 		TYPE_URLPATTERN_PAIRS.put(SOUNDCLOUD, "soundcloud.com");
@@ -24,7 +25,7 @@ public class StreamingUrlType {
 	}
 	
 	public static String of(String streamingUrl) {
-		String type = UNKOWN;
+		String type = UNKNOWN;
 		
 		for (Entry<String, String> urlPattern : TYPE_URLPATTERN_PAIRS.entrySet()) {
 			if (streamingUrl.toLowerCase().contains(urlPattern.getValue().toLowerCase())) {

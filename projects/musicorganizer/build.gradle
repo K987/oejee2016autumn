@@ -11,6 +11,13 @@ ext {
 	hibernateVersion = '4.3.10.Final'
 	jstlVersion = '1.2'
 	
+	jaxrsVersion = '2.0.1'
+	resteasyVersion = '2.3.7.Final'
+	jbossjee6Version = '3.0.3.Final'  
+	
+	webserviceArchiveName = 'mo-webservice.war'
+	webserviceContextPath = 'musicorganizer'
+	
 	deployLocation = 'd:/levair/JEE/jboss-eap-6.4/standalone/deployments/' 
 }
 
@@ -25,6 +32,10 @@ subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'java'
 
+	repositories { 
+		mavenCentral() 
+	}
+
 	dependencies {
 		compile group: 'log4j', name: 'log4j', version: log4jVersion
 		compile group: 'javax', name: 'javaee-api', version: jeeVersion
@@ -32,10 +43,17 @@ subprojects {
 	}
 }
 
+ear {
+    deploymentDescriptor { 
+    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    }
+}
+
 dependencies {
 	deploy project('mo-ejbservice')
 	deploy project('mo-persistence')
 	deploy project(path: 'mo-weblayer', configuration: 'archives')
+	deploy project(path: 'mo-webservice', configuration: 'archives')
 }
 
 task deployClean ( type: Delete ) {

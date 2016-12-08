@@ -4,11 +4,13 @@ public class SongStub {
 	
 	private String title;
 	private String category;
+	private ArtistStub artist;
 	
 	
-	public SongStub(String title, String category) {
+	public SongStub(String title, String category, ArtistStub artist) {
 		this.title = title;
 		this.category = category;
+		this.artist = artist;
 	}
 	
 	
@@ -24,6 +26,11 @@ public class SongStub {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
-	
+	public ArtistStub getArtist() {
+		return artist;
+	}
+	public void setArtist(ArtistStub artist) {
+		this.artist = artist;
+	}
+		
 }

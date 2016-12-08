@@ -115,9 +115,9 @@
             <logger category="jacorb.config">
                 <level name="ERROR"/>
             </logger>
-			<logger category="hu.musicorganizer">
-				<level name="DEBUG"/>
-			</logger>
+            <logger category="hu.musicorganizer">
+                <level name="DEBUG"/>
+            </logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>
@@ -142,7 +142,18 @@
                         <password>sa</password>
                     </security>
                 </datasource>
+                <datasource jndi-name="java:jboss/datasources/musicorganizerds" pool-name="musicorganizerDSPool" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/musicorganizerdb</connection-url>
+                    <driver>postgresql</driver>
+                    <security>
+                        <user-name>musicorganizer_user</user-name>
+                        <password>123</password>
+                    </security>
+                </datasource>
                 <drivers>
+                    <driver name="postgresql" module="org.postgresql">
+                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+                    </driver>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
@@ -153,6 +164,9 @@
             <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ee:1.2">
+            <global-modules>
+                <module name="org.postgresql" slot="main"/>
+            </global-modules>
             <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
             <jboss-descriptor-property-replacement>true</jboss-descriptor-property-replacement>
             <annotation-property-replacement>false</annotation-property-replacement>
@@ -165,6 +179,10 @@
                 <stateful default-access-timeout="5000" cache-ref="simple"/>
                 <singleton default-access-timeout="5000"/>
             </session-bean>
+			<mdb>
+                <resource-adapter-ref resource-adapter-name="${ejb.resource-adapter-name:hornetq-ra}"/>
+                <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
+            </mdb>
             <pools>
                 <bean-instance-pools>
                     <strict-max-pool name="slsb-strict-max-pool" max-pool-size="20" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>

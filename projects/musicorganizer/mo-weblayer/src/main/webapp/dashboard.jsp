@@ -7,19 +7,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>MO - Dashboard</title>
 </head>
 <body>
 	<h1>Dashboard</h1>  <br/>
 	<% 
 	CustomerStub authenticatedUser = (CustomerStub)request.getSession().getAttribute(SessionAttribute.AUTHENTICATED_USER); 
 	%>
-	<p>Welcome <%= authenticatedUser.getNickname() %>!</p>
+	<h2>Welcome <a href="Settings"><%= authenticatedUser.getNickname() %>!</a></h2>
+    <form method="post" action="CreateTracklist">
+			<td><input type="text" name="name" value="" /></td>
+			<td><input type="submit" value="Create Tracklist" />&nbsp;</td>
+	</form>
 	
-	
-	 <c:forEach items="${requestScope.tracklists}" var="tracklist">
+	<c:forEach items="${requestScope.tracklists}" var="tracklist">
+		 <hr/>
          <strong>
-             <c:out value="${tracklist.name}" />
+             <c:out value="${tracklist.name}" /> ( <a href="RemoveTracklist?name=${tracklist.name}"/>remove</a> )
          </strong>
          <br/>
          <table>
@@ -29,30 +33,40 @@
 	                 <th>title</th>
 	                 <th>url</th>
 	                 <th>category</th>
-	                 <th></th>
+	                 <th>action</th>
 	             </tr>
 	         </thead>
 	         <tbody>
 	             <c:forEach items="${tracklist.streamingUrls}" var="streamingUrl">
 	                 <tr>
+                 		 <td><c:out value="${streamingUrl.song.artist.name}" /></td>
 	                     <td><c:out value="${streamingUrl.song.title}" /></td>
-	                     <td><a href="<c:out value="${streamingUrl.url}" />"><c:out value="${streamingUrl.url}" /></a></td>
+	                     <td>
+							<img src="resources/images/<c:out value="${streamingUrl.type}" />.png" alt="<c:out value="${streamingUrl.type}" />" height="20" width="20">
+	                     	<a href="<c:out value="${streamingUrl.url}" />" target="_blank" ><c:out value="${streamingUrl.url}" /></a>
+                     	 </td>
+	                     <td><c:out value="${streamingUrl.song.category}" /></td>
+	                     <td><a href="RemoveTrack?tracklistName=${tracklist.name}&streamingUrl=${streamingUrl.url}"/>remove</a></td>
 	                 </tr>
 	             </c:forEach>
 	             
 	             <form method="post" action="AddTrack">
 		            <tr>
+		            	<input type="hidden" name="tracklistName" value="${tracklist.name}"/>
    						<td><input type="text" name="artistName" value=""/></td>
    						<td><input type="text" name="songTitle" value=""/></td>
 						<td><input type="text" name="streamingUrl" value=""/></td>
 						<td><input type="text" name="songCategory" value="" /></td>
-						<td><input type="submit" value="Add" />&nbsp;</tr>
+						<td><input type="submit" value="Add" />&nbsp;</td>
 					<tr>
 				</form>
-	             
 	         </tbody>
      	</table>
-         
+        <hr/>
      </c:forEach>
+     
+     <br/><br/>
+     <a href="Logout">Logout</a>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-package hu.musicorganizer.weblayer.servlet.controls;
+package hu.musicorganizer.weblayer.servlet.services;
 
 import hu.musicorganizer.ejbservice.exception.FacadeException;
 import hu.musicorganizer.ejbservice.facade.SongFacade;

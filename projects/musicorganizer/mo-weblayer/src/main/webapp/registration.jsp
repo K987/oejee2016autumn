@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Music Organizer - Registration</title>
+<title>MO - Create account</title>
 </head>
 <body>
 	<h1>Welcome to Music Organizer!</h1>

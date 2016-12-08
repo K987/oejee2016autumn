@@ -22,7 +22,8 @@ import javax.persistence.Table;
 @Table(name = "customer")
 @NamedQueries(value = { //
 		@NamedQuery(name = CustomerQuery.COUNT_BY_EMAILADDRESS, query = "SELECT COUNT(c) FROM Customer c WHERE c.emailAddress=:" + CustomerParameter.EMAILADDRESS),
-		@NamedQuery(name = CustomerQuery.GET_BY_EMAILADDRESS, query = "SELECT c FROM Customer c WHERE c.emailAddress=:" + CustomerParameter.EMAILADDRESS)
+		@NamedQuery(name = CustomerQuery.GET_BY_EMAILADDRESS, query = "SELECT c FROM Customer c WHERE c.emailAddress=:" + CustomerParameter.EMAILADDRESS),
+		@NamedQuery(name = CustomerQuery.GET_ALL, query = "SELECT c FROM Customer c ORDER BY c.nickname")
 })
 public class Customer {
 
@@ -86,4 +87,14 @@ public class Customer {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+
+	public Set<Tracklist> getTrackLists() {
+		return trackLists;
+	}
+
+	public void setTrackLists(Set<Tracklist> trackLists) {
+		this.trackLists = trackLists;
+	}
+	
+	
 }

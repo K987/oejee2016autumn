@@ -1,9 +1,12 @@
 package hu.musicorganizer.persistence.service;
 
 import hu.musicorganizer.persistence.entity.Artist;
+import hu.musicorganizer.persistence.entity.Customer;
 import hu.musicorganizer.persistence.entity.Song;
 import hu.musicorganizer.persistence.exception.PersistenceServiceException;
+import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.parameter.SongParameter;
+import hu.musicorganizer.persistence.query.CustomerQuery;
 import hu.musicorganizer.persistence.query.SongQuery;
 
 import javax.ejb.Stateless;
@@ -40,6 +43,19 @@ public class SongServiceImpl implements SongService {
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error during counting Songs by title (" + title + ")! " + e.getLocalizedMessage(), e);
 		}
+	}
+
+	@Override
+	public Song read(String title) throws PersistenceServiceException {
+		Song result = null;
+		try {
+			result = this.entityManager.createNamedQuery(SongQuery.GET_BY_TITLE, Song.class)
+					.setParameter(SongParameter.TITLE, title)
+					.getSingleResult();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when fetching Song by title (" + title + ")! " + e.getLocalizedMessage(), e);
+		}
+		return result;
 	}
 
 }

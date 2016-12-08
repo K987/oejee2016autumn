@@ -10,4 +10,8 @@ public class MusicOrganizerSession {
 		return (CustomerStub)request.getSession().getAttribute(SessionAttribute.AUTHENTICATED_USER);
 	}
 	
+	public static void setAuthenticatedUser(HttpServletRequest request, CustomerStub customer) {
+		request.getSession().setAttribute(SessionAttribute.AUTHENTICATED_USER, customer);
+	}
+	
 }

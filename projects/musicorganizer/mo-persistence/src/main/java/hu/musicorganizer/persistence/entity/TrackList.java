@@ -3,6 +3,7 @@ package hu.musicorganizer.persistence.entity;
 import hu.musicorganizer.persistence.parameter.TracklistParameter;
 import hu.musicorganizer.persistence.query.TracklistQuery;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,7 +25,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tracklist")
 @NamedQueries(value = { //
-		@NamedQuery(name = TracklistQuery.GET_BY_CUSTOMER_EMAILADDRESS, query = "SELECT tl FROM Tracklist tl WHERE tl.customer.emailAddress=:" + TracklistParameter.CUSTOMER_EMAILADDRESS)
+		@NamedQuery(name = TracklistQuery.COUNT_BY_NAME_AND_CUSTOMER_EMAILADDRESS, query = "SELECT COUNT(tl) FROM Tracklist tl "
+				+ "WHERE tl.customer.emailAddress=:" + TracklistParameter.CUSTOMER_EMAILADDRESS + " "
+				+ "and tl.name=:" + TracklistParameter.NAME),
+		@NamedQuery(name = TracklistQuery.GET_BY_CUSTOMER_EMAILADDRESS, query = "SELECT tl FROM Tracklist tl WHERE tl.customer.emailAddress=:" + TracklistParameter.CUSTOMER_EMAILADDRESS),
+		@NamedQuery(name = TracklistQuery.GET_BY_NAME_AND_CUSTOMER_EMAILADDRESS, query = "SELECT tl FROM Tracklist tl "
+				+ "WHERE tl.customer.emailAddress=:" + TracklistParameter.CUSTOMER_EMAILADDRESS + " "
+				+ "and tl.name=:" + TracklistParameter.NAME),
+		@NamedQuery(name = TracklistQuery.REMOVE_BY_NAME_AND_CUSTOMER_EMAILADDRESS, query = "DELETE FROM Tracklist tl "
+				//+ "WHERE tl.customer.emailAddress=:" + TracklistParameter.CUSTOMER_EMAILADDRESS + " "
+				//seems like a hibernate bug when including this??? 
+				//hibernate is seeking "customer_emailaddress" in table trackliststreamingurl...
+				+ "WHERE tl.name=:" + TracklistParameter.NAME)
 })
 public class Tracklist {
 
@@ -50,10 +62,12 @@ public class Tracklist {
 
 	public Tracklist() {
 		super();
+		this.streamingUrls = new HashSet<StreamingUrl>();
 	}
 	
 	public Tracklist(Customer customer, String name) {
 		super();
+		this.streamingUrls = new HashSet<StreamingUrl>();
 		this.customer = customer;
 		this.name = name;
 	}
