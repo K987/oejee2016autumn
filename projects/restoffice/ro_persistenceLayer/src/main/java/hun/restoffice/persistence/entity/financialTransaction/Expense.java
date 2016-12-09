@@ -26,18 +26,26 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "expenses")
-@NamedQueries(value = { 
-		@NamedQuery(name = Expense.FIND_ALL, query = "SELECT e FROM Expense e JOIN FETCH  e.party"),
+@NamedQueries(value = { @NamedQuery(name = Expense.FIND_ALL, query = "SELECT e FROM Expense e JOIN FETCH  e.party"),
 		@NamedQuery(name = Expense.READ_BY_DOC_ID, query = "SELECT e FROM Expense e WHERE LOWER(docId)=:" + Expense.DOC_ID),
-		@NamedQuery(name = Expense.READ_FILTERED, query = "SELECT e FROM Expense e JOIN FETCH e.party WHERE "
-				+ "1=1 "
-				+ "AND (COALESCE(null, :"+Expense.PARTNER_ID+") is null OR e.party.id=:"+Expense.PARTNER_ID+") "
-				+ "AND (COALESCE(null, :"+Expense.COSTCENTER_ID+") is null OR e.costCenter.id=:"+Expense.COSTCENTER_ID+") "
-				+ "AND (COALESCE(null, :"+Expense.COSTTYPE_ID+") is null OR e.expType.id=:"+Expense.COSTTYPE_ID+") "
-				+ "AND (COALESCE(null, :"+Expense.PAYMENT_METHOD+") is null OR e.payMethod=:"+Expense.PAYMENT_METHOD+") "
-				+ "AND (COALESCE(null, :"+Expense.IS_PAYED+") is null OR e.payed is :"+Expense.IS_PAYED+")"
-				)
-})
+		@NamedQuery(name = Expense.READ_FILTERED, query = "SELECT e FROM Expense e JOIN FETCH e.party WHERE " 
+				+ "1=1 " 
+				+ "AND (NULLIF( :"+ Expense.PARTNER_ID + ", null) is null "
+						+ "OR e.party.id=:" + Expense.PARTNER_ID 
+				+ ") " 
+				+ "AND (NULLIF( :" + Expense.COSTCENTER_ID+ ", null) is null"
+						+ " OR e.costCenter.id=:" + Expense.COSTCENTER_ID
+				+ ") "
+				+ "AND (NULLIF( :" + Expense.COSTTYPE_ID+ ", null) is null "
+						+ "OR e.expType.id=:" + Expense.COSTTYPE_ID 
+				+ ") "
+				+ "AND (NULLIF( :" + Expense.PAYMENT_METHOD + ", null) is null"
+						+ " OR e.payMethod=:"+ Expense.PAYMENT_METHOD 
+						+ ") "
+				//+ "AND (COALESCE(null, ':" + Expense.IS_PAYED + "') is null)"
+				//+ " OR e.payed is :" + Expense.IS_PAYED + ")"
+				) 
+		})
 
 @AttributeOverrides(value = { @AttributeOverride(name = "docId", column = @Column(name = "expense_doc_id")),
 		@AttributeOverride(name = "docType", column = @Column(name = "expense_doc_type")),
@@ -111,5 +119,4 @@ public class Expense extends FinancialTransaction implements Serializable {
 			grossTotal.negate();
 		super.setGrossTotal(grossTotal);
 	}
-
 }

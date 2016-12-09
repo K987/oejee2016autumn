@@ -109,7 +109,8 @@ public class ExpenseService implements ExpenseServiceLocal {
 		try {
 			return this.entityManager.createNamedQuery(Expense.READ_FILTERED, Expense.class).setParameter(Expense.PARTNER_ID, partnerId)
 					.setParameter(Expense.COSTCENTER_ID, costCenterId).setParameter(Expense.COSTTYPE_ID, costTypeId).setParameter(Expense.PAYMENT_METHOD, pm)
-					.setParameter(Expense.IS_PAYED, payed).getResultList();
+					//.setParameter(Expense.IS_PAYED, payed)
+					.getResultList();
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "error occured while reading expenses");
