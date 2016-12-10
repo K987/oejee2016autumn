@@ -30,16 +30,22 @@ import hun.restoffice.persistence.entity.financialTransaction.Income;
 		@NamedQuery(name = Partner.FIND_ALL, query = "SELECT p FROM Partner p WHERE (FALSE=:" + Partner.APPLY_CRITERIA + " or p.technical=:"
 				+ Partner.IS_TECHNICAL + ")"),
 		@NamedQuery(name = Partner.FIND_BY_NAME, query = "SELECT p FROM Partner p WHERE LOWER(p.name)=:" + Partner.NAME),
-		@NamedQuery(name = Partner.COUNT, query = "SELECT COUNT(P) FROM Partner p WHERE LOWER(p.name)=:" + Partner.NAME) })
+		@NamedQuery(name = Partner.COUNT, query = "SELECT COUNT(P) FROM Partner p WHERE LOWER(p.name)=:" + Partner.NAME),
+		@NamedQuery(name = Partner.READ_BY_ID, query = "SELECT p FROM Partner p WHERE p.id=:"+Partner.ID)
+})
 public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Partner.findAll";
 	public static final String FIND_BY_NAME = "Partner.findByName";
+	public static final String READ_BY_ID = "Partner.finyById";
 	public static final String COUNT = "Partner.count";
 	public static final String NAME = "name";
 	public static final String IS_TECHNICAL = "technical";
 	public static final String APPLY_CRITERIA = "applyCriteria";
+	public static final String ID = "id";
+
+
 
 	@Id
 	@SequenceGenerator(name = "PARTNERS_PARTNERID_GENERATOR", sequenceName = "PARTNERS_PARTNER_ID_SEQ")
@@ -68,7 +74,9 @@ public class Partner implements Serializable {
 	public Partner() {
 	}
 
-	public Partner(String name, String account, boolean technical, String cName, String cEmail, String cPhone) {
+	public Partner(Integer id, String name, String account, boolean technical, String cName, String cEmail, String cPhone) {
+		if (id != null)
+			this.id = id;
 		this.name = name;
 		this.account = account;
 		this.technical = technical;

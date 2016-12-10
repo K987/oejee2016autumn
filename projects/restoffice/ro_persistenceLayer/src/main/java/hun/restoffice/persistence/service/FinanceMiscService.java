@@ -10,7 +10,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
@@ -59,6 +61,44 @@ public class FinanceMiscService implements FinanceMiscServiceLocal {
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unknown error while retrieving expense types");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.FinanceMiscServiceLocal#readCostCenterByName(java.lang.String)
+	 */
+	@Override
+	public CostCenter readCostCenterByName(String costCenterName) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(CostCenter.FIND_BY_NAME, CostCenter.class).setParameter(CostCenter.NAME, costCenterName.trim().toLowerCase()).getSingleResult();
+		} catch (AmbiguousResolutionException e) {
+			LOG.error(e.getMessage());
+			throw new PersistenceServiceException(PersistenceExceptionType.AMBIGOUS_RESULT, "multiple matching for costcenter name: " + costCenterName);
+		} catch (NoResultException e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "no matching for costcenter name: " + costCenterName);
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unkonow error during querying for costcenter name: " + costCenterName);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.FinanceMiscServiceLocal#readExpTypeByName(java.lang.String)
+	 */
+	@Override
+	public ExpType readExpTypeByName(String costTypeName) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(ExpType.FIND_BY_NAME, ExpType.class).setParameter(ExpType.NAME, costTypeName.trim().toLowerCase()).getSingleResult();
+		} catch (AmbiguousResolutionException e) {
+			LOG.error(e.getMessage());
+			throw new PersistenceServiceException(PersistenceExceptionType.AMBIGOUS_RESULT, "multiple matching for costtype name: " + costTypeName);
+		} catch (NoResultException e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "no matching for costtype name: " + costTypeName);
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unkonow error during querying for costtype name: " + costTypeName);
 		}
 	}
 	

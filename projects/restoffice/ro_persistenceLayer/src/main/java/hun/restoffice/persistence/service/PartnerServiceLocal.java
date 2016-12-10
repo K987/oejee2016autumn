@@ -64,4 +64,10 @@ public interface PartnerServiceLocal {
 	 */
 	public Partner update(Partner partner) throws PersistenceServiceException;
 
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Partner readById(Integer id) throws PersistenceServiceException;
+
 }

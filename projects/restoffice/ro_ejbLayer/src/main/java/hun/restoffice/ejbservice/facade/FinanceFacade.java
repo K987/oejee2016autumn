@@ -106,7 +106,7 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	public List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed)
 			throws FacadeException {
 		List<ExpenseStub> rtrn = new ArrayList<>();
-		PaymentMethod pm = paymentMethodOrdinal == null ? null : PaymentMethod.values()[paymentMethodOrdinal];
+		int pm = paymentMethodOrdinal == -1 ? -1 : PaymentMethod.values()[paymentMethodOrdinal].ordinal();
 		try{
 			rtrn = this.eConverter.to(this.eService.readFiltered(partnerId, costCenterId, costTypeId, pm, isPayed));
 			return rtrn;
@@ -114,6 +114,31 @@ public class FinanceFacade implements FinanceFacadeLocal {
 			LOG.error(e);
 			throw new FacadeException(e.getLocalizedMessage());
 		}
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#getExpenseById(java.lang.String)
+	 */
+	@Override
+	public ExpenseStub getExpenseById(String docId) throws FacadeException {
+		try{
+			return this.eConverter.to(this.eService.readById(docId));
+		} catch (PersistenceServiceException e){
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#addExpense(hun.restoffice.ejbservice.domain.ExpenseStub)
+	 */
+	@Override
+	public void addExpense(ExpenseStub stub) throws FacadeException {
+		try{
+			this.eService.add(this.eConverter.from(stub));
+		} catch (PersistenceServiceException e){
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+		
 	}
 
 }

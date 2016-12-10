@@ -8,19 +8,19 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *  
+ * 
  *
  * @author kalmankostenszky
  */
 public class ExpenseStub {
 
 	private final String docId;
-	private final String docType;
+	private final DocTypeStub docType;
 	private final PartnerStub issuer;
 	private final PaymentMethodStub payMethod;
-	private final double grossTotal;
+	private final BigDecimal grossTotal;
 	private final String description;
-	private final Calendar registered;
+	private final Calendar issue;
 	private final Calendar expiry;
 	private final Calendar payed;
 	private final Calendar accPeriodStart;
@@ -44,15 +44,15 @@ public class ExpenseStub {
 	 * @param costCenter
 	 * @param costType
 	 */
-	public ExpenseStub(String docId, String docType, PartnerStub name, int payMethod, BigDecimal grossTotal,
-			String description, Date registered, Date expiry, Date payed, Date startDate, Date endDate, String costCenter, String costType) {
+	public ExpenseStub(String docId, int docType, PartnerStub name, int payMethod, BigDecimal grossTotal, String description, Date registered, Date expiry,
+			Date payed, Date startDate, Date endDate, String costCenter, String costType) {
 		this.docId = docId;
-		this.docType = docType;
+		this.docType = DocTypeStub.values()[docType];
 		this.issuer = name;
 		this.payMethod = PaymentMethodStub.values()[payMethod];
-		this.grossTotal = grossTotal.doubleValue();
+		this.grossTotal = grossTotal;
 		this.description = description;
-		this.registered = toCalendar(registered);
+		this.issue = toCalendar(registered);
 		this.expiry = toCalendar(expiry);
 		this.payed = toCalendar(payed);
 		this.accPeriodStart = toCalendar(startDate);
@@ -83,7 +83,7 @@ public class ExpenseStub {
 	/**
 	 * @return the docType
 	 */
-	public String getDocType() {
+	public DocTypeStub getDocType() {
 		return docType;
 	}
 
@@ -104,7 +104,7 @@ public class ExpenseStub {
 	/**
 	 * @return the grossTotal
 	 */
-	public double getGrossTotal() {
+	public BigDecimal getGrossTotal() {
 		return grossTotal;
 	}
 
@@ -119,7 +119,7 @@ public class ExpenseStub {
 	 * @return the registered
 	 */
 	public Calendar getRegistered() {
-		return registered;
+		return issue;
 	}
 
 	/**
@@ -164,13 +164,15 @@ public class ExpenseStub {
 		return costType;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return String.format(
 				"ExpsnseStub [docId=%s, docType=%s, issuer=%s, payMethod=%s, grossTotal=%s, description=%s, registered=%s, expiry=%s, payed=%s, accPeriodStart=%s, accPeriodEnd=%s, costCenter=%s, costType=%s]",
-				docId, docType, issuer, payMethod, grossTotal, description, registered, expiry, payed, accPeriodStart, accPeriodEnd, costCenter, costType);
+				docId, docType, issuer, payMethod, grossTotal, description, issue, expiry, payed, accPeriodStart, accPeriodEnd, costCenter, costType);
 	}
 }

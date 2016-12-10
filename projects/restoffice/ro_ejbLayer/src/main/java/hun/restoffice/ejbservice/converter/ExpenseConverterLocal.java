@@ -21,4 +21,16 @@ public interface ExpenseConverterLocal {
 	 */
 	List<ExpenseStub> to(List<Expense> readAll);
 
+	/**
+	 * @param readById
+	 * @return
+	 */
+	ExpenseStub to(Expense readById);
+
+	/**
+	 * @param stub
+	 * @return
+	 */
+	Expense from(ExpenseStub stub);
+
 }

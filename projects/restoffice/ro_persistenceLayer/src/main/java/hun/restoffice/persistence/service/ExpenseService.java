@@ -3,8 +3,10 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.Calendar;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -17,8 +19,9 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
+import hun.restoffice.persistence.entity.financialTransaction.CostCenter;
+import hun.restoffice.persistence.entity.financialTransaction.ExpType;
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
-import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
@@ -36,6 +39,9 @@ public class ExpenseService implements ExpenseServiceLocal {
 
 	@PersistenceContext(unitName = "ro-persistence-unit")
 	private EntityManager entityManager;
+	
+	@EJB
+	private FinanceMiscServiceLocal fService;
 
 	/*
 	 * (non-Javadoc)
@@ -71,8 +77,9 @@ public class ExpenseService implements ExpenseServiceLocal {
 
 	}
 
+	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	private Expense readById(String docId) throws PersistenceServiceException {
+	public Expense readById(String docId) throws PersistenceServiceException {
 		try {
 			return this.entityManager.createNamedQuery(Expense.READ_BY_DOC_ID, Expense.class).setParameter(Expense.DOC_ID, docId.trim().toLowerCase())
 					.getSingleResult();
@@ -96,24 +103,76 @@ public class ExpenseService implements ExpenseServiceLocal {
 	 * java.lang.Integer, hun.restoffice.persistence.entity.financialTransaction.PaymentMethod, java.lang.Boolean)
 	 */
 	@Override
-	public List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, PaymentMethod pm, Boolean isPayed)
+	public List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, int pm, Boolean isPayed)
 			throws PersistenceServiceException {
-		String payed = null;
-		if (isPayed != null){
-			if (isPayed)
-				payed = "not null";
-			else
-				payed = "null";
-		}
+		int payed = isPayed == null ? 0 : (isPayed == Boolean.TRUE ? 1 : -1);
 		LOG.info("readFiltered invoked with params: [ partnerID: "+partnerId+", "+"costCenterId: "+costCenterId+", "+"costTypeId: "+costTypeId+", "+"PaymentMethod: "+pm+", "+"isPayed: "+isPayed+"]");
 		try {
-			return this.entityManager.createNamedQuery(Expense.READ_FILTERED, Expense.class).setParameter(Expense.PARTNER_ID, partnerId)
-					.setParameter(Expense.COSTCENTER_ID, costCenterId).setParameter(Expense.COSTTYPE_ID, costTypeId).setParameter(Expense.PAYMENT_METHOD, pm)
-					//.setParameter(Expense.IS_PAYED, payed)
+			return this.entityManager.createNamedQuery(Expense.READ_FILTERED, Expense.class)
+					.setParameter(Expense.PARTNER_ID, partnerId)
+					.setParameter(Expense.COSTCENTER_ID, costCenterId)
+					.setParameter(Expense.COSTTYPE_ID, costTypeId)
+					.setParameter(Expense.PAYMENT_METHOD, pm)
+					.setParameter(Expense.IS_PAYED, isPayed)
 					.getResultList();
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "error occured while reading expenses");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.ExpenseServiceLocal#add(hun.restoffice.persistence.entity.financialTransaction.Expense)
+	 */
+	@Override
+	public void add(Expense expense) throws PersistenceServiceException {
+		if (this.count(expense.getDocId()) == 0){
+			expense.setLastModifiedAt(Calendar.getInstance().getTime());
+			this.insert(expense);
+		} else {
+			this.update(expense);
+		}
+		
+	}
+
+	/**
+	 * @param expense
+	 * @throws PersistenceServiceException 
+	 */
+	private void update(Expense expense) throws PersistenceServiceException {
+		Expense entity = this.readById(expense.getDocId());
+		entity.update(expense);
+		this.entityManager.flush();
+	}
+
+	/**
+	 * @param expense
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	private void insert(Expense expense) throws PersistenceServiceException{
+		CostCenter cc = this.fService.readCostCenterByName(expense.getCostCenterName());
+		ExpType ep = this.fService.readExpTypeByName(expense.getCostTypeName());
+		
+		expense.setCostCenter(cc);
+		expense.setExpType(ep);
+		try{
+		this.entityManager.persist(expense);
+		} catch (Exception e){
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @param docId
+	 * @return
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	private int count(String docId) throws PersistenceServiceException{
+		try{
+			return this.entityManager.createNamedQuery(Expense.COUNT, Long.class).setParameter(Expense.DOC_ID, docId.trim().toLowerCase()).getSingleResult().intValue();
+		} catch (Exception e){
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
 		}
 	}
 

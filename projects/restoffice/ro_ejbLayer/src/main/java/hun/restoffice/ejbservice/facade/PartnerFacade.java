@@ -144,17 +144,34 @@ public class PartnerFacade implements PartnerFacadeLocal {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#gatAllPartner()
 	 */
 	@Override
-	public List<PartnerStub> gatAllPartner() throws FacadeException {
+	public List<PartnerStub> gatAllPartner(Boolean technical) throws FacadeException {
 		List<PartnerStub> rtrn = new ArrayList<>();
-		try{
-			rtrn =  this.pConverter.toPartner(this.pService.readAll(null));
+		try {
+			rtrn = this.pConverter.toPartner(this.pService.readAll(technical));
 			return rtrn;
-		} catch(PersistenceServiceException e){
+		} catch (PersistenceServiceException e) {
 			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see hun.restoffice.ejbservice.facade.PartnerFacadeLocal#getPartnerById(java.lang.String)
+	 */
+	@Override
+	public PartnerStub getPartnerById(Integer id) throws FacadeException {
+		try {
+			return this.pConverter.toPartner(this.pService.readById(id));
+		} catch (PersistenceServiceException e) {
+			LOG.error(e.getLocalizedMessage());
 			throw new FacadeException(e.getLocalizedMessage());
 		}
 	}

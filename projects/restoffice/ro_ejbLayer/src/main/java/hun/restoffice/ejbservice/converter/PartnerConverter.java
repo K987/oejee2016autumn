@@ -81,8 +81,9 @@ public class PartnerConverter implements PartnerConverterLocal {
 	 */
 	@Override
 	public Partner fromPartner(PartnerStub partner) {
-		return new Partner(partner.getName(), partner.getAccount(), false, partner.getContact().getName(), partner.getContact().getEmail(),
+		return new Partner(partner.getId(), partner.getName(), partner.getAccount(), false, partner.getContact().getName(), partner.getContact().getEmail(),
 				partner.getContact().getPhone());
 	}
+
 
 }

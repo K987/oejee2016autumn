@@ -37,15 +37,16 @@ public class ExpenseConverter implements ExpenseConverterLocal {
 		return rtrn;
 	}
 
-	/**
-	 * @param expense
-	 * @return
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.ExpenseConverterLocal#to(hun.restoffice.persistence.entity.financialTransaction.Expense)
 	 */
-	private ExpenseStub to(Expense expense) {
+	@Override
+	public ExpenseStub to(Expense expense) {
 		
 		PartnerStub partner = this.pConverter.toPartner(expense.getParty());
 		return new ExpenseStub(expense.getDocId(),
-				expense.getDocType().toString(), 
+				expense.getDocType().ordinal(), 
 				partner, 
 				expense.getPayMethod().ordinal(),
 				expense.getGrossTotal(),
@@ -57,6 +58,31 @@ public class ExpenseConverter implements ExpenseConverterLocal {
 				(expense.getAccPeriod() == null ? null : expense.getAccPeriod().getEndDate()),
 				expense.getCostCenter().getName(), 
 				expense.getExpType().getName());
+	}
+
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.converter.ExpenseConverterLocal#from(hun.restoffice.ejbservice.domain.ExpenseStub)
+	 */
+	@Override
+	public Expense from(ExpenseStub stub) {
+		
+		return new Expense(
+				stub.getDocId(),
+				stub.getDocType().ordinal(),
+				pConverter.fromPartner(stub.getIssuer()),
+				stub.getPayMethod().ordinal(),
+				stub.getGrossTotal(),
+				stub.getDescription(),
+				stub.getRegistered(),
+				stub.getExpiry(),
+				stub.getPayed(),
+				stub.getAccPeriodStart(),
+				stub.getAccPeriodEnd(),
+				stub.getCostCenter(),
+				stub.getCostType()
+				);
+		
 	}
 
 }

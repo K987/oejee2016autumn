@@ -52,4 +52,15 @@ public interface FinanceFacadeLocal {
 	 */
 	List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed) throws FacadeException;
 
+	/**
+	 * @param docId
+	 * @return
+	 */
+	ExpenseStub getExpenseById(String docId) throws FacadeException;
+
+	/**
+	 * @param stub
+	 */
+	void addExpense(ExpenseStub stub) throws FacadeException;
+
 }

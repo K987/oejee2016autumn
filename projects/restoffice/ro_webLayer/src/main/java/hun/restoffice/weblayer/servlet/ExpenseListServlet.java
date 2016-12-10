@@ -20,14 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.ejbservice.domain.CostCenterStub;
 import hun.restoffice.ejbservice.domain.ExpenseStub;
-import hun.restoffice.ejbservice.domain.ExpenseTypeStub;
-import hun.restoffice.ejbservice.domain.PartnerStub;
-import hun.restoffice.ejbservice.domain.PaymentMethodStub;
 import hun.restoffice.ejbservice.facade.FinanceFacadeLocal;
-import hun.restoffice.ejbservice.facade.PartnerFacadeLocal;
 import hun.restoffice.remoteClient.exception.FacadeException;
+import hun.restoffice.weblayer.util.FinanceHelperLocal;
 
 /**
  * 
@@ -46,9 +42,9 @@ public class ExpenseListServlet extends HttpServlet {
 
 	@EJB
 	private FinanceFacadeLocal fFacade;
-
+	
 	@EJB
-	private PartnerFacadeLocal pFacade;
+	private FinanceHelperLocal fHelper;
 
 	/*
 	 * (non-Javadoc)
@@ -62,7 +58,6 @@ public class ExpenseListServlet extends HttpServlet {
 		List<ExpenseStub> expenses = getExpenses();
 
 		request.setAttribute("expenses", expenses);
-		request.setAttribute("expensesSize", expenses.size());
 
 		this.forward(request, response);
 	}
@@ -84,71 +79,31 @@ public class ExpenseListServlet extends HttpServlet {
 		// }
 		// LOG.info(entry.getKey() +" : "+ sb.toString());
 		// }
-		Integer partnerId = request.getParameter("partner").equals("-1") ? null : Integer.parseInt(request.getParameter("partner"));
-		Integer costCenterId = request.getParameter("costCenter").equals("-1") ? null : Integer.parseInt(request.getParameter("costCenter"));
-		Integer costTypeId = request.getParameter("costType").equals("-1") ? null : Integer.parseInt(request.getParameter("costType"));
-		Integer paymentMethodOrdinal = request.getParameter("paymentMethod").equals("-1") ? null
-				: PaymentMethodStub.valueOf(request.getParameter("paymentMethod")).ordinal();
+		Integer partnerId = Integer.parseInt(request.getParameter("partner"));
+		Integer costCenterId = Integer.parseInt(request.getParameter("costCenter"));
+		Integer costTypeId = Integer.parseInt(request.getParameter("costType"));
+		Integer paymentMethodOrdinal = Integer.parseInt(request.getParameter("paymentMethod"));
 		Boolean isPayed = request.getParameter("isPayed").equals("-1") ? null : request.getParameter("isPayed").equals("1");
 
 		List<ExpenseStub> expenses = getExpenses(partnerId, costCenterId, costTypeId, paymentMethodOrdinal, isPayed);
 
 		request.setAttribute("expenses", expenses);
-		request.setAttribute("expensesSize", expenses.size());
 
 		this.forward(request, response);
 
 	}
 
 	private void forward(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("partners", getPartners());
-		request.setAttribute("costCenters", getCostCenters());
-		request.setAttribute("costTypes", getExpenseTypes());
+		try{
+		request.setAttribute("partners", this.fHelper.getPartners());
+		request.setAttribute("costCenters", this.fHelper.getCostCenters());
+		request.setAttribute("costTypes", this.fHelper.getExpenseTypes());
+		} catch (FacadeException e){
+			
+		}
 		request.setAttribute("today", Calendar.getInstance());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ExpenseList.jsp");
 		dispatcher.forward(request, response);
-	}
-
-	/**
-	 * @return
-	 */
-	private List<ExpenseTypeStub> getExpenseTypes() {
-		LOG.info("ExpenseList#getExpenseTypes invoked");
-		List<ExpenseTypeStub> stubs = new ArrayList<>();
-		try {
-			stubs = this.fFacade.getAllExpenseType();
-		} catch (FacadeException e) {
-			LOG.error(e);
-		}
-		return stubs;
-	}
-
-	/**
-	 * @return
-	 */
-	private List<CostCenterStub> getCostCenters() {
-		LOG.info("ExpenseList#getCostCenters invoked");
-		List<CostCenterStub> stubs = new ArrayList<>();
-		try {
-			stubs = this.fFacade.getAllCostCenters();
-		} catch (FacadeException e) {
-			LOG.error(e);
-		}
-		return stubs;
-	}
-
-	/**
-	 * @return
-	 */
-	private List<PartnerStub> getPartners() {
-		LOG.info("ExpenseList#getPartners invoked");
-		List<PartnerStub> stubs = new ArrayList<>();
-		try {
-			stubs = this.pFacade.gatAllPartner();
-		} catch (FacadeException e) {
-			LOG.error(e);
-		}
-		return stubs;
 	}
 
 	/**
@@ -163,7 +118,7 @@ public class ExpenseListServlet extends HttpServlet {
 		LOG.info("ExpenseList#getExpenses invoked");
 		List<ExpenseStub> stubs = new ArrayList<>();
 		try {
-			stubs = this.fFacade.getExpensesMatching(partnerId, costCenterId, costTypeId, paymentMethodOrdinal,isPayed);
+			stubs = this.fFacade.getExpensesMatching(partnerId, costCenterId, costTypeId, paymentMethodOrdinal, isPayed);
 			Collections.sort(stubs, new Comparator<ExpenseStub>() {
 
 				@Override

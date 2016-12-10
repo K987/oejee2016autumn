@@ -32,6 +32,15 @@ public class AccountingPeriod {
 
 	}
 
+
+	/**
+	 * @param startDate
+	 * @param endDate
+	 */
+	public AccountingPeriod(Date startDate, Date endDate) {
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
 	// public methods
 
 	// private methods

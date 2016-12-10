@@ -9,10 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 /**
  * The persistent class for the exp_types database table.
@@ -24,11 +26,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "exp_types")
-@NamedQuery(name = ExpType.FIND_ALL, query = "SELECT e FROM ExpType e")
+@NamedQueries({ 
+		@NamedQuery(name = ExpType.FIND_ALL, query = "SELECT e FROM ExpType e"),
+		@NamedQuery(name = ExpType.FIND_BY_NAME, query = "SELECT e FROM ExpType e WHERE LOWER(e.name)=:"+ExpType.NAME)
+})
 public class ExpType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "ExpType.findAll";
+
+	public static final String FIND_BY_NAME = "ExpType.findByName";
+
+	public static final String NAME = "name";
 
 	// fields
 	@Id

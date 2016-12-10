@@ -68,6 +68,12 @@ public interface PartnerFacadeLocal {
 	/**
 	 * @return
 	 */
-	List<PartnerStub> gatAllPartner() throws FacadeException;
+	List<PartnerStub> gatAllPartner(Boolean technical) throws FacadeException;
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	PartnerStub getPartnerById(Integer id) throws FacadeException;
 
 }

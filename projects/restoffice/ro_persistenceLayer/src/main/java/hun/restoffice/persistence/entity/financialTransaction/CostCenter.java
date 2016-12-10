@@ -23,11 +23,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cost_centers")
-@NamedQueries({ @NamedQuery(name = CostCenter.FIND_ALL, query = "SELECT c FROM CostCenter c") })
+@NamedQueries({ 
+	@NamedQuery(name = CostCenter.FIND_ALL, query = "SELECT c FROM CostCenter c"),
+	@NamedQuery(name = CostCenter.FIND_BY_NAME, query = "SELECT c FROM CostCenter c WHERE LOWER(c.name) =:"+CostCenter.NAME)
+})
 public class CostCenter implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "CostCenter.findAll";
+	public static final String FIND_BY_NAME = "CostCenter.findByName";
+
+	public static final String NAME = "name";
 
 	// fields
 	@Id

@@ -29,4 +29,16 @@ public interface FinanceMiscServiceLocal {
 	 */
 	List<ExpType> readAllExpenseType() throws PersistenceServiceException;
 
+	/**
+	 * @param costCenterName
+	 * @return
+	 */
+	CostCenter readCostCenterByName(String costCenterName) throws PersistenceServiceException;;
+
+	/**
+	 * @param costTypeName
+	 * @return
+	 */
+	ExpType readExpTypeByName(String costTypeName) throws PersistenceServiceException;;
+
 }

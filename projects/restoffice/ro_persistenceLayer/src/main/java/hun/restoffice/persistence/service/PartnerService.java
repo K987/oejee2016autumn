@@ -68,7 +68,7 @@ public class PartnerService implements PartnerServiceLocal {
 		List<Partner> rtrn = null;
 		try {
 			if (technical == null) {
-				// returns all
+				// return all
 				rtrn = this.entityManager.createNamedQuery(Partner.FIND_ALL, Partner.class).setParameter(Partner.APPLY_CRITERIA, false)
 						.setParameter(Partner.IS_TECHNICAL, false).getResultList();
 			} else {
@@ -152,12 +152,30 @@ public class PartnerService implements PartnerServiceLocal {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private int count(Partner partner) throws PersistenceServiceException {
 		try {
-			LOG.info(partner.getName().toLowerCase().trim());
 			return this.entityManager.createNamedQuery(Partner.COUNT, Long.class).setParameter(Partner.NAME, partner.getName().toLowerCase().trim())
 					.getSingleResult().intValue();
 		} catch (Exception e) {
 			LOG.error(e.getLocalizedMessage());
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during counting occurences of partner " + partner, e);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.PartnerServiceLocal#readById(java.lang.String)
+	 */
+	@Override
+	public Partner readById(Integer id) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(Partner.READ_BY_ID, Partner.class).setParameter(Partner.ID, id).getSingleResult();
+		} catch (NoResultException e) {
+			throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "Partner w/ id " + id + " does not exists", e);
+		} catch (NonUniqueResultException e) {
+			throw new PersistenceServiceException(PersistenceExceptionType.AMBIGOUS_RESULT,
+					"Multiply partner found w/ id " + id + ". You should warn a responsible person", e);
+		} catch (Exception e) {
+			LOG.error("partner read exception: " + e.getLocalizedMessage());
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "Error during finding partner by id " + id, e);
+		}
+
 	}
 }

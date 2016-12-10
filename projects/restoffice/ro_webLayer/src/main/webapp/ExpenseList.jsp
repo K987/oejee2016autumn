@@ -19,35 +19,37 @@
 <body>
 	<h1>Kiadások listája</h1>
 	<br />
-	<a href="Expense?docId=-1">új kiadás rözítése</a>
+	<a href="ExpenseEdit?docId=-1">új kiadás rözítése</a>
 	<br />
 	<br />
-	<table class=expenseTable>
-		<thead>
-			<tr>
-				<th>sorszám</th>
-				<th>kibocsátó</th>
-				<th>kelt</th>
-				<th>leírás</th>
-				<th>bruttó összeg</th>
-				<th>költséghely</th>
-				<th>költségnem</th>
-				<th>fizetés módja</th>
-				<th>fizetési határidő</th>
-				<th>fizetve</th>
-				<th>módosít</th>
-				<th>töröl</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:choose>
-				<c:when test="${requestScope.expensesSize} == 0">
-					<h2>kiadás lista üres</h2>
-				</c:when>
-				<c:otherwise>
-						<tr>
+	<c:choose>
+		<c:when test="${requestScope.expenses.size() eq  0}">
+			<h2>kiadás lista üres</h2>
+			<a href="ExpenseList">vissza</a>
+		</c:when>
+		<c:otherwise>
+			<table class=expenseTable>
+				<thead>
+					<tr>
+						<th>sorszám</th>
+						<th>kibocsátó</th>
+						<th>kelt</th>
+						<th>leírás</th>
+						<th>bruttó összeg</th>
+						<th>költséghely</th>
+						<th>költségnem</th>
+						<th>fizetés módja</th>
+						<th>fizetési határidő</th>
+						<th>fizetve</th>
+						<th>módosít</th>
+						<th>töröl</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr>
 						<form method="post" action="ExpenseList">
-						<td>-</td>
+							<td>-</td>
 							<!-- partners -->
 							<td><select name="partner" id="partner">
 									<option value="-1">-</option>
@@ -79,7 +81,7 @@
 									<c:set var="paymentMethods"
 										value="<%=PaymentMethodStub.values()%>" />
 									<c:forEach items="${paymentMethods}" var="paymentMethod">
-										<option value="${paymentMethod}">${paymentMethod.description}</option>
+										<option value="${paymentMethod.ordinal()}">${paymentMethod.description}</option>
 									</c:forEach>
 							</select></td>
 							<td>-</td>
@@ -90,12 +92,12 @@
 									<option value="1">fizetve</option>
 							</select></td>
 
-							<td><input type="submit" value="Szűr"></td>
-					</form>
-					<form method="get" action="ExpenseList">
-							<td><input type="submit" value="szűrés törlése"/></td>
-					</form>
-						</tr>
+							<td><input type="submit" value="Szűr"/></td>
+						</form>
+						<form method="get" action="ExpenseList">
+							<td><input type="submit" value="szűrés törlése" /></td>
+						</form>
+					</tr>
 					<c:forEach items="${requestScope.expenses}" var="expense">
 						<tr>
 							<td><c:out value="${expense.docId}" /></td>
@@ -119,15 +121,16 @@
 								type="date" dateStyle="short" />
 							<td><c:out value="${payDate}" /></td>
 							<td><a
-								href="Expense?docId=<c:out value="${expense.docId}"/>">módosít</a></td>
+								href="ExpenseEdit?docId=<c:out value="${expense.docId}"/>">módosít</a></td>
 							<td><a
 								href="ExpenseDelete?docId=<c:out value="${expense.docId}"/>">töröl</a></td>
 						</tr>
 					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-		</tbody>
-	</table>
+
+				</tbody>
+			</table>
+		</c:otherwise>
+	</c:choose>
 
 
 </body>
