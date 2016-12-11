@@ -10,6 +10,7 @@ import javax.ejb.Local;
 import hun.restoffice.ejbservice.domain.CostCenterStub;
 import hun.restoffice.ejbservice.domain.ExpenseStub;
 import hun.restoffice.ejbservice.domain.ExpenseTypeStub;
+import hun.restoffice.remoteClient.domain.IncomeStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 
@@ -22,25 +23,32 @@ import hun.restoffice.remoteClient.exception.FacadeException;
 @Local
 public interface FinanceFacadeLocal {
 
+
 	/**
 	 * @return
+	 * @throws FacadeException
 	 */
 	List<ExpenseStub> getAllExpenses() throws FacadeException;
 
 	/**
 	 * @param docId
+	 * @throws FacadeException
 	 */
 	void deleteExpense(String docId) throws FacadeException;
 
 	/**
 	 * @return
+	 * @throws FacadeException
 	 */
 	List<CostCenterStub> getAllCostCenters() throws FacadeException;
 
+
 	/**
 	 * @return
+	 * @throws FacadeException
 	 */
 	List<ExpenseTypeStub> getAllExpenseType() throws FacadeException;
+
 
 	/**
 	 * @param partnerId
@@ -49,6 +57,7 @@ public interface FinanceFacadeLocal {
 	 * @param paymentMethodOrdinal
 	 * @param isPayed
 	 * @return
+	 * @throws FacadeException
 	 */
 	List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed) throws FacadeException;
 
@@ -58,9 +67,22 @@ public interface FinanceFacadeLocal {
 	 */
 	ExpenseStub getExpenseById(String docId) throws FacadeException;
 
+
+	/**
+	 * @param stub
+	 * @throws FacadeException
+	 */
+	void addExpense(ExpenseStub stub) throws FacadeException;
+
+	/**
+	 * @param stub
+	 * @throws FacadeException
+	 */
+	void addIncome(IncomeStub stub) throws FacadeException;
+
 	/**
 	 * @param stub
 	 */
-	void addExpense(ExpenseStub stub) throws FacadeException;
+	void updateExpense(ExpenseStub stub) throws FacadeException;
 
 }

@@ -44,6 +44,7 @@ dependencies{
 	deploy project (path: 'ro_RESTService', configuration: 'archives')
   	deploy project (path: 'ro_webLayer', configuration: 'archives')
 	earlib project ('ro_remoteApplication')
+	deploy project ('ro_mqService')
 }
 
 task copyTask(type: Copy){

@@ -1,8 +1,19 @@
 package hun.restoffice.persistence.entity.financialTransaction;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the inc_types database table.
@@ -11,9 +22,17 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "inc_types")
-@NamedQuery(name = ".findAll", query = "SELECT i FROM  IncType i")
+@NamedQueries(value = { 
+		@NamedQuery(name = IncType.FIND_ALL, query = "SELECT i FROM  IncType i"),
+		@NamedQuery(name = IncType.FIND_BY_NAME, query = "SELECT i FROM IncType i WHERE LOWER(i.name)=:"+IncType.NAME)
+})
 public class IncType implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_BY_NAME = "IncType.findByName";
+	public static final String FIND_ALL = "IncType.findAll";
+
+	public static final String NAME = "name";
 
 	// fields
 	@Id

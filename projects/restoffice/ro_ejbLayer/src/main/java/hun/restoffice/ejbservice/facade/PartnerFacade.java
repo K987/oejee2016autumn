@@ -37,7 +37,7 @@ public class PartnerFacade implements PartnerFacadeLocal {
 
 	@EJB
 	private PartnerConverterLocal pConverter;
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

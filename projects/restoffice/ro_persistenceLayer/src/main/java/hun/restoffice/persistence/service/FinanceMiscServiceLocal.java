@@ -9,6 +9,7 @@ import javax.ejb.Local;
 
 import hun.restoffice.persistence.entity.financialTransaction.CostCenter;
 import hun.restoffice.persistence.entity.financialTransaction.ExpType;
+import hun.restoffice.persistence.entity.financialTransaction.IncType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
@@ -39,6 +40,12 @@ public interface FinanceMiscServiceLocal {
 	 * @param costTypeName
 	 * @return
 	 */
-	ExpType readExpTypeByName(String costTypeName) throws PersistenceServiceException;;
+	ExpType readExpTypeByName(String costTypeName) throws PersistenceServiceException;
+
+	/**
+	 * @param incTypeName
+	 * @return
+	 */
+	IncType readIncTypeByName(String incTypeName) throws PersistenceServiceException;
 
 }

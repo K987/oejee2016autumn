@@ -3,7 +3,6 @@
  */
 package hun.restoffice.persistence.service;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -40,7 +39,7 @@ public class ExpenseService implements ExpenseServiceLocal {
 
 	@PersistenceContext(unitName = "ro-persistence-unit")
 	private EntityManager entityManager;
-	
+
 	@EJB
 	private FinanceMiscServiceLocal fService;
 
@@ -106,63 +105,59 @@ public class ExpenseService implements ExpenseServiceLocal {
 	@Override
 	public List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, PaymentMethod pm, Boolean isPayed)
 			throws PersistenceServiceException {
-		LOG.info("readFiltered invoked with params: [ partnerID: "+partnerId+", "+"costCenterId: "+costCenterId+", "+"costTypeId: "+costTypeId+", "+"PaymentMethod: "+pm+", "+"isPayed: "+isPayed+"]");
+		LOG.info("readFiltered invoked with params: [ partnerID: " + partnerId + ", " + "costCenterId: " + costCenterId + ", " + "costTypeId: " + costTypeId
+				+ ", " + "PaymentMethod: " + pm + ", " + "isPayed: " + isPayed + "]");
 		int payed = isPayed == null ? -1 : isPayed.booleanValue() == true ? 1 : 0;
 		int payMethod = pm == null ? -1 : pm.ordinal();
-		
+
 		try {
-			return this.entityManager.createNamedQuery(Expense.READ_FILTERED, Expense.class)
-					.setParameter(Expense.PARTNER_ID, partnerId)
-					.setParameter(Expense.COSTCENTER_ID, costCenterId)
-					.setParameter(Expense.COSTTYPE_ID, costTypeId)
-					.setParameter(Expense.PAYMENT_METHOD, payMethod)
-					.setParameter(Expense.IS_PAYED, payed)
-					.getResultList();
+			return this.entityManager.createNamedQuery(Expense.READ_FILTERED, Expense.class).setParameter(Expense.PARTNER_ID, partnerId)
+					.setParameter(Expense.COSTCENTER_ID, costCenterId).setParameter(Expense.COSTTYPE_ID, costTypeId)
+					.setParameter(Expense.PAYMENT_METHOD, payMethod).setParameter(Expense.IS_PAYED, payed).getResultList();
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "error occured while reading expenses");
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see hun.restoffice.persistence.service.ExpenseServiceLocal#add(hun.restoffice.persistence.entity.financialTransaction.Expense)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * hun.restoffice.persistence.service.ExpenseServiceLocal#add(hun.restoffice.persistence.entity.financialTransaction
+	 * .Expense)
 	 */
 	@Override
 	public void add(Expense expense) throws PersistenceServiceException {
-		if (this.count(expense.getDocId()) == 0){
-			expense.setLastModifiedAt(Calendar.getInstance().getTime());
-			this.insert(expense);
-		} else {
-			this.update(expense);
-		}
-		
-	}
-
-	/**
-	 * @param expense
-	 * @throws PersistenceServiceException 
-	 */
-	private void update(Expense expense) throws PersistenceServiceException {
-		Expense entity = this.readById(expense.getDocId());
-		entity.update(expense);
-		this.entityManager.flush();
-	}
-
-	/**
-	 * @param expense
-	 */
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	private void insert(Expense expense) throws PersistenceServiceException{
 		CostCenter cc = this.fService.readCostCenterByName(expense.getCostCenterName());
 		ExpType ep = this.fService.readExpTypeByName(expense.getCostTypeName());
-		
 		expense.setCostCenter(cc);
 		expense.setExpType(ep);
-		try{
-		this.entityManager.persist(expense);
-		} catch (Exception e){
+		try {
+			this.entityManager.persist(expense);
+		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @param expense
+	 * @throws PersistenceServiceException
+	 */
+	@Override
+	public void update(Expense expense) throws PersistenceServiceException {
+		Expense entity = this.readById(expense.getDocId());
+		CostCenter cc = this.fService.readCostCenterByName(expense.getCostCenterName());
+		ExpType ep = this.fService.readExpTypeByName(expense.getCostTypeName());
+		expense.setCostCenter(cc);
+		expense.setExpType(ep);
+		entity.update(expense);
+		try {
+			this.entityManager.flush();
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "error while updateing expense w/ docId: " + expense.getDocId());
 		}
 	}
 
@@ -171,11 +166,13 @@ public class ExpenseService implements ExpenseServiceLocal {
 	 * @return
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	private int count(String docId) throws PersistenceServiceException{
-		try{
-			return this.entityManager.createNamedQuery(Expense.COUNT, Long.class).setParameter(Expense.DOC_ID, docId.trim().toLowerCase()).getSingleResult().intValue();
-		} catch (Exception e){
-			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, e.getLocalizedMessage());
+	private int count(String docId) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(Expense.COUNT, Long.class).setParameter(Expense.DOC_ID, docId.trim().toLowerCase()).getSingleResult()
+					.intValue();
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "error while counting docId: " + docId);
 		}
 	}
 

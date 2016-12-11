@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import hun.restoffice.persistence.entity.financialTransaction.CostCenter;
 import hun.restoffice.persistence.entity.financialTransaction.ExpType;
+import hun.restoffice.persistence.entity.financialTransaction.IncType;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
@@ -68,6 +69,7 @@ public class FinanceMiscService implements FinanceMiscServiceLocal {
 	 * @see hun.restoffice.persistence.service.FinanceMiscServiceLocal#readCostCenterByName(java.lang.String)
 	 */
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public CostCenter readCostCenterByName(String costCenterName) throws PersistenceServiceException {
 		try {
 			return this.entityManager.createNamedQuery(CostCenter.FIND_BY_NAME, CostCenter.class).setParameter(CostCenter.NAME, costCenterName.trim().toLowerCase()).getSingleResult();
@@ -87,6 +89,7 @@ public class FinanceMiscService implements FinanceMiscServiceLocal {
 	 * @see hun.restoffice.persistence.service.FinanceMiscServiceLocal#readExpTypeByName(java.lang.String)
 	 */
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public ExpType readExpTypeByName(String costTypeName) throws PersistenceServiceException {
 		try {
 			return this.entityManager.createNamedQuery(ExpType.FIND_BY_NAME, ExpType.class).setParameter(ExpType.NAME, costTypeName.trim().toLowerCase()).getSingleResult();
@@ -99,6 +102,26 @@ public class FinanceMiscService implements FinanceMiscServiceLocal {
 		} catch (Exception e) {
 			LOG.error(e);
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unkonow error during querying for costtype name: " + costTypeName);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.FinanceMiscServiceLocal#readIncTypeByName(java.lang.String)
+	 */
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public IncType readIncTypeByName(String incTypeName) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(IncType.FIND_BY_NAME, IncType.class).setParameter(IncType.NAME, incTypeName.trim().toLowerCase()).getSingleResult();
+		} catch (AmbiguousResolutionException e) {
+			LOG.error(e.getMessage());
+			throw new PersistenceServiceException(PersistenceExceptionType.AMBIGOUS_RESULT, "multiple matching for incType name: " + incTypeName);
+		} catch (NoResultException e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "no matching for incType name: " + incTypeName);
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unkonow error during querying for incType name: " + incTypeName);
 		}
 	}
 	

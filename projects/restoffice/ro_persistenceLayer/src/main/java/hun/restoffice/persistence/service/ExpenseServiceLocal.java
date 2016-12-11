@@ -49,6 +49,11 @@ public interface ExpenseServiceLocal {
 	 * @param from
 	 */
 	void add(Expense from) throws PersistenceServiceException;
+
+	/**
+	 * @param expense
+	 */
+	void update(Expense expense) throws PersistenceServiceException;;
 	
 
 }

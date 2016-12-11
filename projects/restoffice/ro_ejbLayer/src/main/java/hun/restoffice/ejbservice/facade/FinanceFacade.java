@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.converter.ExpenseConverterLocal;
 import hun.restoffice.ejbservice.converter.FinanceMiscConverterLocal;
+import hun.restoffice.ejbservice.converter.IncomeConverterLocal;
 import hun.restoffice.ejbservice.domain.CostCenterStub;
 import hun.restoffice.ejbservice.domain.ExpenseStub;
 import hun.restoffice.ejbservice.domain.ExpenseTypeStub;
@@ -20,6 +21,8 @@ import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.ExpenseServiceLocal;
 import hun.restoffice.persistence.service.FinanceMiscServiceLocal;
+import hun.restoffice.persistence.service.IncomeServiceLocal;
+import hun.restoffice.remoteClient.domain.IncomeStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
@@ -43,6 +46,13 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	
 	@EJB
 	private FinanceMiscConverterLocal fmConverter;
+	
+	@EJB
+	private IncomeConverterLocal iConverter;
+	
+	@EJB
+	private IncomeServiceLocal iService;
+	
 	
 	/* (non-Javadoc)
 	 * @see hun.restoffice.ejbservice.facade.ExpenseFacadeLocal#getAllExpenses()
@@ -135,6 +145,32 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	public void addExpense(ExpenseStub stub) throws FacadeException {
 		try{
 			this.eService.add(this.eConverter.from(stub));
+		} catch (PersistenceServiceException e){
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+		
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#addIncome(hun.restoffice.remoteClient.domain.IncomeStub)
+	 */
+	@Override
+	public void addIncome(IncomeStub stub) throws FacadeException {
+		try{
+			this.iService.insert(this.iConverter.from(stub));
+		}catch (PersistenceServiceException e) {
+			LOG.error(e);
+			throw new FacadeException(e.getLocalizedMessage());
+		}
+		
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#updateExpense(hun.restoffice.ejbservice.domain.ExpenseStub)
+	 */
+	@Override
+	public void updateExpense(ExpenseStub stub) throws FacadeException {
+		try{
+			this.eService.update(this.eConverter.from(stub));
 		} catch (PersistenceServiceException e){
 			LOG.error(e);
 			throw new FacadeException(e.getLocalizedMessage());

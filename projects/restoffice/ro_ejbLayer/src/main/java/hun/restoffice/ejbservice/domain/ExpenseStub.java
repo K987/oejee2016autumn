@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
+import hun.restoffice.remoteClient.domain.DocTypeStub;
+import hun.restoffice.remoteClient.domain.PaymentMethodStub;
+
 /**
  * 
  *

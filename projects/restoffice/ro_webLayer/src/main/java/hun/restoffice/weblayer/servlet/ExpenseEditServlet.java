@@ -129,14 +129,17 @@ public class ExpenseEditServlet extends HttpServlet {
 		String costType = request.getParameter("costType");
 		Date accPerStart = formatCalendar(request.getParameter("accStartDate"));
 		Date accPerEnd = formatCalendar(request.getParameter("accEndDate"));
+		String isNew = request.getParameter("isNew");
 
 		ExpenseStub stub = new ExpenseStub(docId, docType, partner, payMethod, grossTotal, description, issue, expiry, payed, accPerStart, accPerEnd,
 				costCenter, costType);
 		LOG.info("Input is: " + stub);
 		try {
-			this.fFacade.addExpense(stub);
+			if ("-1".equals(isNew.trim()))
+				this.fFacade.addExpense(stub);
+			else
+				this.fFacade.updateExpense(stub);
 		} catch (FacadeException e) {
-			// TODO Auto-generated catch block
 			LOG.error(e);
 		}
 		
@@ -148,6 +151,8 @@ public class ExpenseEditServlet extends HttpServlet {
 	 * @return
 	 */
 	private Date formatCalendar(String parameter) {
+		if (parameter == null && "".equals(parameter))
+			return null;
 		Calendar rtrn = Calendar.getInstance();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd.");
 		try {
