@@ -86,7 +86,7 @@ public class ExpenseListServlet extends HttpServlet {
 		Boolean isPayed = request.getParameter("isPayed").equals("-1") ? null : request.getParameter("isPayed").equals("1");
 
 		List<ExpenseStub> expenses = getExpenses(partnerId, costCenterId, costTypeId, paymentMethodOrdinal, isPayed);
-
+		LOG.info("result size is: "+expenses.size());
 		request.setAttribute("expenses", expenses);
 
 		this.forward(request, response);

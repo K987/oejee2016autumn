@@ -31,7 +31,7 @@ import hun.restoffice.persistence.entity.partner.Partner;
  */
 @Entity
 @Table(name = "expenses")
-@NamedQueries(value = { @NamedQuery(name = Expense.FIND_ALL, query = "SELECT e FROM Expense e JOIN FETCH  e.party"),
+@NamedQueries(value = { @NamedQuery(name = Expense.FIND_ALL, query = "SELECT e FROM Expense e JOIN FETCH e.party JOIN FETCH e.costCenter JOIN FETCH e.expType "),
 		@NamedQuery(name = Expense.READ_BY_DOC_ID, query = "SELECT e FROM Expense e WHERE LOWER(docId)=:" + Expense.DOC_ID),
 		@NamedQuery(name = Expense.READ_FILTERED, query = "SELECT e FROM Expense e JOIN FETCH e.party WHERE " 
 				+ "1=1" 
@@ -48,8 +48,8 @@ import hun.restoffice.persistence.entity.partner.Partner;
 					+ " OR e.payMethod =:"+ Expense.PAYMENT_METHOD 
 				+ " )"
 				+ "AND ( 0 =:"+Expense.IS_PAYED+" "
-						+ "OR ((-1 =:"+Expense.IS_PAYED+" AND e.payed is null) "
-						+ "OR (1 =:"+Expense.IS_PAYED+" AND e.payed is not null))"
+						+ "OR (-1 =:"+Expense.IS_PAYED+" AND e.payed is null) "
+						+ "OR (1 =:"+Expense.IS_PAYED+" AND e.payed is not null)"
 						+ ") "
 				),
 		@NamedQuery(name= Expense.COUNT, query="SELECT COUNT(e) FROM Expense e WHERE LOWER(docId)=:"+Expense.DOC_ID)
@@ -87,12 +87,12 @@ public class Expense extends FinancialTransaction implements Serializable {
 	// fields
 
 	// bi-directional many-to-one association to CostCenter
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expense_costcenter", nullable = false, referencedColumnName = "cost_center_id")
 	private CostCenter costCenter;
 
 	// bi-directional many-to-one association to ExpType
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expense_type", nullable = false, referencedColumnName = "exp_type_id")
 	private ExpType expType;
 

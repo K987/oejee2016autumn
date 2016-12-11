@@ -104,7 +104,9 @@ public class ExpenseEditServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LOG.info("ExpenseEditServlet#doPost invoked");
-
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		String docId = request.getParameter("docId");
 		int docType = Integer.parseInt(request.getParameter("docType"));
 		PartnerStub partner = null;
@@ -130,7 +132,7 @@ public class ExpenseEditServlet extends HttpServlet {
 
 		ExpenseStub stub = new ExpenseStub(docId, docType, partner, payMethod, grossTotal, description, issue, expiry, payed, accPerStart, accPerEnd,
 				costCenter, costType);
-		
+		LOG.info("Input is: " + stub);
 		try {
 			this.fFacade.addExpense(stub);
 		} catch (FacadeException e) {

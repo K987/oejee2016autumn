@@ -173,6 +173,6 @@ public class ExpenseStub {
 	public String toString() {
 		return String.format(
 				"ExpsnseStub [docId=%s, docType=%s, issuer=%s, payMethod=%s, grossTotal=%s, description=%s, registered=%s, expiry=%s, payed=%s, accPeriodStart=%s, accPeriodEnd=%s, costCenter=%s, costType=%s]",
-				docId, docType, issuer, payMethod, grossTotal, description, issue, expiry, payed, accPeriodStart, accPeriodEnd, costCenter, costType);
+				docId, docType, issuer == null ? "" : issuer.getName(), payMethod, grossTotal, description, issue.getTimeInMillis(), expiry == null ? "" : expiry.getTimeInMillis(), payed == null ? "" : payed.getTimeInMillis(), accPeriodStart == null ? "" : accPeriodStart.getTimeInMillis(), accPeriodEnd == null ? "" : accPeriodEnd.getTimeInMillis(), costCenter, costType);
 	}
 }

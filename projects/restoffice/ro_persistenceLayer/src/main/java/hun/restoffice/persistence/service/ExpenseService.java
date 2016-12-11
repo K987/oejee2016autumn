@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import hun.restoffice.persistence.entity.financialTransaction.CostCenter;
 import hun.restoffice.persistence.entity.financialTransaction.ExpType;
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
+import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
 import hun.restoffice.persistence.exception.PersistenceExceptionType;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
@@ -103,17 +104,19 @@ public class ExpenseService implements ExpenseServiceLocal {
 	 * java.lang.Integer, hun.restoffice.persistence.entity.financialTransaction.PaymentMethod, java.lang.Boolean)
 	 */
 	@Override
-	public List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, int pm, Boolean isPayed)
+	public List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, PaymentMethod pm, Boolean isPayed)
 			throws PersistenceServiceException {
-		int payed = isPayed == null ? 0 : (isPayed == Boolean.TRUE ? 1 : -1);
 		LOG.info("readFiltered invoked with params: [ partnerID: "+partnerId+", "+"costCenterId: "+costCenterId+", "+"costTypeId: "+costTypeId+", "+"PaymentMethod: "+pm+", "+"isPayed: "+isPayed+"]");
+		int payed = isPayed == null ? -1 : isPayed.booleanValue() == true ? 1 : 0;
+		int payMethod = pm == null ? -1 : pm.ordinal();
+		
 		try {
 			return this.entityManager.createNamedQuery(Expense.READ_FILTERED, Expense.class)
 					.setParameter(Expense.PARTNER_ID, partnerId)
 					.setParameter(Expense.COSTCENTER_ID, costCenterId)
 					.setParameter(Expense.COSTTYPE_ID, costTypeId)
-					.setParameter(Expense.PAYMENT_METHOD, pm)
-					.setParameter(Expense.IS_PAYED, isPayed)
+					.setParameter(Expense.PAYMENT_METHOD, payMethod)
+					.setParameter(Expense.IS_PAYED, payed)
 					.getResultList();
 		} catch (Exception e) {
 			LOG.error(e);

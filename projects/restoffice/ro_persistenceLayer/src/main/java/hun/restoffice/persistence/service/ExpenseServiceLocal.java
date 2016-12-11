@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import hun.restoffice.persistence.entity.financialTransaction.Expense;
+import hun.restoffice.persistence.entity.financialTransaction.PaymentMethod;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 
 /**
@@ -36,7 +37,7 @@ public interface ExpenseServiceLocal {
 	 * @param isPayed null if filter not applied
 	 * @return
 	 */
-	List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, int pm, Boolean isPayed) throws PersistenceServiceException;
+	List<Expense> readFiltered(Integer partnerId, Integer costCenterId, Integer costTypeId, PaymentMethod pm, Boolean isPayed) throws PersistenceServiceException;
 
 	/**
 	 * @param docId

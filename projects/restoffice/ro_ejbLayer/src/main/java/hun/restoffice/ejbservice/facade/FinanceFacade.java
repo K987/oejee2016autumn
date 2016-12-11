@@ -106,7 +106,8 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	public List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed)
 			throws FacadeException {
 		List<ExpenseStub> rtrn = new ArrayList<>();
-		int pm = paymentMethodOrdinal == -1 ? -1 : PaymentMethod.values()[paymentMethodOrdinal].ordinal();
+		PaymentMethod pm = paymentMethodOrdinal == -1 ? null : PaymentMethod.values()[paymentMethodOrdinal];
+		
 		try{
 			rtrn = this.eConverter.to(this.eService.readFiltered(partnerId, costCenterId, costTypeId, pm, isPayed));
 			return rtrn;
