@@ -6,6 +6,10 @@
 				<entry name="jms/queue/incomequeue" />
 				<entry name="java:jboss/exported/jms/queue/incomequeue" />
 			</jms-queue>
+			<jms-topic name="dailyincometopic">
+				<entry name="jms/queue/dailyincometopic" />
+				<entry name="java:jboss/exported/jms/queue/dailyincometopic" />
+			</jms-topic>
 		</jms-destinations>
 	</hornetq-server>
 </messaging-deployment>

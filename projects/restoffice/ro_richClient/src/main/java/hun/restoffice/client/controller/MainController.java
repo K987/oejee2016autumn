@@ -6,14 +6,20 @@ package hun.restoffice.client.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
 import hun.restoffice.client.model.DailyTransactionModel;
 import hun.restoffice.client.model.EmployeeShiftModel;
 import hun.restoffice.client.model.JobPosition;
+import hun.restoffice.client.service.RemoteServiceFactory;
+import hun.restoffice.remoteClient.exception.FacadeException;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -199,7 +205,7 @@ public class MainController implements WizardElement {
 	public boolean onPrevious() {
 		LOG.debug("previous pressed");
 		boolean rtrn = selectedController.onPrevious();
-		//boolean rtrn = true;
+		// boolean rtrn = true;
 		if (rtrn && (selectedItem > 1)) {
 			setPane(--selectedItem);
 			setAdvanceIndicator(selectedItem);
@@ -216,7 +222,7 @@ public class MainController implements WizardElement {
 	@FXML
 	public boolean onNext() {
 		LOG.debug("next pressed");
-		//boolean rtrn = true;
+		// boolean rtrn = true;
 		boolean rtrn = selectedController.onNext();
 		if (rtrn && (selectedItem < steps.size() - 1)) {
 			setPane(++selectedItem);
@@ -236,13 +242,20 @@ public class MainController implements WizardElement {
 		LOG.debug("send pressed");
 //		if (!canSend)
 //			return;
-		this.selectedController.onSend();
-//		
+//
 //		for (WizardStep step : steps) {
 //			if (step.loader != null) {
 //				((WizardElement) step.loader.getController()).onSend();
 //			}
 //		}
+		Date toClose = Date.from(closingDate.get().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		try {
+			RemoteServiceFactory.lookupDailyTransaction().closeDay(toClose);
+		} catch (FacadeException e) {
+			LOG.error(e);
+		} catch (NamingException e) {
+			LOG.error(e);
+		}
 	}
 
 	/**

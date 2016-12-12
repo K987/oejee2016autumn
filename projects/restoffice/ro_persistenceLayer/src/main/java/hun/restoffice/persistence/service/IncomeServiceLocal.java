@@ -3,6 +3,8 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import hun.restoffice.persistence.entity.financialTransaction.Income;
@@ -18,7 +20,14 @@ public interface IncomeServiceLocal {
 
 	/**
 	 * @param income
+	 * @return 
 	 */
-	void insert(Income income) throws PersistenceServiceException;
+	Income insert(Income income) throws PersistenceServiceException;
+
+	/**
+	 * @param incomes
+	 * @return
+	 */
+	List<Income> insertAll(List<Income> incomes) throws PersistenceServiceException;
 
 }

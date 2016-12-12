@@ -73,6 +73,7 @@ public class RemoteServiceFactory {
 			initContext();
 		return (DailyTransactionFacadeRemote) context.lookup("restoffice/ro_ejbLayer/DailyTransactionFacade!hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote");
 	}
+	
 
 		
 }

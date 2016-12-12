@@ -3,6 +3,7 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -60,4 +61,18 @@ public class DailyTransactionService implements DailyTransactionServiceLocal {
 			}
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.DailyTransactionServiceLocal#findByDate(java.util.Calendar)
+	 */
+	@Override
+	public List<DailyIncome> findByDate(Calendar workDay) throws PersistenceServiceException {
+		try {
+			return this.entityManager.createNamedQuery(DailyIncome.FIND_BY_DATE, DailyIncome.class).setParameter(DailyIncome.DATE, workDay.getTime()).getResultList();
+		} catch (Exception e) {
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unknown error while retrieving daily incomes w/ param  "+workDay);
+		}
+	}
+	
+	
 }

@@ -3,6 +3,9 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -48,18 +51,22 @@ public class IncomeService implements IncomeServiceLocal {
 	 * Income)
 	 */
 	@Override
-	public void insert(Income income) throws PersistenceServiceException {
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Income insert(Income income) throws PersistenceServiceException {
 		if (this.count(income.getDocId()) == 0) {
 			Partner partner = this.pService.read(income.getPartnerName());
 			IncType incType = this.fmService.readIncTypeByName(income.getIncTypeName());
 			income.setParty(partner);
 			income.setIncType(incType);
 			try{
-			this.entityManager.persist(income);
+				return this.entityManager.merge(income);
 			} catch (Exception e){
 				LOG.error(e);
 				throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unknown exception occured while persisting income with docId: "+income.getDocId());
 			}
+		}
+		else{
+			throw new PersistenceServiceException(PersistenceExceptionType.EXISTS_ALREADY, "income already exists w/ docId: "+income.getDocId());
 		}
 	}
 
@@ -77,6 +84,18 @@ public class IncomeService implements IncomeServiceLocal {
 			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "error while counting docId: " + docId);
 		}
 
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.IncomeServiceLocal#insertAll(java.util.List)
+	 */
+	@Override
+	public List<Income> insertAll(List<Income> incomes) throws PersistenceServiceException {
+		List<Income> rtrn = new ArrayList<>();
+		for (Income income : incomes) {
+			rtrn.add(insert(income));
+		}
+		return rtrn;
 	}
 
 }

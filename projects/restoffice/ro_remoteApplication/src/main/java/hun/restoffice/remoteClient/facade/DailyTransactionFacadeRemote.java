@@ -3,6 +3,7 @@
  */
 package hun.restoffice.remoteClient.facade;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -25,4 +26,5 @@ public interface DailyTransactionFacadeRemote {
 	 */
 	void batchTransactionClose(List<DailyTransactionStub> stubs) throws FacadeException;
 
+	void closeDay(Date day) throws FacadeException;
 }

@@ -57,4 +57,5 @@ public interface ShiftServiceLocal {
 	 * @return
 	 */
 	EmployeeShift readByRowId(int rowId) throws PersistenceServiceException;
+
 }

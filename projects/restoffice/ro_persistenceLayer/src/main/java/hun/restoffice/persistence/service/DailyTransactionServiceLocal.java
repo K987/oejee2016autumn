@@ -3,6 +3,7 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -23,5 +24,11 @@ public interface DailyTransactionServiceLocal {
 	 * @throws PersistenceServiceException 
 	 */
 	void createDailyTransactionBatch(List<DailyIncome> incomes) throws PersistenceServiceException;
+
+	/**
+	 * @param workDay
+	 * @return
+	 */
+	List<DailyIncome> findByDate(Calendar workDay) throws PersistenceServiceException;;
 
 }

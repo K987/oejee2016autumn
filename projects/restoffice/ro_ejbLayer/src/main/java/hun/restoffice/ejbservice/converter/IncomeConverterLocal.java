@@ -3,6 +3,8 @@
  */
 package hun.restoffice.ejbservice.converter;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import hun.restoffice.persistence.entity.financialTransaction.Income;
@@ -21,5 +23,11 @@ public interface IncomeConverterLocal {
 	 * @return
 	 */
 	Income from(IncomeStub stub);
+
+	/**
+	 * @param incomes
+	 * @return
+	 */
+	List<IncomeStub> to(List<Income> incomes);
 
 }

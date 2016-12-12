@@ -3,6 +3,8 @@
  */
 package hun.restoffice.ejbservice.facade;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,6 +12,7 @@ import javax.ejb.Stateless;
 
 import org.apache.log4j.Logger;
 
+import hun.restoffice.ejbservice.business.DailyTransactionBusinessLocal;
 import hun.restoffice.ejbservice.converter.DailyTransactionConverterLocal;
 import hun.restoffice.persistence.service.DailyTransactionServiceLocal;
 import hun.restoffice.remoteClient.domain.DailyTransactionStub;
@@ -31,6 +34,9 @@ public class DailyTransactionFacade implements DailyTransactionFacadeRemote {
 	@EJB
 	private DailyTransactionServiceLocal dService;
 	
+	@EJB
+	private DailyTransactionBusinessLocal dBusiness;
+	
 	/* (non-Javadoc)
 	 * @see hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote#batchTransactionClose(java.util.List)
 	 */
@@ -42,6 +48,17 @@ public class DailyTransactionFacade implements DailyTransactionFacadeRemote {
 			LOG.error(e);
 			throw new FacadeException(e.getLocalizedMessage());
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote#closeDay(java.util.Calendar)
+	 */
+	@Override
+	public void closeDay(Date day) throws FacadeException {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(day);
+		this.dBusiness.closeWorkDay(cal);
+		
 	}
 	
 

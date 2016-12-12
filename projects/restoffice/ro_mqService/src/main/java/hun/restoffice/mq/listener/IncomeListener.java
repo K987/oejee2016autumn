@@ -18,41 +18,42 @@ import hun.restoffice.remoteClient.domain.IncomeStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
- *  
+ * 
  *
  * @author kalmankostenszky
  */
-@MessageDriven(name = "IncomeListener", activationConfig = { 
-		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+@MessageDriven(name = "IncomeListener", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
 		@ActivationConfigProperty(propertyName = "destination", propertyValue = "incomequeue"),
-		@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge") 
-		})
+		@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge") })
 public class IncomeListener implements MessageListener {
 
 	private static final Logger LOG = Logger.getLogger(IncomeListener.class);
-	
+
 	@EJB
 	private FinanceFacadeLocal fFacade;
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 	 */
-	
+
 	@Override
 	public void onMessage(Message message) {
 		LOG.info("IcomeListener#onMessage invoked messageId");
-		
-		if (message instanceof javax.jms.ObjectMessage){
+
+		if (message instanceof javax.jms.ObjectMessage) {
 			ObjectMessage oMessage = (ObjectMessage) message;
 			IncomeStub stub = null;
 			try {
-				if (oMessage.getObject() instanceof hun.restoffice.remoteClient.domain.IncomeStub){
+				if (oMessage.getObject() instanceof hun.restoffice.remoteClient.domain.IncomeStub) {
 					stub = (IncomeStub) oMessage.getObject();
 				}
 			} catch (JMSException e) {
-				LOG.error(e.getLocalizedMessage());
+				LOG.error(e);
 			}
-			
-			if (stub != null){
+
+			if (stub != null) {
 				try {
 					this.fFacade.addIncome(stub);
 				} catch (FacadeException e) {

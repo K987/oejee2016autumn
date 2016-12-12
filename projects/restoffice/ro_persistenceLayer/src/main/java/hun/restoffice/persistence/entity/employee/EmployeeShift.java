@@ -34,7 +34,7 @@ import javax.persistence.Transient;
 				+ " AND shift.startDate >:" + EmployeeShift.FROM_DATE),
 		@NamedQuery(name = EmployeeShift.FIND_BY_NAME_AND_SHIFT, query = "SELECT es FROM EmployeeShift es WHERE LOWER(employee.name)=:"+EmployeeShift.EMPLOYEE_NAME//
 		+" AND shift.id=:"+EmployeeShift.SHIFT_ID),
-		@NamedQuery(name = EmployeeShift.GET_BY_ROWID, query = "SELECT es FROM EmployeeShift es WHERE rowId =:"+EmployeeShift.ROWID)
+		@NamedQuery(name = EmployeeShift.GET_BY_ROWID, query = "SELECT es FROM EmployeeShift es WHERE rowId =:"+EmployeeShift.ROWID),
 })
 public class EmployeeShift implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,7 @@ public class EmployeeShift implements Serializable {
 	public static final String EMPLOYEE_NAME = "employeeName";
 	public static final String SHIFT_ID = "shiftId";
 	public static final String ROWID = "rowId";
+
 
 
 
@@ -76,6 +77,7 @@ public class EmployeeShift implements Serializable {
 	@Enumerated(value = EnumType.ORDINAL)
 	@Column(name = "employee_shift_actual_position")
 	private JobPosition actualPosition;
+	
 
 	@SequenceGenerator(name = "employee_shift_employee_shift_id_generator", sequenceName = "employee_shift_employee_shift_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_shift_employee_shift_id_generator")
