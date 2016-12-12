@@ -115,6 +115,7 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	@Override
 	public List<ExpenseStub> getExpensesMatching(Integer partnerId, Integer costCenterId, Integer costTypeId, Integer paymentMethodOrdinal, Boolean isPayed)
 			throws FacadeException {
+		LOG.info("get Expense matching invoked");
 		List<ExpenseStub> rtrn = new ArrayList<>();
 		PaymentMethod pm = paymentMethodOrdinal == -1 ? null : PaymentMethod.values()[paymentMethodOrdinal];
 		

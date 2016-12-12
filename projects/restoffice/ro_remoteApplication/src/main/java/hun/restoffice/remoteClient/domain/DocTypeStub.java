@@ -10,8 +10,8 @@ package hun.restoffice.remoteClient.domain;
  */
 public enum DocTypeStub {
 
-	EXTERNAL("külső"),
-	INTERNAL("belső");
+	INTERNAL("belső"),
+	EXTERNAL("külső");
 	
 	
 	private final String description;

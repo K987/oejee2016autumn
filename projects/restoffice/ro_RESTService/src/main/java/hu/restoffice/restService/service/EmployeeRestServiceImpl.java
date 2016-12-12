@@ -96,6 +96,7 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 		LOG.info("get employee schedule invoked");
 		Calendar f = null;
 		Calendar t = null;
+		
 		try {
 			f = from.getDate() != null ? from.getDate() : Calendar.getInstance();
 			if (to.getDate() != null) {
@@ -105,6 +106,7 @@ public class EmployeeRestServiceImpl implements EmployeeRestService {
 				t.add(Calendar.DAY_OF_YEAR, 14);
 			}
 		} catch (Exception e) {
+			LOG.error(e.getLocalizedMessage());
 			throw new WebApplicationException(e, Response.status(400).entity(new RestError(-100, "missing parameter")).build());
 		}
 

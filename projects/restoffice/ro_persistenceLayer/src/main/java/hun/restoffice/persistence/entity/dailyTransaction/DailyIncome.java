@@ -27,7 +27,7 @@ import hun.restoffice.persistence.entity.employee.EmployeeShift;
 @Table(name = "daily_incomes")
 // TODO: add static final fields for qry name and params
 @NamedQueries({ @NamedQuery(name = DailyIncome.FIND_ALL, query = "SELECT d FROM DailyIncome d JOIN FETCH d.employeeShift es"),
-		@NamedQuery(name = DailyIncome.FIND_BY_DATE, query = "SELECT d FROM DailyIncome d JOIN d.employeeShift es JOIN es.shift s WHERE s.startDate =:"
+		@NamedQuery(name = DailyIncome.FIND_BY_DATE, query = "SELECT DISTINCT d FROM DailyIncome d JOIN d.employeeShift es JOIN es.shift s WHERE s.startDate =:"
 				+ DailyIncome.DATE) })
 public class DailyIncome implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -107,7 +107,7 @@ public class ExpenseService implements ExpenseServiceLocal {
 			throws PersistenceServiceException {
 		LOG.info("readFiltered invoked with params: [ partnerID: " + partnerId + ", " + "costCenterId: " + costCenterId + ", " + "costTypeId: " + costTypeId
 				+ ", " + "PaymentMethod: " + pm + ", " + "isPayed: " + isPayed + "]");
-		int payed = isPayed == null ? -1 : isPayed.booleanValue() == true ? 1 : 0;
+		int payed = isPayed == null ? 0 : isPayed.booleanValue() == true ? 1 : -1;
 		int payMethod = pm == null ? -1 : pm.ordinal();
 
 		try {

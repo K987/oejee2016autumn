@@ -76,7 +76,7 @@ public class DailyTransactionBusiness implements DailyTransactionBusinessLocal {
 		BigDecimal cardTotal = getTotal(registers, RegisterType.CARD);
 		BigDecimal cashTotal = getTotal(registers, RegisterType.CASH);
 
-		cardTotal = cashTotal.subtract(cardTotal);
+		cashTotal = cashTotal.subtract(cardTotal);
 
 		BigDecimal cashOver = getOver(dailyIncomes, cashTotal, CASH_TYPE);
 		BigDecimal cardOver = getOver(dailyIncomes, cardTotal, CARD_TYPE);
@@ -127,7 +127,7 @@ public class DailyTransactionBusiness implements DailyTransactionBusinessLocal {
 		for (DailyIncome dailyIncome : dailyIncomes) {
 			if (type.equals(CASH_TYPE))
 				rtrn = rtrn.add(dailyIncome.getCashSum());
-			else
+			else if (type.equals(CARD_TYPE))
 				rtrn = rtrn.add(dailyIncome.getCardSum());
 		}
 		rtrn = rtrn.subtract(total);

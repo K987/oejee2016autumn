@@ -87,12 +87,12 @@ public class Expense extends FinancialTransaction implements Serializable {
 	// fields
 
 	// bi-directional many-to-one association to CostCenter
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "expense_costcenter", nullable = false, referencedColumnName = "cost_center_id")
 	private CostCenter costCenter;
 
 	// bi-directional many-to-one association to ExpType
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "expense_type", nullable = false, referencedColumnName = "exp_type_id")
 	private ExpType expType;
 

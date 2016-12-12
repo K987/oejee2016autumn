@@ -11,6 +11,6 @@ package hun.restoffice.persistence.entity.financialTransaction;
  */
 public enum DocumentType {
 
-	EXTERNAL,
-	INTERNAL
+	INTERNAL,
+	EXTERNAL
 }
