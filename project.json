@@ -53,6 +53,22 @@
 				}
 			],
 			"interfaces": [
+				{
+				"type": "web",
+				"goal": "manage expenses"
+				},
+				{
+				"type": "REST",
+				"goal": "manage partners and employees, get schedulew"
+				},
+				{
+				"type": "RMI",
+				"goal": "manage daily closing"
+				},
+				{
+				"type": "jms",
+				"goal": "queue: send incomes, topic: publish daily result"
+				}
 			]
 		},
 		{
