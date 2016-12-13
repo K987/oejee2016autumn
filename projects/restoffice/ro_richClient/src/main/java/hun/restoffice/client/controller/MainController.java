@@ -240,14 +240,14 @@ public class MainController implements WizardElement {
 	@FXML
 	public void onSend() {
 		LOG.debug("send pressed");
-		if (!canSend)
-			return;
+//		if (!canSend)
+//			return;
 
-		for (WizardStep step : steps) {
-			if (step.loader != null) {
-				((WizardElement) step.loader.getController()).onSend();
-			}
-		}
+//		for (WizardStep step : steps) {
+//			if (step.loader != null) {
+//				((WizardElement) step.loader.getController()).onSend();
+//			}
+//		}
 		Date toClose = Date.from(closingDate.get().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		try {
 			RemoteServiceFactory.lookupDailyTransaction().closeDay(toClose);

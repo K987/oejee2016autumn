@@ -7,7 +7,7 @@
 				<entry name="java:jboss/exported/jms/queue/incomequeue" />
 			</jms-queue>
 			<jms-topic name="dailyincometopic">
-				<entry name="jms/queue/dailyincometopic" />
+				<entry name="jms/topic/dailyincometopic" />
 				<entry name="java:jboss/exported/jms/queue/dailyincometopic" />
 			</jms-topic>
 		</jms-destinations>

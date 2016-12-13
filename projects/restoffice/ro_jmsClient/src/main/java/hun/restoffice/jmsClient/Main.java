@@ -6,10 +6,16 @@ package hun.restoffice.jmsClient;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import javax.jms.JMSException;
+import javax.naming.NamingException;
+
 import org.apache.log4j.Logger;
 
 import hun.restoffice.jmsClient.queue.QueueMessageFactory;
 import hun.restoffice.jmsClient.queue.QueueName;
+import hun.restoffice.jmsClient.topic.IncomeListener;
+import hun.restoffice.jmsClient.topic.Subsrcriber;
+import hun.restoffice.jmsClient.topic.TopicName;
 import hun.restoffice.remoteClient.domain.DocTypeStub;
 import hun.restoffice.remoteClient.domain.IncomeStub;
 import hun.restoffice.remoteClient.domain.PaymentMethodStub;
@@ -22,13 +28,26 @@ import hun.restoffice.remoteClient.domain.PaymentMethodStub;
 public class Main {
 
 	private static final Logger LOG = Logger.getLogger(Main.class);
-	
+
 	private static boolean run = true;
+
+	static Subsrcriber subsrcriber;
+	static IncomeListener listener;
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
+		try {
+			subsrcriber = new Subsrcriber(TopicName.TOPIC_DAILY_INCOME);
+			listener = new IncomeListener();
+			subsrcriber.startASync(listener);
+		} catch (NamingException e) {
+			LOG.error("cant start listening " + e.getLocalizedMessage());
+		} catch (JMSException e) {
+			LOG.error("topic not found " + e.getLocalizedMessage());
+		}
 
 		while (run) {
 			System.out.println(" Send new income: press 1 \n Get daily closes: press 2 \n Quit: press 3: ");
@@ -61,13 +80,18 @@ public class Main {
 	private static void quit() {
 		run = false;
 		System.out.println("bye then...");
+		try {
+			subsrcriber.stop();
+		} catch (JMSException e) {
+			LOG.error(e);
+		}
 	}
 
 	/**
 	 * 
 	 */
 	private static void getDailyCloses() {
-		// TODO Auto-generated method stub
+		listener.printAll();
 
 	}
 

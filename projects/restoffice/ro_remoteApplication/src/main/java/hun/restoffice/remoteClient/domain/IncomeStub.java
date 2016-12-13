@@ -159,16 +159,19 @@ public class IncomeStub implements Serializable {
 		return accPeriodEnd;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return String.format(
-				"IncomeStub [partner=%s, payMethod=%s, incomeType=%s, accPeriodStart=%s, registered=%s, payed=%s, grossTotal=%s, expiry=%s, docType=%s, docId=%s, description=%s]",
-				partner, payMethod, incomeType, accPeriodStart, registered, payed, grossTotal, expiry, docType, docId, description);
+		return "IncomeStub [" + (docId != null ? "docId=" + docId + ", " : "") + (partner != null ? "partner=" + partner + ", " : "")
+				+ (payMethod != null ? "payMethod=" + payMethod + ", " : "") + (incomeType != null ? "incomeType=" + incomeType + ", " : "")
+				+ (accPeriodStart != null ? "accPeriodStart=" + accPeriodStart.getTimeInMillis() + ", " : "") + (registered != null ? "registered=" + registered.getTimeInMillis() + ", " : "")
+				+ (payed != null ? "payed=" + payed.getTimeInMillis() + ", " : "") + (grossTotal != null ? "grossTotal=" + grossTotal + ", " : "")
+				+ (expiry != null ? "expiry=" + expiry + ", " : "") + (docType != null ? "docType=" + docType + ", " : "")
+				+ (description != null ? "description=" + description + ", " : "") + (accPeriodEnd != null ? "accPeriodEnd=" + accPeriodEnd.getTimeInMillis() : "") + "]";
 	}
+
+
 
 }
