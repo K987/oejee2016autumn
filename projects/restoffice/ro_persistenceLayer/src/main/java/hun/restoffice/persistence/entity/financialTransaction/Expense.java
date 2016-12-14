@@ -132,6 +132,7 @@ public class Expense extends FinancialTransaction implements Serializable {
 		setDescription(description);
 		setRegistered(convertDate(registered));
 		setExpiry(convertDate(expiry));
+		setPayed(convertDate(payed));
 		setAccPeriod(new AccountingPeriod(convertDate(accPeriodStart), convertDate(accPeriodEnd)));
 		this.costCenterName = costCenter2;
 		this.costTypeName = costType;
