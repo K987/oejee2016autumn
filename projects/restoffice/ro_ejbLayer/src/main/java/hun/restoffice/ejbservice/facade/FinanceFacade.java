@@ -54,6 +54,8 @@ public class FinanceFacade implements FinanceFacadeLocal {
 	private IncomeServiceLocal iService;
 	
 	
+	
+	
 	/* (non-Javadoc)
 	 * @see hun.restoffice.ejbservice.facade.ExpenseFacadeLocal#getAllExpenses()
 	 */
@@ -177,6 +179,19 @@ public class FinanceFacade implements FinanceFacadeLocal {
 			throw new FacadeException(e.getLocalizedMessage());
 		}
 		
+	}
+	/* (non-Javadoc)
+	 * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#getAllIncomes()
+	 */
+	@Override
+	public List<IncomeStub> getAllIncomes() throws FacadeException {
+		List<IncomeStub> rtrn = new ArrayList<>();
+		try {
+			rtrn = this.iConverter.to(this.iService.readAll());
+			return rtrn;
+		} catch (PersistenceServiceException e) {
+			throw new FacadeException(e.getLocalizedMessage());
+		}
 	}
 
 }

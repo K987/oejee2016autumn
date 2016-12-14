@@ -64,8 +64,8 @@ public class IncomeConverter implements IncomeConverterLocal {
 				convertToCal(income.getRegistered()),
 				convertToCal(income.getPayed()),
 				convertToCal(income.getExpiry()),
-				convertToCal(income.getAccPeriod().getStartDate()),
-				convertToCal(income.getAccPeriod().getEndDate()));
+				convertToCal(income.getAccPeriod() == null ? null : income.getAccPeriod().getStartDate()),
+				convertToCal(income.getAccPeriod() == null ? null : income.getAccPeriod().getEndDate()));
 	}
 	
 	private Calendar convertToCal(Date date){

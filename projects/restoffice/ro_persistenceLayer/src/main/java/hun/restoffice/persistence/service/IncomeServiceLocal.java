@@ -30,4 +30,9 @@ public interface IncomeServiceLocal {
 	 */
 	List<Income> insertAll(List<Income> incomes) throws PersistenceServiceException;
 
+	/**
+	 * @return
+	 */
+	List<Income> readAll() throws PersistenceServiceException;;
+
 }

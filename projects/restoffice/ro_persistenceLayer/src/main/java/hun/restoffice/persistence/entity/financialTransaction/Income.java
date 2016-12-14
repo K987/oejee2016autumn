@@ -28,7 +28,7 @@ import javax.persistence.Transient;
 @Table(name = "incomes")
 
 @NamedQueries(value = { 
-		@NamedQuery(name = Income.FIND_ALL, query = "SELECT i FROM Income i"),
+		@NamedQuery(name = Income.FIND_ALL, query = "SELECT i FROM Income i JOIN FETCH i.party"),
 		@NamedQuery(name = Income.COUNT_BY_ID, query = "SELECT COUNT(i) FROM Income i WHERE LOWER(i.docId)=:"+Income.ID)
 })
 
@@ -55,7 +55,7 @@ public class Income extends FinancialTransaction implements Serializable {
 	// fields
 
 	// bi-directional many-to-one association to IncType
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "income_type", nullable = false)
 	private IncType incType;
 

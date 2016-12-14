@@ -98,4 +98,18 @@ public class IncomeService implements IncomeServiceLocal {
 		return rtrn;
 	}
 
+	/* (non-Javadoc)
+	 * @see hun.restoffice.persistence.service.IncomeServiceLocal#readAll()
+	 */
+	@Override
+	public List<Income> readAll() throws PersistenceServiceException {
+		try{
+			return this.entityManager.createNamedQuery(Income.FIND_ALL, Income.class).getResultList();
+		} catch (Exception e){
+			LOG.error(e);
+			throw new PersistenceServiceException(PersistenceExceptionType.UNKNOWN, "unknown exception while retireving all incomes");
+		}
+		
+	}
+
 }

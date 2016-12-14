@@ -85,4 +85,9 @@ public interface FinanceFacadeLocal {
 	 */
 	void updateExpense(ExpenseStub stub) throws FacadeException;
 
+	/**
+	 * @return
+	 */
+	List<IncomeStub> getAllIncomes() throws FacadeException;
+
 }

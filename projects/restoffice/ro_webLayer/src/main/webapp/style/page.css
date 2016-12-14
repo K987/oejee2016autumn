@@ -4,7 +4,7 @@ body {
 	background-color: #ffffff;
 }
 
-.expenseTable {
+.expenseTable, .incomeTable {
 	color: black;
 	font-weight: normal;
 	padding: 0px;
@@ -18,12 +18,12 @@ body {
 	white-space: nowrap;
 }
 
-.expenseTable thead {
+.expenseTable thead, .incomeTable thead {
 	text-align: center;
 	font-weight: bold;
 }
 
-.expenseTable td, .expenseTable th {
+.expenseTable td, .expenseTable th, .incomeTable td, .incomeTable th {
 	border: 1px solid;
 	padding: 3px;
 }

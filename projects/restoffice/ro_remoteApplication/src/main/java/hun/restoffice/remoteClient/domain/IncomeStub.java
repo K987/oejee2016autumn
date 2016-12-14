@@ -23,7 +23,6 @@ public class IncomeStub implements Serializable {
 	private final String partner;
 	private final PaymentMethodStub payMethod;
 	private final String incomeType;
-	private final Calendar accPeriodStart;
 	private final Calendar registered;
 	private final Calendar payed;
 	private final BigDecimal grossTotal;
@@ -31,6 +30,7 @@ public class IncomeStub implements Serializable {
 	private final DocTypeStub docType;
 	private final String description;
 	private final Calendar accPeriodEnd;
+	private final Calendar accPeriodStart;
 
 
 	/**
