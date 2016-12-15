@@ -17,7 +17,8 @@ import hu.szabobelazoltan.centralizedbookmarksstorage.persistence.query.Bookmark
 
 @Entity
 @Table(name = "cbms_keyword")
-@NamedQueries(value = { @NamedQuery(name = BookmarkQuery.KEYWORD_BY_KW, query = "SELECT k FROM cbms_keyword k WHERE k.keyword=:" + BookmarkParameter.KEYWORD), })
+@NamedQueries(value = { @NamedQuery(name = BookmarkQuery.KEYWORD_BY_KW, query = "SELECT k FROM cbms_keyword k WHERE k.keyword=:" + BookmarkParameter.KEYWORD),
+		@NamedQuery(name = BookmarkQuery.KEYWORD_ALL, query = "Select k FROM cbms_keyword k") })
 public class Keyword implements Serializable {
 
 	/**

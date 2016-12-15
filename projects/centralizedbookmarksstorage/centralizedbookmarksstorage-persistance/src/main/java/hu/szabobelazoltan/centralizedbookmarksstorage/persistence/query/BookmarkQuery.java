@@ -14,4 +14,5 @@ public class BookmarkQuery {
 	public static final String INSERT_USER = "User.insert";
 	public static final String INSERT_BOOKMARK = "Bookmark.insert";
 	public static final String INSERT_SHARE = "Share.insert";
+	public static final String KEYWORD_ALL = "Keyword.all";
 }
