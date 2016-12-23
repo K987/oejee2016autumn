@@ -45,21 +45,7 @@ public class CreateTracklistServlet extends HttpServlet {
 			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
 			return;
 		}
-		
-		//FIXME remove (start of testing promotion)
-//
-//		try {	
-//			List<String> streamingUrls = new ArrayList<String>();
-//			streamingUrls.add("https://soundcloud.com/solardisco/altair-nouveau-showdown");
-//			streamingUrls.add("https://play.spotify.com/track/3AA8xNhDC0MpqwkGX3EP5V");
-//			tracklistFacade.promoteTracks(streamingUrls);
-//		} catch (FacadeException e) {
-//			LOGGER.error(e, e);
-//			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
-//			return;
-//		}
-		//FIXME remove (end of testing promotion)
-		
+	
 		resp.sendRedirect(Page.DASHBOARD.getUrl());
 	}
 }

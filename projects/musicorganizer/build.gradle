@@ -11,6 +11,8 @@ ext {
 	hibernateVersion = '4.3.10.Final'
 	jstlVersion = '1.2'
 	
+	jbossjmsclientVersion = '7.2.0.Final'
+	
 	jaxrsVersion = '2.0.1'
 	resteasyVersion = '2.3.7.Final'
 	jbossjee6Version = '3.0.3.Final'  
