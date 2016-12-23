@@ -44,6 +44,6 @@ public class RemoveTrackServlet extends HttpServlet {
 			return;
 		}
 		
-		resp.sendRedirect(Page.DASHBOARD.getUrl());
+		resp.sendRedirect(Page.TRACKLIST.getUrl());
 	}
 }

@@ -23,21 +23,23 @@ public class TracklistConverterImpl implements TracklistConverter {
 	public List<TracklistStub> to(List<Tracklist> tracklists) {
 		final List<TracklistStub> result = new ArrayList<>();
 		for (final Tracklist tracklist : tracklists) {
-			TracklistStub tracklistStub = this.to(tracklist);
-			for(StreamingUrl streamingUrl : tracklist.getStreamingUrls()) {
-				tracklistStub.getStreamingUrls().add(streamingUrlConverter.to(streamingUrl));
-			}
-			result.add(tracklistStub);
+			result.add(this.to(tracklist));
 		}
 		return result;
  	}
 
 	@Override
 	public TracklistStub to(Tracklist tracklist) {
-		return new TracklistStub(
+		final TracklistStub result = new TracklistStub(
 				customerConverter.to(tracklist.getCustomer()), 
 				tracklist.getName()
 				);
+		
+		for(StreamingUrl streamingUrl : tracklist.getStreamingUrls()) {
+			result.getStreamingUrls().add(streamingUrlConverter.to(streamingUrl));
+		}
+		
+		return result;
 	}
 
 }

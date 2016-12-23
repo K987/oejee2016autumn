@@ -50,7 +50,7 @@ public class AddTrackServlet extends HttpServlet {
 			return;
 		}
 		
-		resp.sendRedirect(Page.DASHBOARD.getUrl());
+		resp.sendRedirect(Page.TRACKLIST.getUrl());
 	}
 	
 }

@@ -15,56 +15,34 @@
 	CustomerStub authenticatedUser = (CustomerStub)request.getSession().getAttribute(SessionAttribute.AUTHENTICATED_USER); 
 	%>
 	<h2>Welcome <a href="Settings"><%= authenticatedUser.getNickname() %>!</a></h2>
-    <form method="post" action="CreateTracklist">
-			<td><input type="text" name="name" value="" /></td>
-			<td><input type="submit" value="Create Tracklist" />&nbsp;</td>
-	</form>
 	
-	<c:forEach items="${requestScope.tracklists}" var="tracklist">
-		 <hr/>
-         <strong>
-             <c:out value="${tracklist.name}" /> ( <a href="RemoveTracklist?name=${tracklist.name}"/>remove</a> )
-         </strong>
          <br/>
+         <h3>All your tracklists: </h3>
          <table>
 	         <thead>
 	             <tr>
-	                 <th>artist</th>
-	                 <th>title</th>
-	                 <th>url</th>
-	                 <th>category</th>
+	                 <th>name</th>
 	                 <th>action</th>
 	             </tr>
 	         </thead>
 	         <tbody>
-	             <c:forEach items="${tracklist.streamingUrls}" var="streamingUrl">
-	                 <tr>
-                 		 <td><c:out value="${streamingUrl.song.artist.name}" /></td>
-	                     <td><c:out value="${streamingUrl.song.title}" /></td>
-	                     <td>
-							<img src="resources/images/<c:out value="${streamingUrl.type}" />.png" alt="<c:out value="${streamingUrl.type}" />" height="20" width="20">
-	                     	<a href="<c:out value="${streamingUrl.url}" />" target="_blank" ><c:out value="${streamingUrl.url}" /></a>
-                     	 </td>
-	                     <td><c:out value="${streamingUrl.song.category}" /></td>
-	                     <td><a href="RemoveTrack?tracklistName=${tracklist.name}&streamingUrl=${streamingUrl.url}"/>remove</a></td>
-	                 </tr>
-	             </c:forEach>
-	             
-	             <form method="post" action="AddTrack">
-		            <tr>
-		            	<input type="hidden" name="tracklistName" value="${tracklist.name}"/>
-   						<td><input type="text" name="artistName" value=""/></td>
-   						<td><input type="text" name="songTitle" value=""/></td>
-						<td><input type="text" name="streamingUrl" value=""/></td>
-						<td><input type="text" name="songCategory" value="" /></td>
-						<td><input type="submit" value="Add" />&nbsp;</td>
-					<tr>
-				</form>
+	         <c:forEach items="${requestScope.tracklists}" var="tracklist">
+	            <tr>
+	             	<td><a href="Tracklist?name=${tracklist.name}"/><c:out value="${tracklist.name}" /></a></td>
+	                <td><a href="RemoveTracklist?name=${tracklist.name}"/>remove</a></td>
+	            </tr>
+	         </c:forEach>
+
+			<tr>
+			<form method="post" action="CreateTracklist">
+				<td><input type="text" name="name" value="" /></td>
+				<td><input type="submit" value="Create Tracklist" />&nbsp;</td>
+			</form>
+			</tr>
+
 	         </tbody>
      	</table>
-        <hr/>
-     </c:forEach>
-     
+
      <br/><br/>
      <a href="Logout">Logout</a>
 

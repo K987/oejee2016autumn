@@ -195,6 +195,17 @@ public class TracklistFacadeImpl implements TracklistFacade {
 		
 	}
 
+	@Override
+	public TracklistStub getTracklist(String customerEmailAddress, String name)
+			throws FacadeException {
+		try {
+			return this.converter.to(this.tracklistService.read(name, customerEmailAddress));
+		} catch (final PersistenceServiceException e) {
+			LOGGER.error(e, e);
+			throw new FacadeException("Failed to get Tracklist by name " + name + " for customer " + customerEmailAddress);
+		}
+	}
+
 
 
 }
