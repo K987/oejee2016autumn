@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 			authenticatedCustomer = customerFacade.authenticate(emailAddress, password);
 		} catch (FacadeException e) {
 			LOGGER.error(e,e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage())); 
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage())); 
 			return;
 		}
 		

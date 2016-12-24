@@ -8,6 +8,8 @@ import javax.ejb.Local;
 @Local
 public interface ArtistService {
 
+	Artist read(String name) throws PersistenceServiceException;
+	
 	Artist create(String name) throws PersistenceServiceException;
 	
 	boolean exists(String name) throws PersistenceServiceException;

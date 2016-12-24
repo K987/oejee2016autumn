@@ -69,7 +69,9 @@ public class TracklistFacadeImpl implements TracklistFacade {
 					LOGGER.debug("No Artist exists by name " + artistName + ". Creating a new Artist entity");
 				}
 				artist = artistService.create(artistName);
-			} 
+			} else {
+				artist = artistService.read(artistName);
+			}
 			
 			if (!songService.exists(songTitle)) {
 				if (LOGGER.isDebugEnabled()) {

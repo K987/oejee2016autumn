@@ -39,7 +39,7 @@ public class RemoveTrackListServlet extends HttpServlet {
 			tracklistFacade.remove(tracklistName, customerEmailAddress);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage()));
 			return;
 		}
 		

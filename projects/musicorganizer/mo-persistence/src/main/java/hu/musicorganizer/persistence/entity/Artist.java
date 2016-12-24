@@ -1,7 +1,9 @@
 package hu.musicorganizer.persistence.entity;
 
 import hu.musicorganizer.persistence.parameter.ArtistParameter;
+import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.query.ArtistQuery;
+import hu.musicorganizer.persistence.query.CustomerQuery;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "artist")
 @NamedQueries(value = { //
-		@NamedQuery(name = ArtistQuery.COUNT_BY_NAME, query = "SELECT COUNT(a) FROM Artist a WHERE a.name=:" + ArtistParameter.NAME)
+		@NamedQuery(name = ArtistQuery.COUNT_BY_NAME, query = "SELECT COUNT(a) FROM Artist a WHERE a.name=:" + ArtistParameter.NAME),
+		@NamedQuery(name = ArtistQuery.GET_BY_NAME, query = "SELECT a FROM Artist a WHERE a.name=:" + ArtistParameter.NAME)
 })
 public class Artist {
 

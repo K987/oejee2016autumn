@@ -44,7 +44,7 @@ public class DashboardServlet extends HttpServlet  {
 			req.setAttribute(TracklistAttribute.ATTR_TRACKLISTS, tracklists);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage())); 
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage())); 
 			return;
 		}
 		

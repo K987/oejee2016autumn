@@ -46,11 +46,11 @@ public class AddTrackServlet extends HttpServlet {
 			tracklistFacade.addTrack(customerEmailAddress, tracklistName, songTitle, songCategory, streamingUrl, artistName);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage()));
 			return;
 		}
 		
-		resp.sendRedirect(Page.TRACKLIST.getUrl());
+		resp.sendRedirect(Page.TRACKLIST.getUrlWithNameParameter(tracklistName));
 	}
 	
 }

@@ -4,7 +4,9 @@ import hu.musicorganizer.persistence.entity.Artist;
 import hu.musicorganizer.persistence.entity.Customer;
 import hu.musicorganizer.persistence.exception.PersistenceServiceException;
 import hu.musicorganizer.persistence.parameter.ArtistParameter;
+import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.query.ArtistQuery;
+import hu.musicorganizer.persistence.query.CustomerQuery;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,6 +44,19 @@ public class ArtistServiceImpl implements ArtistService {
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error during counting Artists by name (" + name + ")! " + e.getLocalizedMessage(), e);
 		}
+	}
+
+	@Override
+	public Artist read(String name) throws PersistenceServiceException {
+		Artist result = null;
+		try {
+			result = this.entityManager.createNamedQuery(ArtistQuery.GET_BY_NAME, Artist.class)
+					.setParameter(ArtistParameter.NAME, name)
+					.getSingleResult();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when fetching Artist by name (" + name + ")! " + e.getLocalizedMessage(), e);
+		}
+		return result;
 	}
 
 }

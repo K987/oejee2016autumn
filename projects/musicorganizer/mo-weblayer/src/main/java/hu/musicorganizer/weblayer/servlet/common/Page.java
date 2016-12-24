@@ -20,8 +20,12 @@ public enum Page {
 		return this.url;
 	}
 	
-	public String getUrl(String errorMessage) {
+	public String getUrlWithErrorMessage(String errorMessage) {
 		return this.url + "?errorMessage=" + errorMessage;
+	}
+	
+	public String getUrlWithNameParameter(String name) {
+		return this.url + "?name=" + name;
 	}
 
 	private Page(final String jspName, final String url) {

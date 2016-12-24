@@ -40,10 +40,10 @@ public class RemoveTrackServlet extends HttpServlet {
 			tracklistFacade.removeTrack(customerEmailAddress, tracklistName, streamingUrl);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage()));
 			return;
 		}
 		
-		resp.sendRedirect(Page.TRACKLIST.getUrl());
+		resp.sendRedirect(Page.TRACKLIST.getUrlWithNameParameter(tracklistName));
 	}
 }

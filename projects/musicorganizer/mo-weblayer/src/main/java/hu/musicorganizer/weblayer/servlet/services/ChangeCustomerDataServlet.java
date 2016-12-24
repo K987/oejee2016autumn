@@ -50,7 +50,7 @@ public class ChangeCustomerDataServlet extends HttpServlet {
 			
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage()));
 			return;
 		}
 		

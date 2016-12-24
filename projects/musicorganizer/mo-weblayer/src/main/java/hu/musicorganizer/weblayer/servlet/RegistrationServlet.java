@@ -51,7 +51,7 @@ public class RegistrationServlet extends HttpServlet {
 			MusicOrganizerSession.setAuthenticatedUser(req, customer);
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
-			resp.sendRedirect(Page.ERROR.getUrl(e.getLocalizedMessage()));
+			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage()));
 			return;
 		}
 		
