@@ -22,5 +22,7 @@ public interface TracklistFacade {
 
 	void remove(String name, String customerEmailAddress) throws FacadeException;
 	
+	List<TracklistStub> getRecommendedTracklists(String customerEmailAddress) throws FacadeException;
+	
 	void promoteTracks(List<String> streamingUrls) throws FacadeException;
 }

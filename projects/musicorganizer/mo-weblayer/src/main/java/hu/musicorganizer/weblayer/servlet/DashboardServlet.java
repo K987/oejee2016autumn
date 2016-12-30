@@ -36,12 +36,13 @@ public class DashboardServlet extends HttpServlet  {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		
-
+		String customerEmailAddress = MusicOrganizerSession.getAuthenticatedUser(req).getEmailAddress();
 
 		try {
-			final List<TracklistStub> tracklists = tracklistFacade.getTracklists(MusicOrganizerSession.getAuthenticatedUser(req).getEmailAddress());
-			orderTracklists(tracklists);
-			req.setAttribute(TracklistAttribute.ATTR_TRACKLISTS, tracklists);
+			final List<TracklistStub> customersTracklists = tracklistFacade.getTracklists(customerEmailAddress);
+			orderTracklists(customersTracklists);
+			req.setAttribute(TracklistAttribute.ATTR_TRACKLISTS, customersTracklists);
+
 		} catch (FacadeException e) {
 			LOGGER.error(e, e);
 			resp.sendRedirect(Page.ERROR.getUrlWithErrorMessage(e.getLocalizedMessage())); 

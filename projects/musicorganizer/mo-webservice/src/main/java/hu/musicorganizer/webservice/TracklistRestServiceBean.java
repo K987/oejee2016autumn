@@ -1,5 +1,6 @@
 package hu.musicorganizer.webservice;
 
+import hu.musicorganizer.ejbservice.domain.TrackInputStub;
 import hu.musicorganizer.ejbservice.domain.TracklistStub;
 import hu.musicorganizer.ejbservice.exception.FacadeException;
 import hu.musicorganizer.ejbservice.facade.TracklistFacade;
@@ -25,6 +26,21 @@ public class TracklistRestServiceBean implements TracklistRestService {
 	public List<TracklistStub> getTracklists(String emailAddress)
 			throws FacadeException {
 		return facade.getTracklists(emailAddress);
+	}
+
+
+	@Override
+	public TracklistStub addTrack(TrackInputStub stub)
+			throws FacadeException {
+		this.facade.addTrack(
+				stub.getCustomerEmailAddress(), 
+				stub.getTracklistName(), 
+				stub.getSongTitle(), 
+				stub.getSongCategory(), 
+				stub.getStreamingUrl(), 
+				stub.getArtistName());
+		
+		return facade.getTracklist(stub.getCustomerEmailAddress(), stub.getTracklistName());
 	}
 
 	

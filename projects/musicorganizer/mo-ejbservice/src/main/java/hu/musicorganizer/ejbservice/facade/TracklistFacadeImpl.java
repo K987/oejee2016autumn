@@ -208,6 +208,19 @@ public class TracklistFacadeImpl implements TracklistFacade {
 		}
 	}
 
+	@Override
+	public List<TracklistStub> getRecommendedTracklists(
+			String customerEmailAddress) throws FacadeException {
+		try {
+			LOGGER.error("!!!!!!!!!!!!!"+ this.streamingUrlService.readAll(customerEmailAddress).size());
+		} catch (final PersistenceServiceException e) {
+			LOGGER.error(e, e);
+			throw new FacadeException("Failed to get recommended tracklists for customer " + customerEmailAddress);
+		}
+
+		return null;
+	}
+
 
 
 }

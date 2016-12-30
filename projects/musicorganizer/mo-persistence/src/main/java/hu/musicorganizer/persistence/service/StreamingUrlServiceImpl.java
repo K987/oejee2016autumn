@@ -1,10 +1,16 @@
 package hu.musicorganizer.persistence.service;
 
+import java.util.List;
+
 import hu.musicorganizer.persistence.entity.Song;
 import hu.musicorganizer.persistence.entity.StreamingUrl;
+import hu.musicorganizer.persistence.entity.Tracklist;
 import hu.musicorganizer.persistence.exception.PersistenceServiceException;
+import hu.musicorganizer.persistence.parameter.CustomerParameter;
 import hu.musicorganizer.persistence.parameter.StreamingUrlParameter;
+import hu.musicorganizer.persistence.parameter.TracklistParameter;
 import hu.musicorganizer.persistence.query.StreamingUrlQuery;
+import hu.musicorganizer.persistence.query.TracklistQuery;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -57,6 +63,20 @@ public class StreamingUrlServiceImpl implements StreamingUrlService {
 					.getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching StreamingUrl by url (" + url + ")! " + e.getLocalizedMessage(), e);
+		}
+		return result;
+	}
+
+	@Override
+	public List<StreamingUrl> readAll(String customerEmailAddress)
+			throws PersistenceServiceException {
+		List<StreamingUrl> result = null;
+		try {
+			result = this.entityManager.createNamedQuery(StreamingUrlQuery.GET_ALL_BY_CUSTOMER_EMAILADDRESS, StreamingUrl.class)
+					.setParameter(CustomerParameter.EMAILADDRESS, customerEmailAddress)
+					.getResultList();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when fetching all StreamingUrls for " + customerEmailAddress +"! " + e.getLocalizedMessage(), e);
 		}
 		return result;
 	}
