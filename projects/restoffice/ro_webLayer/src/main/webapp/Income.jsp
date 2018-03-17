@@ -19,7 +19,7 @@
 <c:choose>
 	<c:when test="${requestScope.incomes.size() eq  0}">
 		<h2>kiadás lista üres</h2>
-		<a href="IncomeList">vissza</a>
+		<a href="Income">vissza</a>
 	</c:when>
 	<c:otherwise>
 

@@ -12,7 +12,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--  
 <link rel="stylesheet" type="text/css" href="style/page.css" />
+-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <title>Kiadások</title>
 </head>
 <body>
@@ -24,7 +27,7 @@
 	<c:choose>
 		<c:when test="${requestScope.expenses.size() eq  0}">
 			<h2>kiadás lista üres</h2>
-			<a href="ExpenseList">vissza</a>
+			<a href="Expense">vissza</a>
 		</c:when>
 		<c:otherwise>
 			<table class=expenseTable>
@@ -47,7 +50,7 @@
 				<tbody>
 
 					<tr>
-						<form method="post" action="ExpenseList">
+						<form method="post" action="Expense">
 							<td>-</td>
 							<!-- partners -->
 							<td><select name="partner" id="partner">
@@ -93,7 +96,7 @@
 
 							<td><input type="submit" value="Szűr"/></td>
 						</form>
-						<form method="get" action="ExpenseList">
+						<form method="get" action="Expense">
 							<td><input type="submit" value="szűrés törlése" /></td>
 						</form>
 					</tr>
