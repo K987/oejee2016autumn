@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.persistence.service;
 
@@ -20,50 +20,50 @@ import hun.restoffice.persistence.exception.PersistenceServiceException;
 @Local
 public interface EmployeeServiceLocal {
 
-	/**
-	 * Retrieve all employees
-	 * 
-	 * @return
-	 * @throws PersistenceServiceException
-	 */
-	List<Employee> readAll() throws PersistenceServiceException;
+    /**
+     * Retrieve all employees
+     *
+     * @return
+     * @throws PersistenceServiceException
+     */
+    List<Employee> readAll() throws PersistenceServiceException;
 
-	/**
-	 * Create new employee
-	 * 
-	 * @param employee
-	 * @return
-	 * @throws PersistenceServiceException
-	 */
-	public Employee create(Employee employee) throws PersistenceServiceException;
+    /**
+     * Create new employee
+     *
+     * @param employee
+     * @return
+     * @throws PersistenceServiceException
+     */
+    public Employee create(Employee employee) throws PersistenceServiceException;
 
-	/**
-	 * Queries employee work schedule betwee two dates
-	 * 
-	 * @param name
-	 * @param from
-	 * @param to
-	 * @return
-	 * @throws PersistenceServiceException
-	 */
-	Employee queryEmpSchedule(String name, Calendar from, Calendar to) throws PersistenceServiceException;
+    /**
+     * Queries employee work schedule betwee two dates
+     *
+     * @param name
+     * @param from
+     * @param to
+     * @return
+     * @throws PersistenceServiceException
+     */
+    Employee queryEmpSchedule(String name, Calendar from, Calendar to) throws PersistenceServiceException;
 
-	/**
-	 * Deletes employee
-	 * 
-	 * @param employeeName
-	 * @return
-	 * @throws PersistenceServiceException
-	 */
-	List<Shift> deleteEmployee(String employeeName) throws PersistenceServiceException;
+    /**
+     * Deletes employee
+     *
+     * @param employeeName
+     * @return
+     * @throws PersistenceServiceException
+     */
+    List<Shift> deleteEmployee(Integer employeeId) throws PersistenceServiceException;
 
-	/**
-	 * Updates employee data
-	 * 
-	 * @param employee
-	 * @return
-	 * @throws PersistenceServiceException
-	 */
-	Employee updateEmployee(Employee employee) throws PersistenceServiceException;
+    /**
+     * Updates employee data
+     *
+     * @param employee
+     * @return
+     * @throws PersistenceServiceException
+     */
+    Employee updateEmployee(Employee employee) throws PersistenceServiceException;
 
 }

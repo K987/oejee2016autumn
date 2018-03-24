@@ -13,5 +13,7 @@
     <a href="Expense">Kiadások kezelése</a>
     <br/>
     <a href="Income">Bevételek kezelése</a>
+        <br/>
+    <a href="Employee">Munkavállalók kezelése</a>
 </body>
 </html>
