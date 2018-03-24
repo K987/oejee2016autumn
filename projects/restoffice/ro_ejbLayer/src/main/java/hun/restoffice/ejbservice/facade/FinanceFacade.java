@@ -234,6 +234,54 @@ public class FinanceFacade implements FinanceFacadeLocal {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hun.restoffice.ejbservice.facade.FinanceFacadeLocal#getIncomeById(java.lang.
+     * String)
+     */
+    @Override
+    public IncomeStub getIncomeById(final String docId) throws FacadeException {
+        log.info("get income by id invoked");
+        try {
+            IncomeStub rtrn = iConverter.to(iService.readById(docId));
+            return rtrn;
+        } catch (PersistenceServiceException e) {
+            log.error(e);
+            throw new FacadeException(e.getLocalizedMessage());
+        }
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see hun.restoffice.ejbservice.facade.FinanceFacadeLocal#updateIncome(hun.
+     * restoffice.remoteClient.domain.IncomeStub)
+     */
+    @Override
+    public void updateIncome(final IncomeStub stub) throws FacadeException {
+        // TODO Auto-generated method stub
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * hun.restoffice.ejbservice.facade.FinanceFacadeLocal#deleteIncome(java.lang.
+     * String)
+     */
+    @Override
+    public void deleteIncome(final String docId) throws FacadeException {
+        try {
+            iService.deleteById(docId);
+        } catch (PersistenceServiceException e) {
+            log.error(e);
+            throw new FacadeException(e.getLocalizedMessage());
+        }
+    }
+
 
 
 }

@@ -105,4 +105,20 @@ public interface FinanceFacadeLocal {
     List<IncomeStub> getIncomeMatching(Integer partnerId, Integer incomeTypeId, Integer paymentMethodOrdinal,
             Boolean isPayed) throws FacadeException;
 
+    /**
+     * @param docId
+     * @return
+     */
+    IncomeStub getIncomeById(String docId) throws FacadeException;
+
+    /**
+     * @param stub
+     */
+    void updateIncome(IncomeStub stub) throws FacadeException;
+
+    /**
+     * @param docId
+     */
+    void deleteIncome(String docId) throws FacadeException;
+
 }

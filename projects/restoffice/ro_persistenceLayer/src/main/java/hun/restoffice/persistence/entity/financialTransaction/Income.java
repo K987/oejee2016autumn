@@ -31,7 +31,7 @@ import javax.persistence.Transient;
         @NamedQuery(name = Income.FIND_ALL, query = "SELECT i FROM Income i JOIN FETCH i.party"),
         @NamedQuery(name = Income.COUNT_BY_ID, query = "SELECT COUNT(i) FROM Income i WHERE LOWER(i.docId)=:"
                 + Income.ID),
-        @NamedQuery(name = Income.FIND_ALL, query = "SELECT i FROM Income i JOIN FETCH i.party WHERE "
+        @NamedQuery(name = Income.READ_FILTERED, query = "SELECT i FROM Income i JOIN FETCH i.party WHERE "
                 + "1=1"
                 + " AND ( :" + Income.PARTNER_ID + " =-1" + " OR i.party.id=:" + Income.PARTNER_ID
                 + ")"
@@ -41,7 +41,9 @@ import javax.persistence.Transient;
                 + " )"
                 + "AND ( 0 =:" + Income.IS_PAYED + " " + "OR (-1 =:" + Income.IS_PAYED + " AND i.payed is null) "
                 + "OR (1 =:" + Income.IS_PAYED + " AND i.payed is not null)"
-                + ") ")
+                + ") "),
+        @NamedQuery(name = Income.FIND_BY_ID, query = "SELECT i FROM Income i JOIN FETCH i.party WHERE LOWER(i.docId)=:"
+                + Income.ID)
 })
 
 @AttributeOverrides(value = { @AttributeOverride(name = "docId", column = @Column(name = "income_doc_id")),
@@ -62,6 +64,7 @@ public class Income extends FinancialTransaction implements Serializable {
 
     public static final String COUNT_BY_ID = "Income.countById";
     public static final String FIND_ALL = "Income.findAll";
+    public static final String FIND_BY_ID = "Income.findById";
 
     public static final String ID = "id";
     public static final String PARTNER_ID = "partnerId";
@@ -70,6 +73,7 @@ public class Income extends FinancialTransaction implements Serializable {
     public static final String IS_PAYED = "isPayed";
 
     public static final String READ_FILTERED = "Income.findFiltered";
+
 
     // fields
 

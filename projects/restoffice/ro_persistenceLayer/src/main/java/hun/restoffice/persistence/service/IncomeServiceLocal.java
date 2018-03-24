@@ -46,4 +46,15 @@ public interface IncomeServiceLocal {
     List<Income> readFiltered(Integer partnerId, Integer incomeTypeId, PaymentMethod pm, Boolean isPayed)
             throws PersistenceServiceException;
 
+    /**
+     * @param docId
+     * @return
+     */
+    Income readById(String docId) throws PersistenceServiceException;
+
+    /**
+     * @param docId
+     */
+    void deleteById(String docId) throws PersistenceServiceException;
+
 }
