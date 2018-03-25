@@ -2,9 +2,6 @@ package hun.restoffice.weblayer.servlet;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -16,13 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import hun.restoffice.ejbservice.facade.FinanceFacadeLocal;
-import hun.restoffice.ejbservice.facade.PartnerFacadeLocal;
-import hun.restoffice.remoteClient.domain.DocTypeStub;
-import hun.restoffice.remoteClient.domain.IncomeStub;
-import hun.restoffice.remoteClient.domain.PaymentMethodStub;
+import hun.restoffice.ejbservice.domain.EmployeeStub;
+import hun.restoffice.ejbservice.exception.AdaptorException;
+import hun.restoffice.ejbservice.facade.EmployeeFacadeLocal;
+import hun.restoffice.persistence.entity.employee.JobPosition;
 import hun.restoffice.remoteClient.exception.FacadeException;
-import hun.restoffice.weblayer.util.FinanceHelperLocal;
 
 /**
  *
@@ -33,13 +28,7 @@ public class EmployeeEditServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(EmployeeEditServlet.class);
 
     @EJB
-    private FinanceFacadeLocal fFacade;
-
-    @EJB
-    private FinanceHelperLocal fHelper;
-
-    @EJB
-    private PartnerFacadeLocal pFacade;
+    private EmployeeFacadeLocal eFacade;
 
     /*
      * (non-Javadoc)
@@ -54,15 +43,23 @@ public class EmployeeEditServlet extends HttpServlet {
         log.info("EmployeeEditServlet#doGet invoked");
 
         Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
-        if (employeeId == -1) {
+        EmployeeStub employee = new EmployeeStub();
+        employee.setId(-1);
+        employee.setName("");
+        employee.setPosition(JobPosition.BARTENDER);
+        employee.setWage(new BigDecimal("0"));
+        employee.setActive(true);
+        if (employeeId != null && employeeId != -1) {
+            try {
+                employee = eFacade.getEmployee(employeeId);
+            } catch (FacadeException e) {
+                // TODO Auto-generated catch block
 
-        } else if (employeeId != null) {
-
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Employee");
-            dispatcher.forward(request, response);
+                log.error("cant find employee");
+            }
         }
 
+        request.setAttribute("employee", employee);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("EmployeeEdit.jsp");
         dispatcher.forward(request, response);
@@ -76,65 +73,38 @@ public class EmployeeEditServlet extends HttpServlet {
      * javax.servlet.http.HttpServletResponse)
      */
     @Override
-    protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        log.info("IncomeEditServlet#doPost invoked");
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
+        log.info("EmployeeEditServlet#doPost invoked");
 
-        request.setCharacterEncoding("UTF-8");
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        JobPosition jobPosition = JobPosition.values()[Integer.parseInt(request.getParameter("position"))];
+        BigDecimal wage = new BigDecimal(request.getParameter("wage"));
+        Boolean isActive = new Boolean(request.getParameter("isActive"));
 
-        String docId = request.getParameter("docId");
-        DocTypeStub docType = DocTypeStub.values()[Integer.parseInt(request.getParameter("docType"))];
-        String partner = null;
-        try {
-            partner = pFacade.getPartnerById(Integer.parseInt(request.getParameter("partner"))).getName();
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FacadeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        EmployeeStub emp = new EmployeeStub();
+        emp.setName(name);
+        emp.setPosition(jobPosition);
+        emp.setWage(wage);
+        emp.setActive(isActive);
+
+        log.info(emp.toString());
+        if (id != -1) {
+            try {
+                emp.setId(id);
+                log.info("id is...." + id);
+                eFacade.updateEmployee(emp);
+            } catch (AdaptorException e) {
+                log.error(e);
+            }
+        } else {
+            try {
+                eFacade.addEmployee(emp);
+            } catch (AdaptorException e) {
+                log.error(e);
+            }
         }
-        BigDecimal grossTotal = new BigDecimal(request.getParameter("grossTotal"));
-        String description = request.getParameter("description");
-        Calendar issue = formatCalendar(request.getParameter("issueDate"));
-        PaymentMethodStub payMethod = PaymentMethodStub.values()[Integer.parseInt(request.getParameter("payMethod"))];
-        Calendar expiry = formatCalendar(request.getParameter("expiryDate"));
-        Calendar payed = formatCalendar(request.getParameter("payedDate"));
-        String incomeType = request.getParameter("incomeType");
-        Calendar accPerStart = formatCalendar(request.getParameter("accStartDate"));
-        Calendar accPerEnd = formatCalendar(request.getParameter("accEndDate"));
-        String isNew = request.getParameter("isNew");
-
-        IncomeStub stub = new IncomeStub(docId, docType, partner, description, grossTotal, payMethod, incomeType, issue,
-                payed, expiry, accPerStart, accPerEnd);
-        log.info("income stub: " + stub);
-        log.info("Input is: " + stub);
-        try {
-            if ("-1".equals(isNew.trim()))
-                fFacade.addIncome(stub);
-            else
-                fFacade.updateIncome(stub);
-        } catch (FacadeException e) {
-            log.error(e);
-        }
-
-        response.sendRedirect("Income");
-    }
-
-    /**
-     * @param parameter
-     * @return
-     */
-    private Calendar formatCalendar(final String parameter) {
-        if (parameter == null && "".equals(parameter))
-            return null;
-        Calendar rtrn = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            rtrn.setTime(df.parse(parameter.trim()));
-        } catch (ParseException e) {
-            log.error(e);
-            return null;
-        }
-        return rtrn;
+        response.sendRedirect("Employee");
     }
 }

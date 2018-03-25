@@ -66,4 +66,13 @@ public interface EmployeeServiceLocal {
      */
     Employee updateEmployee(Employee employee) throws PersistenceServiceException;
 
+    /**
+     * find employee by id
+     * 
+     * @param employeeId
+     * @return
+     * @throws PersistenceServiceException
+     */
+    Employee read(final Integer employeeId) throws PersistenceServiceException;
+
 }

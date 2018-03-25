@@ -68,4 +68,10 @@ public interface EmployeeFacadeLocal {
      */
     EmployeeStub updateEmployee(EmployeeStub employee) throws AdaptorException;
 
+    /**
+     * @param employeeId
+     * @return
+     */
+    EmployeeStub getEmployee(Integer employeeId) throws FacadeException;
+
 }

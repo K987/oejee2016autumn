@@ -34,7 +34,7 @@ import javax.persistence.Table;
                 + "WHERE LOWER(e.name)=:" + Employee.NAME + " AND es.shift.startDate <=:" + Employee.END_DATE + " AND es.actualStart != null"),
         @NamedQuery(name = Employee.COUNT, query = "SELECT COUNT(e) FROM Employee e WHERE LOWER(e.name) =:"
                 + Employee.NAME),
-        @NamedQuery(name = Employee.FIND_BY_ID, query = "SELECT e FROM Employee e WHERE e.id :=" + Employee.ID)
+        @NamedQuery(name = Employee.FIND_BY_ID, query = "SELECT e FROM Employee e WHERE e.id =:" + Employee.ID)
 
 })
 public class Employee implements Serializable {
@@ -148,6 +148,13 @@ public class Employee implements Serializable {
 
     public void setEmployeeShifts(final Set<EmployeeShift> employeeShifts) {
         this.employeeShifts = employeeShifts;
+    }
+
+    /**
+     * @param id2
+     */
+    public void setId(final Integer id2) {
+        id = id2;
     }
 
 }

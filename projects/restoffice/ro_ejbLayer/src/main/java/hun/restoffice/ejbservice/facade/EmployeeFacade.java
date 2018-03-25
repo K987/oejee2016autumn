@@ -20,6 +20,7 @@ import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.exception.ApplicationError;
 import hun.restoffice.persistence.exception.PersistenceServiceException;
 import hun.restoffice.persistence.service.EmployeeServiceLocal;
+import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
  * Employee business facade
@@ -85,13 +86,13 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
      * @see hun.restoffice.ejbservice.facade.EmployeeFacadeLocal#removeEmployee(java.lang.String)
      */
     @Override
-    public List<ShiftStub> removeEmployee(final Integer employeeId) throws AdaptorException {
+    public List<ShiftStub> removeEmployee(final Integer employeeId) throws FacadeException {
         if (LOG.isDebugEnabled())
             LOG.debug("removeEmployee invoked w/ param " + employeeId);
         try {
             return sConverter.to(eService.deleteEmployee(employeeId));
         } catch (Exception e) {
-            throw new AdaptorException(ApplicationError.UNEXPECTED, "not implemented");
+            throw new FacadeException(e.getLocalizedMessage());
         }
     }
 
@@ -134,6 +135,22 @@ public class EmployeeFacade implements EmployeeFacadeLocal {
                 default:
                     throw new AdaptorException(ApplicationError.UNEXPECTED, e.getMessage());
             }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hun.restoffice.ejbservice.facade.EmployeeFacadeLocal#getEmployee(java.lang.
+     * Integer)
+     */
+    @Override
+    public EmployeeStub getEmployee(final Integer employeeId) throws FacadeException {
+        try {
+            return eConverter.to(eService.read(employeeId));
+        } catch (PersistenceServiceException e) {
+            throw new FacadeException(e.getLocalizedMessage());
         }
     }
 

@@ -176,7 +176,7 @@ public class EmployeeService implements EmployeeServiceLocal {
      * @throws PersistenceServiceException
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    private Employee read(final Integer employeeId) throws PersistenceServiceException {
+    public Employee read(final Integer employeeId) throws PersistenceServiceException {
         try {
             return entityManager.createNamedQuery(Employee.FIND_BY_ID, Employee.class)
                     .setParameter(Employee.ID, employeeId).getSingleResult();

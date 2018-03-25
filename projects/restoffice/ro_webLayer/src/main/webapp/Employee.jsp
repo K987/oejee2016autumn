@@ -12,6 +12,8 @@
 	<t1>Munkavállalók listája</t1>
 	<br />
     <a href="/webpage">vissza</a>
+        <br />
+    <a href="EmployeeEdit?employeeId=-1">új munkavállaló</a>
 	<c:choose>
 		<c:when test="${requestScope.employees.size() eq 0 }}">
 			<h2>Munkavállaló lista üres</h2>
@@ -38,8 +40,8 @@
                                 type="currency" />
 							<td><c:out value="${wage} "/></td>
 							<td><c:out value="${employee.active }" /></td>
-							<td><a href="EmployeeEdit?employeId="<c:out value="${employee.id} }"/>>módosít</a></td>
-							<td><a href="EmployeeDelete?employeId="<c:out value="${employee.id} }"/>>töröl</a></td>
+							<td><a href="EmployeeEdit?employeeId=<c:out value="${employee.id}"/>">módosít</a></td>
+							<td><a href="EmployeeDelete?employeeId=<c:out value="${employee.id}"/>">töröl</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
