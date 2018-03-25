@@ -11,7 +11,7 @@
 <body>
 	<t1>Munkavállalók listája</t1>
 	<br />
-    <a href="/webpage">vissza</a>
+    <a href="/webpage">vissza a főoldalra</a>
         <br />
     <a href="EmployeeEdit?employeeId=-1">új munkavállaló</a>
 	<c:choose>

@@ -5,6 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+    request.setCharacterEncoding("UTF-8");
+%>
 <html>
 <head>
 <%@ include file="style/header.jspf"%>
@@ -17,7 +20,7 @@
 	<form action="EmployeeEdit" method="POST" accept-charset="UTF-8">
 	     <input type="hidden" id="id" name="id"  value="${requestScope.employee.id }">
 		<label for="name">név:</label> <input  type="text" id="name" name="name"
-			value="${requestScope.employee.name }" disabled="disabled"/>
+			value="${requestScope.employee.name }" ${requestScope.employee.id eq -1 ? '' : 'disabled' }/>
 			 <br /> 
 	    <label for="position">munkakör:</label>
 		<select name="position" id="position" name="position">
