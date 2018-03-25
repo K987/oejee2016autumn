@@ -17,7 +17,6 @@
 	<c:choose>
 		<c:when test="${requestScope.employees.size() eq 0 }}">
 			<h2>Munkavállaló lista üres</h2>
-			<a href="Employee">vissza</a>
 		</c:when>
 		<c:otherwise>
 			<table class="table table-striped">
@@ -38,7 +37,7 @@
 							<td><c:out value="${employee.position }" /></td>
 						      <fmt:formatNumber var="wage" value="${employee.wage}"
                                 type="currency" />
-							<td><c:out value="${wage} "/></td>
+							<td><c:out value="${wage}"/></td>
 							<td><c:out value="${employee.active }" /></td>
 							<td><a href="EmployeeEdit?employeeId=<c:out value="${employee.id}"/>">módosít</a></td>
 							<td><a href="EmployeeDelete?employeeId=<c:out value="${employee.id}"/>">töröl</a></td>

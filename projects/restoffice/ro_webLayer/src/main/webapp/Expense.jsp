@@ -27,7 +27,7 @@
 			<a href="Expense">vissza</a>
 		</c:when>
 		<c:otherwise>
-			<table class=expenseTable>
+			<table class="table table-stripped">
 				<thead>
 					<tr>
 						<th>sorszám</th>

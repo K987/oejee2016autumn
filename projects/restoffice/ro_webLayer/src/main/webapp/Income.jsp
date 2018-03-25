@@ -28,7 +28,7 @@
 	</c:when>
 	<c:otherwise>
 
-		<table class=incomeTable>
+		<table class="table table-stripped">
 			<thead>
 				<tr>
 					<th>sorszám</th>
