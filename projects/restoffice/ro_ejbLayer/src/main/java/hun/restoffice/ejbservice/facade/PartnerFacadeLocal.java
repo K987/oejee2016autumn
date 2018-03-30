@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.ejbservice.facade;
 
@@ -14,66 +14,71 @@ import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
  * Partner business facade
- * 
+ *
  * @author kalmankostenszky
  */
 @Local
 public interface PartnerFacadeLocal {
 
-	/**
-	 * Returns partner contact information if exists
-	 * 
-	 * @param partnerName
-	 *            partner company name
-	 * @return
-	 * @throws AdaptorException
-	 */
-	PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException;
+    /**
+     * Returns partner contact information if exists
+     *
+     * @param partnerName
+     *            partner company name
+     * @return
+     * @throws AdaptorException
+     */
+    PartnerContactStub getPartnerContact(String partnerName) throws AdaptorException;
 
-	/**
-	 * Returns all partner contact information
-	 * 
-	 * @return
-	 * @throws AdaptorException
-	 */
-	List<PartnerStub> gatAllPartnerContact() throws AdaptorException;
+    /**
+     * Returns all partner contact information
+     *
+     * @return
+     * @throws AdaptorException
+     */
+    List<PartnerStub> gatAllPartnerContact() throws AdaptorException;
 
-	/**
-	 * Delete partners without financialtransactions
-	 * 
-	 * @return
-	 */
-	List<PartnerStub> deleteUnusedPartners() throws AdaptorException;
+    /**
+     * Delete partners without financialtransactions
+     *
+     * @return
+     */
+    List<PartnerStub> deleteUnusedPartners() throws AdaptorException;
 
-	/**
-	 * Add new partner
-	 * 
-	 * @param partner
-	 *            partner to add
-	 * @return added partner data
-	 * @throws AdaptorException
-	 */
-	PartnerStub addPartner(PartnerStub partner) throws AdaptorException;
+    /**
+     * Add new partner
+     *
+     * @param partner
+     *            partner to add
+     * @return added partner data
+     * @throws AdaptorException
+     */
+    PartnerStub addPartner(PartnerStub partner) throws AdaptorException;
 
-	/**
-	 * Remove existing partner
-	 * 
-	 * @param partner
-	 *            partner to updated
-	 * @return updated partner data
-	 * @throws AdaptorException
-	 */
-	PartnerStub updatePartner(PartnerStub partner) throws AdaptorException;
+    /**
+     * Remove existing partner
+     *
+     * @param partner
+     *            partner to updated
+     * @return updated partner data
+     * @throws AdaptorException
+     */
+    PartnerStub updatePartner(PartnerStub partner) throws AdaptorException;
 
-	/**
-	 * @return
-	 */
-	List<PartnerStub> gatAllPartner(Boolean technical) throws FacadeException;
+    /**
+     * @return
+     */
+    List<PartnerStub> gatAllPartner(Boolean technical) throws FacadeException;
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	PartnerStub getPartnerById(Integer id) throws FacadeException;
+    /**
+     * @param id
+     * @return
+     */
+    PartnerStub getPartnerById(Integer id) throws FacadeException;
+
+    /**
+     * @param partnerId
+     */
+    void deletePatner(Integer partnerId) throws FacadeException;
 
 }

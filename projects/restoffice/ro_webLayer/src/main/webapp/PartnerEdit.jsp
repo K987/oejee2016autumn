@@ -14,8 +14,8 @@
 <body>
 	<h1>Partner kezelése</h1>
 	<br>
-	<form action="POST" action="PartnerEdit" accept-charset="UTF-8">
-		<input type="hidden" id="id" value="${requestScope.partner.id}" />
+	<form method="POST" action="PartnerEdit" accept-charset="UTF-8">
+		<input type="hidden" id="id" name="id" value="${requestScope.partner.id}" />
 		<label for="name">partner neve:</label><input type="text" id="name" name="name" value="${requestScope.partner.name}"/>
 		<br>
 		<label for="accountno">számla száma:</label><input type="text" id="accountno" name="accountno" value="${requestScope.partner.account}"/>

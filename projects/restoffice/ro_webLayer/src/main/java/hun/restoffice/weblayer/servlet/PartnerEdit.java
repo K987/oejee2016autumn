@@ -43,7 +43,9 @@ public class PartnerEdit extends HttpServlet {
         log.info("PartnerEdit#doGet invoked");
 
         Integer partnerId = Integer.parseInt(request.getParameter("partnerId"));
-        PartnerStub partner = new PartnerStub(null, null, null);
+        log.info("partner id: " + partnerId);
+        PartnerStub partner = new PartnerStub(partnerId, null, null, null);
+
 
         if (partnerId != null && partnerId != -1)
             try {
@@ -71,6 +73,7 @@ public class PartnerEdit extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
+        log.info(request.getParameter("id"));
         Integer id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String accountno = request.getParameter("accountno");
@@ -93,5 +96,6 @@ public class PartnerEdit extends HttpServlet {
                 log.error(e);
             }
         }
+        response.sendRedirect("Partner");
     }
 }
