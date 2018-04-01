@@ -10,6 +10,9 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'war'
 
+war{
+webInf { from 'src/main/resources' }
+}
 
 // In this section you declare the dependencies for your production and test code
 dependencies {

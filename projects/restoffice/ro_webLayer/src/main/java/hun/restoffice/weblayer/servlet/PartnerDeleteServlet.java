@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.ejbservice.facade.PartnerFacadeLocal;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
@@ -39,7 +40,13 @@ public class PartnerDeleteServlet extends HttpServlet {
 
         Integer partnerId = Integer.parseInt(request.getParameter("partnerId"));
 
-        if (partnerId != null) {
+        if (partnerId == -1) {
+            try {
+                pFacade.deleteUnusedPartners();
+            } catch (AdaptorException e) {
+                log.error(e);
+            }
+        } else if (partnerId != null) {
             try {
                 pFacade.deletePatner(partnerId);
             } catch (FacadeException e) {

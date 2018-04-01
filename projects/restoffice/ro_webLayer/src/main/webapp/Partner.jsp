@@ -13,6 +13,8 @@
 	<br>
 	<a href="PartnerEdit?partnerId=-1">új partner</a>
 	<br>
+	<a href="PartnerDelete?partnerId=-1">nem használt partnerek törlése</a>
+	<br>
 	<a href="/webpage">vissza a főoldalra</a>
 	<c:choose>
 		<c:when test="${requestScope.partners.size() eq 0 }">

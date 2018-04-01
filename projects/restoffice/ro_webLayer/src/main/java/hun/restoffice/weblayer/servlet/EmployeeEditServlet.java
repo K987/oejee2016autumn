@@ -40,6 +40,8 @@ public class EmployeeEditServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.getSession();
         log.info("EmployeeEditServlet#doGet invoked");
 
         Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.ejbservice.facade;
 
@@ -20,46 +20,46 @@ import hun.restoffice.remoteClient.exception.FacadeException;
 import hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote;
 
 /**
- *  
+ *
  *
  * @author kalmankostenszky
  */
 @Stateless(mappedName = "ejb/dailyTransactionFacade")
-public class DailyTransactionFacade implements DailyTransactionFacadeRemote {
+public class DailyTransactionFacade implements DailyTransactionFacadeRemote, DailyTransactionFacadeLocal {
 
-	private static final Logger LOG = Logger.getLogger(DailyTransactionFacade.class);
-	@EJB
-	private DailyTransactionConverterLocal dConverter;
-	
-	@EJB
-	private DailyTransactionServiceLocal dService;
-	
-	@EJB
-	private DailyTransactionBusinessLocal dBusiness;
-	
-	/* (non-Javadoc)
-	 * @see hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote#batchTransactionClose(java.util.List)
-	 */
-	@Override
-	public void batchTransactionClose(List<DailyTransactionStub> stubs) throws FacadeException {
-		try{
-			this.dService.createDailyTransactionBatch(this.dConverter.from(stubs));
-		} catch (Exception e){
-			LOG.error(e);
-			throw new FacadeException(e.getLocalizedMessage());
-		}
-	}
+    private static final Logger LOG = Logger.getLogger(DailyTransactionFacade.class);
+    @EJB
+    private DailyTransactionConverterLocal dConverter;
 
-	/* (non-Javadoc)
-	 * @see hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote#closeDay(java.util.Calendar)
-	 */
-	@Override
-	public void closeDay(Date day) throws FacadeException {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(day);
-		this.dBusiness.closeWorkDay(cal);
-		
-	}
-	
+    @EJB
+    private DailyTransactionServiceLocal dService;
+
+    @EJB
+    private DailyTransactionBusinessLocal dBusiness;
+
+    /* (non-Javadoc)
+     * @see hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote#batchTransactionClose(java.util.List)
+     */
+    @Override
+    public void batchTransactionClose(final List<DailyTransactionStub> stubs) throws FacadeException {
+        try{
+            dService.createDailyTransactionBatch(dConverter.from(stubs));
+        } catch (Exception e){
+            LOG.error(e);
+            throw new FacadeException(e.getLocalizedMessage());
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see hun.restoffice.remoteClient.facade.DailyTransactionFacadeRemote#closeDay(java.util.Calendar)
+     */
+    @Override
+    public void closeDay(final Date day) throws FacadeException {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(day);
+        dBusiness.closeWorkDay(cal);
+
+    }
+
 
 }

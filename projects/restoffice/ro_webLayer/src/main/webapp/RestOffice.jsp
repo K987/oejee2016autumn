@@ -17,5 +17,7 @@
 	<a href="Employee">Munkavállalók kezelése</a>
 	   <br>
     <a href="Partner">Partnerek kezelése</a>
+    <br>
+    <a href="DailyClose">Nap zárás</a>
 </body>
 </html>

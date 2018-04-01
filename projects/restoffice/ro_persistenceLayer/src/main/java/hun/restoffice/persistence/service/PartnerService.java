@@ -3,6 +3,7 @@
  */
 package hun.restoffice.persistence.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -90,7 +91,7 @@ public class PartnerService implements PartnerServiceLocal {
      */
     @Override
     public List<Partner> deleteUnused() throws PersistenceServiceException {
-        List<Partner> rtrn = null;
+        List<Partner> rtrn = new ArrayList<>();
         try {
             // get partner with old transactions
             // delete partners from incomes

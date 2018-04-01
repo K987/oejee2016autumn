@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.remoteClient.domain;
 
@@ -15,69 +15,85 @@ import java.util.Date;
  */
 public class RegisterCloseStub implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 
-	private final RegisterStub registerStub;
-	private final BigDecimal closeAmt;
-	private final Calendar closeDate;
-	private final int closeNo;
-	
-
-	/**
-	 * @param regStub
-	 * @param registerCloseAmt
-	 * @param registerCloseDate
-	 * @param registerCloseNo 
-	 */
-	public RegisterCloseStub(RegisterStub regStub, BigDecimal registerCloseAmt, Date registerCloseDate, Integer registerCloseNo) {
-		this.registerStub = regStub;
-		this.closeAmt = registerCloseAmt;
-		if(registerCloseDate != null)
-			(this.closeDate = Calendar.getInstance()).setTime(registerCloseDate);
-		else
-			this.closeDate = null;
-		this.closeNo = registerCloseNo;
-	}
-
-	/**
-	 * @return the registerStub
-	 */
-	public RegisterStub getRegisterStub() {
-		return registerStub;
-	}
+    private RegisterStub registerStub;
+    private BigDecimal closeAmt;
+    private Calendar closeDate;
+    private int closeNo;
 
 
-	/**
-	 * @return the closeAmt
-	 */
-	public BigDecimal getCloseAmt() {
-		return closeAmt;
-	}
+    /**
+     * @param regStub
+     * @param registerCloseAmt
+     * @param registerCloseDate
+     * @param registerCloseNo
+     */
+    public RegisterCloseStub(final RegisterStub regStub, final BigDecimal registerCloseAmt, final Date registerCloseDate, final Integer registerCloseNo) {
+        registerStub = regStub;
+        closeAmt = registerCloseAmt;
+        if(registerCloseDate != null)
+            (closeDate = Calendar.getInstance()).setTime(registerCloseDate);
+        else
+            closeDate = null;
+        closeNo = registerCloseNo;
+    }
+
+    /**
+     * @return the registerStub
+     */
+    public RegisterStub getRegisterStub() {
+        return registerStub;
+    }
 
 
-	/**
-	 * @return the closeDate
-	 */
-	public Calendar getCloseDate() {
-		return closeDate;
-	}
+    /**
+     * @return the closeAmt
+     */
+    public BigDecimal getCloseAmt() {
+        return closeAmt;
+    }
 
 
-	/**
-	 * @return the closeNo
-	 */
-	public int getCloseNo() {
-		return closeNo;
-	}
+    /**
+     * @return the closeDate
+     */
+    public Calendar getCloseDate() {
+        return closeDate;
+    }
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return String.format("RegisterCloseStub [registerStub=%s, closeAmt=%s, closeDate=%s, closeNo=%s]", registerStub, closeAmt, closeDate, closeNo);
-	}
-	
+    /**
+     * @return the closeNo
+     */
+    public int getCloseNo() {
+        return closeNo;
+    }
+
+
+    /**
+     * @param closeAmt
+     *            the closeAmt to set
+     */
+    public void setCloseAmt(final BigDecimal closeAmt) {
+        this.closeAmt = closeAmt;
+    }
+
+    /**
+     * @param closeNo
+     *            the closeNo to set
+     */
+    public void setCloseNo(final int closeNo) {
+        this.closeNo = closeNo;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("RegisterCloseStub [registerStub=%s, closeAmt=%s, closeDate=%s, closeNo=%s]", registerStub, closeAmt, closeDate, closeNo);
+    }
+
 }
