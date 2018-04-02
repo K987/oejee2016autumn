@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import hun.restoffice.ejbservice.domain.EmployeeShiftCloseStub;
 import hun.restoffice.ejbservice.exception.AdaptorException;
 import hun.restoffice.remoteClient.domain.CalendarScheduleStub;
 import hun.restoffice.remoteClient.domain.EmployeeShiftStub;
@@ -33,4 +34,12 @@ public interface ShiftFacadeLocal {
     List<CalendarScheduleStub> getCalendarschedule(Calendar day) throws FacadeException;
 
     void batchShiftClose(List<EmployeeShiftStub> models) throws FacadeException;
+
+    void batchShiftCloseShift(List<EmployeeShiftCloseStub> models) throws FacadeException;
+
+    /**
+     * @param closeDay
+     * @return
+     */
+    List<EmployeeShiftCloseStub> getShiftToClose(Calendar closeDay) throws FacadeException;
 }

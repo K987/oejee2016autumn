@@ -55,8 +55,6 @@ public class EmployeeEditServlet extends HttpServlet {
             try {
                 employee = eFacade.getEmployee(employeeId);
             } catch (FacadeException e) {
-                // TODO Auto-generated catch block
-
                 log.error("cant find employee");
             }
         }
