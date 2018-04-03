@@ -37,8 +37,7 @@
 							<fmt:formatDate var="startTime"
 								value="${shift.actualStart.getTime()}" type="time"
 								dateStyle="short" />
-
-							<!--   <td><c:out value="${startTime}" /></td>-->
+                               
 							<td><input type="time" value="${ startTime}"
 								name="actualStart" ${ shift.closed ? 'disabled' :''}/> <fmt:formatDate var="endTime"
 									value="${shift.actualEnd.getTime()}" type="time"

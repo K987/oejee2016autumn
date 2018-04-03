@@ -57,7 +57,7 @@ public class EmployeeShiftCloseServlet extends HttpServlet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse)
@@ -65,5 +65,6 @@ public class EmployeeShiftCloseServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 }
