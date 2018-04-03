@@ -55,7 +55,8 @@ public class RegisterFacade implements RegisterFacadeRemote, RegisterFacadeLocal
                 for (RegisterCloseStub registerCloseStub : tmp) {
                     LOG.info(registerCloseStub);
                     rtrn.add(
-                            new RegisterCloseStub(registerCloseStub.getRegisterStub(), new BigDecimal(0), day.getTime(), (registerCloseStub.getCloseNo() + 1)));
+                            new RegisterCloseStub(registerCloseStub.getRegisterStub(), new BigDecimal(0), day.getTime(),
+                                    (registerCloseStub.getCloseNo() + 1), false));
                 }
             }
             return rtrn;

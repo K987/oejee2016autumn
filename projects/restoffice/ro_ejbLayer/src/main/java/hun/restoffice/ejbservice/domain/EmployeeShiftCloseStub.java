@@ -15,7 +15,9 @@ public class EmployeeShiftCloseStub {
     private final String employeeName;
     private final Calendar actualStart;
     private final Calendar actualEnd;
+    private final JobPosition defaultPosition;
     private final JobPosition actualPosition;
+    private boolean closed;
 
     /**
      * @param shiftId
@@ -28,7 +30,7 @@ public class EmployeeShiftCloseStub {
      */
     public EmployeeShiftCloseStub(final int shiftId, final int employeeShiftId, final int employeeId,
             final String employeeName, final Calendar actualStart, final Calendar actualEnd,
-            final JobPosition actualPosition) {
+            final JobPosition actualPosition, final JobPosition defaultPosition, final boolean closed) {
         super();
         this.shiftId = shiftId;
         this.employeeShiftId = employeeShiftId;
@@ -37,6 +39,8 @@ public class EmployeeShiftCloseStub {
         this.actualStart = actualStart;
         this.actualEnd = actualEnd;
         this.actualPosition = actualPosition;
+        this.defaultPosition = defaultPosition;
+        this.closed = closed;
     }
 
     /**
@@ -86,6 +90,20 @@ public class EmployeeShiftCloseStub {
      */
     public JobPosition getActualPosition() {
         return actualPosition;
+    }
+
+    /**
+     * @return the defaultPosition
+     */
+    public JobPosition getDefaultPosition() {
+        return defaultPosition;
+    }
+
+    /**
+     * @return the closed
+     */
+    public boolean isClosed() {
+        return closed;
     }
 
     /*

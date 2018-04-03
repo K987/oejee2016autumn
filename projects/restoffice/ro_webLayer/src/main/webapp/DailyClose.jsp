@@ -13,10 +13,31 @@
 
 	<h1>Napzárás</h1>
 
-	<form method="post" action="DailyClose">
-		<label for="closeDate">Válasszon dátumot: </label> <input type="date"
-			name="closeDate" id="closeDate" /> <input type="submit" value="küld" />
-	</form>
+	<c:if test="${requestScope.onGoingClose }">
+		<fmt:formatDate value="${requestScope.closeDate.getTime()}"
+			var="closeDate" type="date" dateStyle="short" />
+
+		<div>
+			folyamatban lévő napi zárás
+			<c:out value="${closeDate}" />
+		</div>
+		<div>
+		<a href="DailyClose?reset=true">napi zárás megszakítása</a>
+		</div>
+		<div>
+			<a href="DailyClose?reset=false">napi zárás folytatása</a>
+		</div>
+	</c:if>
+	<c:if test="${!requestScope.onGoingClose }">
+		<form method="post" action="DailyClose">
+			<label for="closeDate">Válasszon dátumot: </label> <input type="date"
+				name="closeDate" id="closeDate" /> <input type="submit"
+				value="küld" />
+
+		</form>
+	</c:if>
 	<a href="/webpage">vissza a főoldalra</a>
+
+
 </body>
 </html>

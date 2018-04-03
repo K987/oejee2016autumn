@@ -19,36 +19,42 @@
 			<p>Nincsenek lezárandó műszakok</p>
 		</c:when>
 		<c:otherwise>
-		              <form action="EmployeeShiftClose" method="POST">
-                <table class="table table-stripped">
-                    <thead>
-                        <tr>
-                            <th scope="col">név</th>
-                            <th scope="col">munkakör</th>
-                            <th scope="col">kezdés ideje</th>
-                            <th scope="col">végzés ideje</th>
-                            <th scope="col">tényleges munkakör</th>
-                        </tr>
-                    </thead>
-                    <c:forEach items="${requestScope.employeeShifts }" var="shift">
-                        <tr>
-                            <td scope="row"><c:out
-                                    value="${shift.employeeName}"></c:out></td>
-                            <td><c:out value="${ shift.actualPosition}"></c:out></td>
-                            <fmt:formatDate var="startTime"
-                                value="${shift.actualStart.getTime()}" type="time"
-                                dateStyle="short" />
-                            <td><c:out value="${startTime}" /></td>
-                            <fmt:formatDate var="endTime"
-                                value="${shift.actualEnd.getTime()}" type="time"
-                                dateStyle="short" />
-                            <td><c:out value="${endTime}" /></td>
-                            
-                        </tr>
-                    </c:forEach>
-                </table>
-                <input type="submit" value="ment" />
-            </form>
+			<form action="EmployeeShiftClose" method="POST">
+				<table class="table table-stripped">
+					<thead>
+						<tr>
+							<th scope="col">név</th>
+							<th scope="col">munkakör</th>
+							<th scope="col">kezdés ideje</th>
+							<th scope="col">végzés ideje</th>
+							<th scope="col">tényleges munkakör</th>
+						</tr>
+					</thead>
+					<c:forEach items="${requestScope.employeeShifts }" var="shift">
+						<tr>
+							<td scope="row"><c:out value="${shift.employeeName}"></c:out></td>
+							<td><c:out value="${ shift.actualPosition}"></c:out></td>
+							<fmt:formatDate var="startTime"
+								value="${shift.actualStart.getTime()}" type="time"
+								dateStyle="short" />
+
+							<!--   <td><c:out value="${startTime}" /></td>-->
+							<td><input type="time" value="${ startTime}"
+								name="actualStart" ${ shift.closed ? 'disabled' :''}/> <fmt:formatDate var="endTime"
+									value="${shift.actualEnd.getTime()}" type="time"
+									dateStyle="short" />
+							<td><input type="time" value="${ endTime}" name="actualEnd" ${ shift.closed ? 'disabled' :''}/>
+							<td><select name="actualPosition" ${ shift.closed ? 'disabled' :''}>
+									<c:forEach items="${requestScope.positions }" var="position">
+									<option value="${position }" ${position eq shift.actualPosition ? 'selected' : ''} >${position }</option>
+									</c:forEach>
+							</select></td>
+
+						</tr>
+					</c:forEach>
+				</table>
+				<input type="submit" value="ment" />
+			</form>
 		</c:otherwise>
 	</c:choose>
 </body>

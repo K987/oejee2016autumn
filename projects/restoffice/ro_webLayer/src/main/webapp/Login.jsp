@@ -19,11 +19,12 @@
 			</div>
 			<br>
 			<div>
-				<label for="username">Felhasználó név:</label> <input type="text"
+				<label for="username">Felhasználó név:</label> </div><div><input type="text"
 					name="j_username" id="username" value="${requestScope.username }" />
 			</div>
 			<div>
 				<label for="password">Jelszó:</label>
+				</div><div>
 				<input type="password" name="j_password" id="password">
 			</div>
 			<input type="submit" name="submit" value="Bejelentkezés" />

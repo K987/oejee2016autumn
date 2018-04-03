@@ -22,7 +22,7 @@ public class RegisterCloseStub implements Serializable {
     private BigDecimal closeAmt;
     private Calendar closeDate;
     private int closeNo;
-
+    private boolean closed;
 
     /**
      * @param regStub
@@ -30,7 +30,8 @@ public class RegisterCloseStub implements Serializable {
      * @param registerCloseDate
      * @param registerCloseNo
      */
-    public RegisterCloseStub(final RegisterStub regStub, final BigDecimal registerCloseAmt, final Date registerCloseDate, final Integer registerCloseNo) {
+    public RegisterCloseStub(final RegisterStub regStub, final BigDecimal registerCloseAmt,
+            final Date registerCloseDate, final Integer registerCloseNo, final boolean closed) {
         registerStub = regStub;
         closeAmt = registerCloseAmt;
         if(registerCloseDate != null)
@@ -38,6 +39,7 @@ public class RegisterCloseStub implements Serializable {
         else
             closeDate = null;
         closeNo = registerCloseNo;
+        this.closed = closed;
     }
 
     /**
@@ -88,12 +90,29 @@ public class RegisterCloseStub implements Serializable {
         this.closeNo = closeNo;
     }
 
+    /**
+     * @return the closed
+     */
+    public boolean isClosed() {
+        return closed;
+    }
+
+    /**
+     * @param closed
+     *            the closed to set
+     */
+    public void setClosed(final boolean closed) {
+        this.closed = closed;
+    }
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return String.format("RegisterCloseStub [registerStub=%s, closeAmt=%s, closeDate=%s, closeNo=%s]", registerStub, closeAmt, closeDate, closeNo);
+        return "RegisterCloseStub [registerStub=" + registerStub + ", closeAmt=" + closeAmt + ", closeDate="
+                + String.format("%tc", closeDate) + ", closeNo=" + closeNo + ", closed=" + closed + "]";
     }
+
 
 }

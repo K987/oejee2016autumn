@@ -27,6 +27,7 @@ public class DailyCloseFacade implements DailyCloseFacadeLocal {
     private List<EmployeeShiftCloseStub> employeeShifts;
     private List<DailyTransactionStub> dailyTransactions;
     Calendar closeDay;
+    private boolean registerClosed;
 
     @EJB
     private RegisterFacadeLocal rFacade;
@@ -49,6 +50,7 @@ public class DailyCloseFacade implements DailyCloseFacadeLocal {
     public List<RegisterCloseStub> getRegistersToClose() throws FacadeException {
         if (registerCloses == null) {
             registerCloses = rFacade.getRegistersToClose(closeDay);
+            registerClosed = registerCloses.get(0).isClosed();
         }
         return registerCloses;
     }
@@ -101,6 +103,7 @@ public class DailyCloseFacade implements DailyCloseFacadeLocal {
         dFacade.closeDay(closeDay.getTime());
     }
 
+    @Override
     @Remove
     public void remove() {
         registerCloses = null;
@@ -118,4 +121,21 @@ public class DailyCloseFacade implements DailyCloseFacadeLocal {
     public Calendar getCloseDay() {
         return closeDay;
     }
+
+    /**
+     * @return the registerClosed
+     */
+    @Override
+    public boolean areRegistersClosed() {
+        return registerClosed;
+    }
+
+    /**
+     * @param registerClosed
+     *            the registerClosed to set
+     */
+    public void setRegisterClosed(final boolean registerClosed) {
+        this.registerClosed = registerClosed;
+    }
+
 }

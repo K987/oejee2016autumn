@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import hun.restoffice.ejbservice.domain.EmployeeShiftCloseStub;
 import hun.restoffice.ejbservice.facade.DailyCloseFacadeLocal;
+import hun.restoffice.persistence.entity.employee.JobPosition;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
@@ -49,7 +50,20 @@ public class EmployeeShiftCloseServlet extends HttpServlet {
         }
 
         request.setAttribute("employeeShifts", employeeShifts);
+        request.setAttribute("positions", JobPosition.values());
         RequestDispatcher dispatcher = request.getRequestDispatcher("EmployeeShiftClose.jsp");
         dispatcher.forward(request, response);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
     }
 }

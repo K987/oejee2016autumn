@@ -37,17 +37,41 @@ public class DailyCloseServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException, IOException {
+        RequestDispatcher dispatcher = null;
 
+        Boolean reset = paramToBool(request.getParameter("reset"));
         DailyCloseFacadeLocal dailyClose = (DailyCloseFacadeLocal) request.getSession()
                 .getAttribute(DAILY_CLOSE_SESSION_KEY);
 
-        if (dailyClose == null) {
-            response.sendRedirect("DailyClose.jsp");
-        }
-        else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("RegisterClose");
+        if (reset == null) {
+            request.setAttribute("onGoingClose", false);
+
+            if (dailyClose != null) {
+                request.setAttribute("onGoingClose", true);
+                request.setAttribute("closeDate", dailyClose.getCloseDay());
+            }
+            dispatcher = request.getRequestDispatcher("DailyClose.jsp");
             dispatcher.forward(request, response);
+        } else if (reset) {
+            dailyClose.remove();
+            request.getSession().removeAttribute(DAILY_CLOSE_SESSION_KEY);
+            response.sendRedirect("RestOffice");
+        } else {
+            response.sendRedirect("RegisterClose");
         }
+
+    }
+
+    /**
+     * @param parameter
+     * @return
+     */
+    private Boolean paramToBool(final String parameter) {
+        if (parameter == null)
+            return null;
+        else
+            return Boolean.parseBoolean(parameter);
+
     }
 
     /*

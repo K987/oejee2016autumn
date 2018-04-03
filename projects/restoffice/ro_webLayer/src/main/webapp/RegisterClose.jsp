@@ -40,13 +40,13 @@
 								value="${register.closeDate.getTime()}" type="date"
 								dateStyle="short" />
 							<td><c:out value="${closeDate}" /></td>
-							<td><input type="checkbox" name="${register.registerStub.registerId }:isClosed" value="true"/></td>
+							<td><input type="checkbox" name="${register.registerStub.registerId }:isClosed" value="true" ${register.closed ? 'checked' : '' }  ${requestScope.isDayClosed ? 'disabled' : '' } /></td>
 							<td><input type="number"
 								name="${register.registerStub.registerId }:closeNo"
-								value="${register.closeNo }" /></td>
+								value="${register.closeNo }" ${requestScope.isDayClosed ? 'disabled' : '' }/></td>
 							<td><input type="number"
 								name="${register.registerStub.registerId }:closeAmt"
-								value="${register.closeAmt}"></td>
+								value="${register.closeAmt}" ${requestScope.isDayClosed ? 'disabled' : '' }></td>
 						</tr>
 					</c:forEach>
 				</table>

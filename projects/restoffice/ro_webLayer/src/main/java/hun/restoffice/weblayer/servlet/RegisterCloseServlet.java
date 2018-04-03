@@ -27,6 +27,7 @@ public class RegisterCloseServlet extends HttpServlet {
     private static final String DAILY_CLOSE_SESSION_KEY = "dailyClose";
 
     private static final Logger log = Logger.getLogger(RegisterCloseServlet.class);
+
     /*
      * (non-Javadoc)
      *
@@ -43,12 +44,15 @@ public class RegisterCloseServlet extends HttpServlet {
                 .getAttribute(DAILY_CLOSE_SESSION_KEY);
 
         List<RegisterCloseStub> registers = new ArrayList<>();
+        boolean isDayClosed = false;
         try {
             registers = dailyClose.getRegistersToClose();
+            isDayClosed = dailyClose.areRegistersClosed();
         } catch (FacadeException e) {
             log.error(e);
         }
         request.setAttribute("registers", registers);
+        request.setAttribute("isDayClosed", isDayClosed);
         RequestDispatcher dispatcher = request.getRequestDispatcher("RegisterClose.jsp");
         dispatcher.forward(request, response);
     }
@@ -68,23 +72,26 @@ public class RegisterCloseServlet extends HttpServlet {
         DailyCloseFacadeLocal dailyClose = (DailyCloseFacadeLocal) request.getSession()
                 .getAttribute(DAILY_CLOSE_SESSION_KEY);
 
-        try {
-            for (RegisterCloseStub register : dailyClose.getRegistersToClose()) {
-                String registerId = register.getRegisterStub().getRegisterId();
-                boolean isClosed = Boolean.parseBoolean(request.getParameter(registerId + ":isClosed"));
-                int closeNo = Integer.parseInt(request.getParameter(registerId + ":closeNo"));
-                BigDecimal closeAmt = new BigDecimal(request.getParameter(registerId + ":closeAmt"));
+        if (!dailyClose.areRegistersClosed()) {
+            try {
+                for (RegisterCloseStub register : dailyClose.getRegistersToClose()) {
+                    String registerId = register.getRegisterStub().getRegisterId();
+                    boolean isClosed = Boolean.parseBoolean(request.getParameter(registerId + ":isClosed"));
+                    int closeNo = Integer.parseInt(request.getParameter(registerId + ":closeNo"));
+                    BigDecimal closeAmt = new BigDecimal(request.getParameter(registerId + ":closeAmt"));
 
-                if (isClosed) {
-                    register.setCloseNo(closeNo);
-                    register.setCloseAmt(closeAmt);
+                    if (isClosed) {
+                        register.setClosed(isClosed);
+                        register.setCloseNo(closeNo);
+                        register.setCloseAmt(closeAmt);
+                    }
                 }
+            } catch (FacadeException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-        } catch (FacadeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
+        }
         response.sendRedirect("EmployeeShiftClose");
     }
 }

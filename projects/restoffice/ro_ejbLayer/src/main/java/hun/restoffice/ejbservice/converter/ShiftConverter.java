@@ -99,16 +99,30 @@ public class ShiftConverter implements ShiftConverterLocal {
         List<EmployeeShiftCloseStub> rtrn = new ArrayList<>();
         for (Shift shift : shifts) {
             for (EmployeeShift empShift : shift.getEmployeeShifts()) {
-                rtrn.add(new EmployeeShiftCloseStub(shift.getId(), empShift.getRowId(), empShift.getEmployee().getId(),
+                Calendar start = empShift.getActualStart() == null ? setCal(shift.getStartDate(), shift.getStartTime(), null) : toCal(empShift.getActualStart());
+                Calendar end = (empShift.getActualEnd() == null ? setCal(shift.getStartDate(), shift.getStartTime(), shift.getDuration()) : toCal(empShift.getActualEnd()));
+
+                rtrn.add(new EmployeeShiftCloseStub(
+                        shift.getId(),
+                        empShift.getRowId(),
+                        empShift.getEmployee().getId(),
                         empShift.getEmployee().getEmployeeName(),
-                        setCal(shift.getStartDate(), shift.getStartTime(), null),
-                        setCal(shift.getStartDate(), shift.getStartTime(), shift.getDuration()),
-                        empShift.getEmployee().getDefaultPosition()));
+                        start,
+                        end,
+                        (empShift.getActualPosition() == null ? empShift.getEmployee().getDefaultPosition() : empShift.getActualPosition()),
+                        empShift.getEmployee().getDefaultPosition(),
+                        empShift.getActualPosition() != null));
+
             }
         }
         return rtrn;
     }
 
+    private Calendar toCal(final Date date) {
+        Calendar rtrn = Calendar.getInstance();
+        rtrn.setTime(date);
+        return rtrn;
+    }
     /**
      * @param startDate
      * @param startTime

@@ -32,4 +32,10 @@ public interface DailyCloseFacadeLocal {
 
     Calendar getCloseDay();
 
+    /**
+     *
+     */
+    void remove();
+
+    public boolean areRegistersClosed();
 }
