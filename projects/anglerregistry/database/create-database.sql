@@ -1,1 +1,0 @@
-CREATE DATABASE anglerregistry_db;

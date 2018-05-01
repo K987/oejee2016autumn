@@ -1,6 +1,0 @@
-
-jar { archiveName 'mo-ejbservice.jar' }
-
-dependencies {
-	compile project(':mo-persistence') 
-}

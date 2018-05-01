@@ -1,1 +1,0 @@
-DROP ROLE collection_role;

@@ -1,1 +1,0 @@
-add-user -a -u levaijmstest -p Levai#123 -g guest
