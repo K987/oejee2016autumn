@@ -5,6 +5,7 @@ package hun.restoffice.weblayer.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 import hun.restoffice.ejbservice.facade.FinanceFacadeLocal;
 import hun.restoffice.remoteClient.domain.IncomeStub;
 import hun.restoffice.remoteClient.exception.FacadeException;
+import hun.restoffice.weblayer.util.FinanceHelperLocal;
 
 /**
  *
@@ -37,6 +39,9 @@ public class IncomeServlet extends HttpServlet {
 
     @EJB
     private FinanceFacadeLocal fFacade;
+
+    @EJB
+    private FinanceHelperLocal fHelper;
 
 
     @Override
@@ -110,7 +115,13 @@ public class IncomeServlet extends HttpServlet {
      * @throws ServletException
      */
     private void forward(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
+        try {
+            request.setAttribute("partners", fHelper.getPartners());
+            request.setAttribute("incomeTypes", fHelper.getIncomeTypes());
+        } catch (FacadeException e) {
+
+        }
+        request.setAttribute("today", Calendar.getInstance());
         RequestDispatcher dispatcher = request.getRequestDispatcher("Income.jsp");
         dispatcher.forward(request, response);
     }

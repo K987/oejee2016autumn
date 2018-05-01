@@ -143,4 +143,38 @@ public class IncomeService implements IncomeServiceLocal {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hun.restoffice.persistence.service.IncomeServiceLocal#readById(java.lang.
+     * String)
+     */
+    @Override
+    public Income readById(final String docId) throws PersistenceServiceException {
+        log.info("readById invoked with params: [docId: " + docId + "]");
+
+        try {
+            return entityManager.createNamedQuery(Income.FIND_BY_ID, Income.class).setParameter(Income.ID, docId)
+                    .getSingleResult();
+        } catch (Exception e) {
+            log.error(e);
+            throw new PersistenceServiceException(PersistenceExceptionType.NOT_EXISTS, "no income with id: " + docId);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * hun.restoffice.persistence.service.IncomeServiceLocal#deleteById(java.lang.
+     * String)
+     */
+    @Override
+    public void deleteById(final String docId) throws PersistenceServiceException {
+        log.info("deleteById invoked with param: [docId: " + docId + "]");
+        Income income = this.readById(docId);
+        entityManager.remove(income);
+    }
+
 }

@@ -11,18 +11,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--  
-<link rel="stylesheet" type="text/css" href="style/page.css" />
--->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <%@ include file="style/header.jspf" %>
 <title>Kiadások</title>
 </head>
 <body>
 	<h1>Kiadások listája</h1>
 	<br />
-	<a href="ExpenseEdit?docId=-1">új kiadás rözítése</a>
+	<a href="ExpenseEdit?docId=-1">új kiadás rögzítése</a>
 	<br />
+	<a href="/webpage">vissza a főoldalra</a>
 	<br />
 	<c:choose>
 		<c:when test="${requestScope.expenses.size() eq  0}">
@@ -30,7 +27,7 @@
 			<a href="Expense">vissza</a>
 		</c:when>
 		<c:otherwise>
-			<table class=expenseTable>
+			<table class="table table-stripped">
 				<thead>
 					<tr>
 						<th>sorszám</th>
@@ -94,7 +91,7 @@
 									<option value="1">fizetve</option>
 							</select></td>
 
-							<td><input type="submit" value="Szűr"/></td>
+							<td><input type="submit" value="szűrés"/></td>
 						</form>
 						<form method="get" action="Expense">
 							<td><input type="submit" value="szűrés törlése" /></td>

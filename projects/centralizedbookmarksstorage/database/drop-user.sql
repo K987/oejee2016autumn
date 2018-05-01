@@ -1,1 +1,0 @@
-DROP ROLE centbmstorage_user;

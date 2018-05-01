@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.weblayer.servlet;
 
@@ -18,42 +18,42 @@ import hun.restoffice.ejbservice.facade.FinanceFacadeLocal;
 import hun.restoffice.remoteClient.exception.FacadeException;
 
 /**
- * 
+ *
  *
  * @author kalmankostenszky
  */
 @WebServlet("/ExpenseDelete")
 public class ExpenseDeleteServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(ExpenseDeleteServlet.class);
+    private static final Logger LOG = Logger.getLogger(ExpenseDeleteServlet.class);
 
-	@EJB
-	private FinanceFacadeLocal eFacade;
+    @EJB
+    private FinanceFacadeLocal eFacade;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LOG.info("ExpenseDelete#doGet() invoked");
-		String docId = request.getParameter("docId");
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("ExpenseDelete#doGet() invoked");
+        String docId = request.getParameter("docId");
 
-		if (docId != null && !"".equalsIgnoreCase(docId.trim()))
-		try {
-			this.eFacade.deleteExpense(docId);
-		} catch (FacadeException e) {
-			LOG.error(e);
-		}
-		
-		response.sendRedirect("ExpenseList");
-	}
+        if (docId != null && !"".equalsIgnoreCase(docId.trim()))
+            try {
+                eFacade.deleteExpense(docId);
+            } catch (FacadeException e) {
+                LOG.error(e);
+            }
+
+        response.sendRedirect("Expense");
+    }
 
 }

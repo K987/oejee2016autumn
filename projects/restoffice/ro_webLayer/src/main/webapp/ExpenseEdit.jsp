@@ -16,9 +16,8 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
-	charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="style/page.css" />
+  <%@ include file="style/header.jspf" %>
+
 <title>Kiadás kezelése</title>
 </head>
 <body>
@@ -129,6 +128,6 @@
 		</c:choose>
 		<br /> <input type="submit" value="küld" />
 	</form>
-	<a href="ExpenseList">vissza</a>
+	<a href="Expense">vissza</a>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.remoteClient.domain;
 
@@ -20,66 +20,68 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class CalendarScheduleStub implements Comparable<CalendarScheduleStub>, Serializable {
 
-	private final Calendar start;
-	private final List<EmployeeShiftStub> assignees;
-	
-	private final int id;
+    private final Calendar start;
+    private final List<EmployeeShiftStub> assignees;
 
-	public CalendarScheduleStub(Date startDate, Date startTime, int id, List<EmployeeShiftStub> employeeShifts) {
-		(start = Calendar.getInstance()).setTime(startDate);
-		start.set(Calendar.HOUR_OF_DAY, startTime.getHours());
-		start.set(Calendar.MINUTE, startTime.getMinutes());
-		assignees = employeeShifts;
-		this.id = id;
-		
-	}
+    private final int id;
 
-	/**
-	 * @return the start
-	 */
-	public Calendar getStart() {
-		return start;
-	}
+    public CalendarScheduleStub(final Date startDate, final Date startTime, final int id, final List<EmployeeShiftStub> employeeShifts) {
+        (start = Calendar.getInstance()).setTime(startDate);
+        start.set(Calendar.HOUR_OF_DAY, startTime.getHours());
+        start.set(Calendar.MINUTE, startTime.getMinutes());
+        assignees = employeeShifts;
+        this.id = id;
 
-	/**
-	 * @return the assignees
-	 */
-	public List<EmployeeShiftStub> getAssignees() {
-		return assignees;
-	}
+    }
 
-	/**
-	 * @return the id
-	 */
-	@JsonIgnore
-	public int getId() {
-		return id;
-	}
+    /**
+     * @return the start
+     */
+    public Calendar getStart() {
+        return start;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return String.format("CalendarScheduleStub [start=%s, assignees=%s]", start, assignees);
-	}
+    /**
+     * @return the assignees
+     */
+    public List<EmployeeShiftStub> getAssignees() {
+        return assignees;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	@Override
-	public int compareTo(CalendarScheduleStub o) {
-		return start.compareTo(o.getStart());
-	}
+    /**
+     * @return the id
+     */
+    @JsonIgnore
+    public int getId() {
+        return id;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "CalendarScheduleStub [id=" + id + ", start=" + String.format("%tc", start) + ", assignees=" + assignees
+                +
+                "]";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(final CalendarScheduleStub o) {
+        return start.compareTo(o.getStart());
+    }
 
 
-	
-	
+
+
+
 }
 
 
-	

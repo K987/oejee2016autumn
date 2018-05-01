@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package hun.restoffice.ejbservice.domain;
 
@@ -9,92 +9,116 @@ import hun.restoffice.persistence.entity.employee.Employee;
 import hun.restoffice.persistence.entity.employee.JobPosition;
 
 /**
- * DTO for employee  
+ * DTO for employee
  *
  * @author kalmankostenszky
  */
 public class EmployeeStub {
 
-	private String name;
-	private JobPosition position;
-	private BigDecimal wage;
-	private Boolean active;
+    private Integer id;
+    private String name;
+    private JobPosition position;
+    private BigDecimal wage;
+    private Boolean active;
 
-	public EmployeeStub(){
-		
-	}
-	
-	public EmployeeStub(Employee emp) {
-		this.name = emp.getEmployeeName();
-		this.position = emp.getDefaultPosition();
-		this.wage = emp.getDefaultHourlyWage();
-		this.active = emp.IsActive();
-	}
+    public EmployeeStub(){
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    }
 
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public EmployeeStub(final Employee emp) {
+        id = emp.getId();
+        name = emp.getEmployeeName();
+        position = emp.getDefaultPosition();
+        wage = emp.getDefaultHourlyWage();
+        active = emp.IsActive();
+    }
 
-	/**
-	 * @return the position
-	 */
-	public JobPosition getPosition() {
-		return position;
-	}
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param position the position to set
-	 */
-	public void setPosition(JobPosition position) {
-		this.position = position;
-	}
+    /**
+     * @param name the name to set
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @return the wage
-	 */
-	public BigDecimal getWage() {
-		return wage;
-	}
+    /**
+     * @return the position
+     */
+    public JobPosition getPosition() {
+        return position;
+    }
 
-	/**
-	 * @param wage the wage to set
-	 */
-	public void setWage(BigDecimal wage) {
-		this.wage = wage;
-	}
+    /**
+     * @param position the position to set
+     */
+    public void setPosition(final JobPosition position) {
+        this.position = position;
+    }
 
-	/**
-	 * @return the active
-	 */
-	public Boolean isActive() {
-		return active;
-	}
+    /**
+     * @return the wage
+     */
+    public BigDecimal getWage() {
+        return wage;
+    }
 
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
+    /**
+     * @param wage the wage to set
+     */
+    public void setWage(final BigDecimal wage) {
+        this.wage = wage;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return String.format("EmployeeStub [name=%s, position=%s, wage=%s, active=%s]", name, position, wage, active);
-	}
-	
-	
+    /**
+     * @return the active
+     */
+    public Boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @return the active
+     */
+    public Boolean getActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(final Boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(final Integer id) {
+        this.id = id;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("EmployeeStub [name=%s, position=%s, wage=%s, active=%s]", name, position, wage, active);
+    }
+
+
 
 }
